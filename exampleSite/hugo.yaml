@@ -13,3 +13,22 @@ markup:
         block: true
   highlight:
     style: monokailight
+
+### The following loose security settings affect only the maintenance of this module!
+
+security:
+  exec:
+    allow:
+      - ^go$
+    osEnv:
+      - '.*'
+      # - (?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|DISPLAY)$
+  funcs:
+    getenv:
+      - ^HUGO_
+      - ^GO
+  http:
+    methods:
+      - (?i)GET|POST
+    urls:
+      - .*
