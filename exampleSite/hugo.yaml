@@ -1,0 +1,15 @@
+baseURL: 'http://example.org/'
+languageCode: en-us
+title: Hugo-mod- example site
+
+module:
+  imports:
+    - path: github.com/bowman2001/hugo-mod-
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+  highlight:
+    style: monokailight

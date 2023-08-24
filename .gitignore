@@ -1,0 +1,8 @@
+public
+resources
+.idea
+.vscode
+.hugo*
+
+# Go workspace file
+go.work
