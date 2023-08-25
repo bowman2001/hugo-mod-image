@@ -1,10 +1,13 @@
 {{- /* Init */}}
 {{- $hookName := "image" }}
 {{- $configName := "hugoModImage" }}
-{{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
+{{- $page := .Page }}
+{{- $errorLevel := site.Data.hugoModImage.errorLevel | default "ignore" | lower }}
+{{- $configErrorStart := "The %q render hook is misconfigured." }}
+{{- $configErrorEnd := "Please check the configuration file %q in the %q folder." }}
 
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
-    {{- $s := "The %q render hook is misconfigured. The errorLevel %q is invalid. Please check the configuration file %q in the %q folder." }}
+    {{- $s := print $configErrorStart "The errorLevel %q is invalid." $configErrorEnd }}
     {{- errorf $s $hookName $errorLevel $configName "data" }}
 {{- end }}
 
@@ -17,42 +20,26 @@
     {{- $path = .Path }}
 {{- end }}
 
-{{- $u := urls.Parse .Destination }}
-{{- $s := "The %q render hook was unable to resolve the destination %q in %s" }}
-{{- $errorMsg := printf $s $hookName $u.String $path }}
-
 {{- $r := "" }}
-{{- if $u.IsAbs }} {{- /* Remote */}}
-    {{- with resources.GetRemote $u.String }}
-        {{- with .Err }}
-            {{- if eq $errorLevel "warning" }}
-                {{- warnf "%s. See %s" . $path }}                
-            {{- else if eq $errorLevel "error" }}
-                {{- errorf "%s. See %s" . $path  }}
-            {{- end }}
-        {{- else }}
+{{- with (partial "func/get-resource.html" (dict "src" .Destination "page" $page "path" $path "errorLevel" $errorLevel)) }}
+    {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
+        {{- $data := transform.Unmarshal . }}
+        {{- with (partial "func/get-resource.html" (dict "src" $data.src "page" $page "path" $path "errorLevel" $errorLevel))}}
             {{- $r = . }}
-        {{ end }}
+        {{- end }}
     {{- else }}
-        {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
-    {{- end }}
-{{- else }}
-    {{- with .Page.Resources.GetMatch (strings.TrimPrefix "./" $u.Path) }} {{- /* Local */}}
         {{- $r = . }}
-    {{- else }}
-        {{- /* Fallback partial */}}
-    {{- end }}    
-    {{- if not $r }}
-        {{- with resources.Get $u.Path }} {{- /* Global */}}
-            {{- $r = . }}
-        {{- else }}
-            {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
-        {{- end }}   
     {{- end }}
-{{- end }}
+{{- end }} 
 
 {{- if not $r }} {{- /* Placeholder for missing images */}}
-    {{- $r = resources.Get site.Data.hugoModImage.missing }}
+    {{- with resources.Get site.Data.hugoModImage.missing }}
+        {{- $r = . }}
+    {{- else }}
+        {{- $s := print $configErrorStart "The missing image %q is invalid." $configErrorEnd }}
+        {{- $errorMsg := printf $s $hookName $errorLevel $configName "data" }}
+        {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+    {{- end }}
 {{- end }}
 
 {{- $attrs := merge .Attributes (dict "alt" .PlainText "title" .Title) }}
@@ -71,6 +58,8 @@
     {{- end }}
   {{- end -}}
 >
+
+
 {{- /**/ -}}
 
 
