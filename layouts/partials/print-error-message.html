@@ -1,0 +1,5 @@
+{{- if eq .errorLevel "warning" }}
+    {{- warnf .errorMsg }}                
+{{- else if eq .errorLevel "error" }}
+    {{- errorf .errorMsg }}
+{{- end }}
