@@ -37,15 +37,22 @@
         {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
-    {{- with .Page.Resources.Get (strings.TrimPrefix "./" $u.Path) }} {{- /* Local */}}
+    {{- with .Page.Resources.GetMatch (strings.TrimPrefix "./" $u.Path) }} {{- /* Local */}}
         {{- $r = . }}
-    {{- else }} 
+    {{- else }}
+        {{- /* Fallback partial */}}
+    {{- end }}    
+    {{- if not $r }}
         {{- with resources.Get $u.Path }} {{- /* Global */}}
             {{- $r = . }}
         {{- else }}
             {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
-        {{- end }}        
-    {{- end }}    
+        {{- end }}   
+    {{- end }}
+{{- end }}
+
+{{- if not $r }} {{- /* Placeholder for missing images */}}
+    {{- $r = resources.Get site.Data.hugoModImage.missing }}
 {{- end }}
 
 {{- $attrs := merge .Attributes (dict "alt" .PlainText "title" .Title) }}
