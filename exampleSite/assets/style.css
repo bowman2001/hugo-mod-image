@@ -1,5 +1,5 @@
 html {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     font-size: 19px;
     line-height: 1.5;
 }
@@ -10,6 +10,11 @@ body {
     padding: 2rem 1rem;
     background: #fafcfe;
     color: #333;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 code {

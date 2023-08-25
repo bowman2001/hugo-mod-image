@@ -1,5 +1,9 @@
 ---
-title: Hugo module for placeholder text with pangram sentences
+title: "Hugo module for retrieving, processing, and placing images"
 ---
 
-The module 
+![Test](https://picsum.photos/1200/600)
+
+{{% pangram 10 %}}
+
+![Picsum](https://picsum.photos/1200/500)

@@ -1,0 +1,83 @@
+{{- /* Init */}}
+{{- $hookName := "image" }}
+{{- $configName := "hugoModImage" }}
+{{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
+
+{{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
+    {{- $s := "The %q render hook is misconfigured. The errorLevel %q is invalid. Please check the configuration file %q in the %q folder." }}
+    {{- errorf $s $hookName $errorLevel $configName "data" }}
+{{- end }}
+
+
+{{- /* Determine content path for warning and error messages. */}}
+{{- $path := "" }}
+{{- with .Page.File }}
+    {{- $path = .Path }}
+{{- else }}
+    {{- $path = .Path }}
+{{- end }}
+
+{{- $u := urls.Parse .Destination }}
+{{- $s := "The %q render hook was unable to resolve the destination %q in %s" }}
+{{- $errorMsg := printf $s $hookName $u.String $path }}
+
+{{- $r := "" }}
+{{- if $u.IsAbs }} {{- /* Remote */}}
+    {{- with resources.GetRemote $u.String }}
+        {{- with .Err }}
+            {{- if eq $errorLevel "warning" }}
+                {{- warnf "%s. See %s" . $path }}                
+            {{- else if eq $errorLevel "error" }}
+                {{- errorf "%s. See %s" . $path  }}
+            {{- end }}
+        {{- else }}
+            {{- $r = . }}
+        {{ end }}
+    {{- else }}
+        {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+    {{- end }}
+{{- else }}
+    {{- with .Page.Resources.Get (strings.TrimPrefix "./" $u.Path) }} {{- /* Local */}}
+        {{- $r = . }}
+    {{- else }} 
+        {{- with resources.Get $u.Path }} {{- /* Global */}}
+            {{- $r = . }}
+        {{- else }}
+            {{- partial "print-error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+        {{- end }}        
+    {{- end }}    
+{{- end }}
+
+{{- $attrs := merge .Attributes (dict "alt" .PlainText "title" .Title) }}
+
+{{- with $r }}
+  {{- $attrs = merge $attrs (dict "src" .RelPermalink) }}
+  {{- if not (eq .MediaType.SubType "svg") }}
+    {{- $attrs = merge $attrs (dict "height" (string .Height) "width" (string .Width)) }}
+  {{- end }}
+{{- end }}
+
+<img
+  {{- range $k, $v := $attrs }}
+    {{- if or $v (eq $k "alt") }}
+      {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+    {{- end }}
+  {{- end -}}
+>
+{{- /**/ -}}
+
+
+{{- /* 
+    Check the .Destination of the image:  
+    1. Remote (URL)
+    1. Local (page bundle)
+    2. Global (assets)
+    4. Data file with one of the first three options for the path and additional meta-data
+*/ -}}
+
+
+
+{{- /* 
+    Get the image:
+    For the first three options Hugo offers 
+*/ -}}
