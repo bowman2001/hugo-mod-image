@@ -1,11 +1,13 @@
 {{- /* Init */}}
 {{- $hookName := "hugo-mod-image – render-image" }}
 {{- $configName := "data/hugoModImage" }}
-{{- $src := .Destination }}
 {{- $ctx := . }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
 {{- $configErrorStart := printf "%q: " $hookName }}
 {{- $configErrorEnd := printf "Please check the configuration in %q." $configName }}
+
+{{- $src := .Destination }}
+{{- $url := urls.Parse .Destination }}
 
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
     {{- $s := print $configErrorStart "The errorLevel %q is invalid." $configErrorEnd }}
@@ -14,10 +16,11 @@
 
 {{- $r := "" }}
 {{- $data := "" }}
-{{- with (partial "func/get-resource" (dict "src" $src "ctx" $ctx "errorLevel" $errorLevel)) }}
+{{- with (partial "func/resource/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
     {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
         {{- $data = transform.Unmarshal . }}
-        {{- with (partial "func/get-resource" (dict "src" $data.src "ctx" $ctx "errorLevel" $errorLevel))}}
+        {{ $url = urls.Parse $data.src }}
+        {{- with (partial "func/resource/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
             {{- if (eq .MediaType.MainType "image") }}
                 {{- $r = . }}
             {{- else }}
@@ -54,25 +57,25 @@
 
 {{- $params := dict }}
 {{- with $r.Params }} {{- /* Params in the front-matter resources */}}
-    {{- $params = partial "img/func/params" (dict "paramsNew" . "paramsOld" $params) }}
+    {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with $data }} {{- /* Additional params in separate data file */}}
-    {{- $params = partial "img/func/params" (dict "paramsNew" . "paramsOld" $params) }}
+    {{- $params = partial "img/func/params/extra.html" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with $r }}
-    {{- $params = partial "img/func/resource-params" (dict "resource" . "paramsOld" $params) }}
+    {{- $params = partial "img/func/params/resource" (dict "resource" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with . }}
-    {{- $params = partial "img/func/hook-params" (dict "ctx" . "paramsOld" $params )}}
+    {{- $params = partial "img/func/params/hook" (dict "ctx" . "paramsOld" $params )}}
 {{- end }}
 
-{{- $u := urls.Parse .Destination }}
-{{- with and (not $u.IsAbs) $u.Query }}
-    {{- $params = partial "img/func/query-params" (dict "query" . "paramsOld" $params) }}
+{{- with and (not $url.IsAbs) $url.Query }}
+    {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
 {{- end }}
+
 
 
 <img
