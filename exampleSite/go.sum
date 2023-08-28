@@ -1,6 +1,14 @@
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20230827105339-00c160f7b8ba h1:lT9q+3BAnwdl7YIx1+Iz4KgHgBWe48w9N1yYCf3kTu4=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20230827105339-00c160f7b8ba/go.mod h1:s473WVJh6WZSTryMc/OSxp5F1pRAoMw73ClzmbUcbRk=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824130622-a8b58edb8e0a h1:ZaBVVoibmACKmHa/DjAf6idxh1/UOrYvaaqslMSaLTo=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824130622-a8b58edb8e0a/go.mod h1:S6nfOoTUyVKnDj92lm+SMjUH3WWbzc++FVmflwGyRck=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824132640-c1aec8739c5b h1:2elhYb14MO4PmCgE/1xd0EnsgjXT6DVJz4T6GDAExQg=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824132640-c1aec8739c5b/go.mod h1:S6nfOoTUyVKnDj92lm+SMjUH3WWbzc++FVmflwGyRck=
 github.com/bowman2001/hugo-mod-pangram v0.0.0-20230803153646-6851d0e94236 h1:dpQ/1Ue1X8xYw00zZNM9QPNIaAwvLU4Wq4FjkBapkrY=
 github.com/bowman2001/hugo-mod-pangram v0.0.0-20230803153646-6851d0e94236/go.mod h1:p26SPxvC7Q7pLpgX+qS0qicq8Nck5ewwSkS6IfzF3kM=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230827174850-1542fd063c82 h1:oZZXeDprzoWa2l6jWVkk0NIHerWm3joY/2zkHXzzvgk=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230827174850-1542fd063c82/go.mod h1:ogxoWgrfHZ1zwnU02JMH0Ep43QIr19T5Ld9pLDnBwVs=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230827183443-a64d78766181 h1:ptAigNqbktBI2kiNxxlmk5qmPKzrgDCfxD20jh+p0aA=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230827183443-a64d78766181/go.mod h1:ogxoWgrfHZ1zwnU02JMH0Ep43QIr19T5Ld9pLDnBwVs=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230828081742-ba67f8a96c7e h1:X+uekrNFDBM6uD5BeGBwgu0wBdUu09I+PwwLyE2QGfs=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230828081742-ba67f8a96c7e/go.mod h1:bpkDPq8884Zx71IRcp8YvbRsqGbvF4nA2S5bNVBrvs8=

@@ -2,6 +2,9 @@ baseURL: 'http://example.org/'
 languageCode: en-us
 title: Hugo-mod-image example site
 
+disableKinds:
+  - "taxonomy"
+
 module:
   imports:
     - path: github.com/bowman2001/hugo-mod-image

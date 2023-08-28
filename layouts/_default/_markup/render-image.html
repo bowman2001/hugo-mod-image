@@ -1,48 +1,36 @@
 {{- /* Init */}}
-{{- $hookName := "image" }}
-{{- $configName := "hugoModImage" }}
+{{- $hookName := "hugo-mod-image – render-image" }}
+{{- $configName := "data/hugoModImage" }}
 {{- $src := .Destination }}
-{{- $page := .Page }}
+{{- $ctx := . }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{- $configErrorStart := "The %q hook is misconfigured." }}
-{{- $configErrorEnd := "Please check the configuration file %q in the %q folder." }}
+{{- $configErrorStart := printf "%q: " $hookName }}
+{{- $configErrorEnd := printf "Please check the configuration in %q." $configName }}
 
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
     {{- $s := print $configErrorStart "The errorLevel %q is invalid." $configErrorEnd }}
-    {{- errorf $s $hookName $errorLevel $configName "data" }}
-{{- end }}
-
-
-
-
-
-{{- /* Determine content path for warning and error messages. */}}
-{{- $path := "" }}
-{{- with .Page.File }}
-    {{- $path = .Path }}
-{{- else }}
-    {{- $path = .Path }}
+    {{- errorf $s $errorLevel }}
 {{- end }}
 
 {{- $r := "" }}
 {{- $data := "" }}
-{{- with (partial "func/get-resource.html" (dict "src" $src "page" $page "path" $path "errorLevel" $errorLevel)) }}
+{{- with (partial "func/get-resource" (dict "src" $src "ctx" $ctx "errorLevel" $errorLevel)) }}
     {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
         {{- $data = transform.Unmarshal . }}
-        {{- with (partial "func/get-resource.html" (dict "src" $data.src "page" $page "path" $path "errorLevel" $errorLevel))}}
+        {{- with (partial "func/get-resource" (dict "src" $data.src "ctx" $ctx "errorLevel" $errorLevel))}}
             {{- if (eq .MediaType.MainType "image") }}
                 {{- $r = . }}
             {{- else }}
-                {{- $errorMsg := printf "The %q hook can’t use %q from %q in %q." $hookName $data.src $src $path }}
-                {{- partial "img/error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+                {{- $msg := printf "Can’t resolve resource %q in %q" $data.src $src }}
+                {{- partial "md-error-message" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
             {{- end }}
         {{- end }}
     {{- else }}
         {{- if (eq .MediaType.MainType "image") }}
             {{- $r = . }}
         {{- else }}
-            {{- $errorMsg := printf "The %q hook can’t use %q in %q." $hookName $src $path }}
-            {{- partial "img/error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+            {{- $msg := printf "Can’t resolve resource %q" $src }}
+            {{- partial "md-error-message" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
         {{- end }}
     {{- end }}
 {{- end }}
@@ -52,18 +40,15 @@
     {{- with resources.Get site.Data.hugoModImage.missing }}
         {{- $r = . }}
     {{- else }}
-        {{- $s := print $configErrorStart "The missing image file is invalid." $configErrorEnd }}
-        {{- $errorMsg := printf $s $hookName $configName "data" }}
-        {{- partial "img/error-message" (dict "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+        {{- $msg := print $configErrorStart "Can’t resolve file for missing image" $configErrorEnd }}
+        {{- partial "md-error-message" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
-
-
 
 {{- $attrs := merge .Attributes (dict "alt" .PlainText "title" .Title "src" $r.RelPermalink) }}
 {{- if not (eq $r.MediaType.SubType "svg") }}
     {{- $attrs = merge $attrs (dict "height" (string $r.Height) "width" (string $r.Width)) }}
-{{- end }}
+{{- end -}}
 
 <img
   {{- range $k, $v := $attrs }}
@@ -72,8 +57,6 @@
     {{- end }}
   {{- end -}}
 >
-
-
 {{- /**/ -}}
 
 
