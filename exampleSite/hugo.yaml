@@ -15,6 +15,9 @@ markup:
     parser:
       attribute:
         block: true
+      wrapStandAloneImageWithinParagraph: false
+    renderer:
+      hardWraps: true
   highlight:
     style: monokailight
 

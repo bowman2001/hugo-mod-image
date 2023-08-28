@@ -1,5 +1,6 @@
 default:
-  figureWidth: normal
+  figureWidh: normal
   embedWidth: half  
+unsplash: true
 missing: hugo-mod-image-missing.svg
 errorLevel: warning

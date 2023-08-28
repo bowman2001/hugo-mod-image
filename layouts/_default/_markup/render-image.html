@@ -3,29 +3,28 @@
 {{- $configName := "data/hugoModImage" }}
 {{- $ctx := . }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{- $configErrorStart := printf "%q: " $hookName }}
-{{- $configErrorEnd := printf "Please check the configuration in %q." $configName }}
+{{- $configErrorEnd := printf " Please check the configuration in %q." $configName }}
 
 {{- $src := .Destination }}
 {{- $url := urls.Parse .Destination }}
 
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
-    {{- $s := print $configErrorStart "The errorLevel %q is invalid." $configErrorEnd }}
+    {{- $s := print "The errorLevel %q is invalid." $configErrorEnd }}
     {{- errorf $s $errorLevel }}
 {{- end }}
 
 {{- $r := "" }}
 {{- $data := "" }}
-{{- with (partial "func/resource/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
+{{- with (partial "resource/func/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
     {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
         {{- $data = transform.Unmarshal . }}
         {{ $url = urls.Parse $data.src }}
-        {{- with (partial "func/resource/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
+        {{- with (partial "resource/func/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
             {{- if (eq .MediaType.MainType "image") }}
                 {{- $r = . }}
             {{- else }}
                 {{- $msg := printf "Can’t resolve resource %q in %q" $data.src $src }}
-                {{- partial "md-error-message" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
+                {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
             {{- end }}
         {{- end }}
     {{- else }}
@@ -33,7 +32,7 @@
             {{- $r = . }}
         {{- else }}
             {{- $msg := printf "Can’t resolve resource %q" $src }}
-            {{- partial "md-error-message" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
+            {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
         {{- end }}
     {{- end }}
 {{- end }}
@@ -42,26 +41,37 @@
     {{- with resources.Get site.Data.hugoModImage.missing }}
         {{- $r = . }}
     {{- else }}
-        {{- $msg := print $configErrorStart "Can’t resolve file for missing image" $configErrorEnd }}
-        {{- partial "md-error-message" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
+        {{- $msg := print "Can’t resolve file for missing image" $configErrorEnd }}
+        {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
 
-{{- /* Shift zero base to 1 and add default identifier attribute */}}
+{{- /* Parameter defaults */}}
 {{- $params := (dict (slice "attrs" "id") (printf "img-%d" (add .Ordinal 1))) }}
 {{- if .IsBlock }}
-    {{- $params = merge $params (dict (slice "class" "width") site.Data.hugoModImage.default.blockWidth) }}
+    {{- with site.Data.hugoModImage.default.figureWidth }}
+        {{- $params = merge $params (dict (slice "class" "width") . ) }}
+    {{- else }}
+        {{- $msg := print "Can’t find default width for figure." $configErrorEnd }}
+        {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
+    {{- end }}
 {{- else }}
-    {{- $params = merge $params (dict (slice "class" "width") site.Data.hugoModImage.default.embedWidth) }}
+    {{- with site.Data.hugoModImage.default.embedWidth }}
+        {{- $params = merge $params (dict (slice "class" "width") . ) }}
+    {{- else }}
+        {{- $msg := print "Can’t find default width for embedded image." $configErrorEnd }}
+        {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
+    {{- end }}
 {{- end }}
 
-{{- $params := dict }}
 {{- with $r.Params }} {{- /* Params in the front-matter resources */}}
     {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
+    {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with $data }} {{- /* Additional params in separate data file */}}
     {{- $params = partial "img/func/params/extra.html" (dict "paramsNew" . "paramsOld" $params) }}
+    {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with $r }}
@@ -76,8 +86,6 @@
     {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
 {{- end }}
 
-
-
 <img
   {{- range $k, $v := $params.attrs }}
     {{- if or $v (eq $k "alt") }}
@@ -90,19 +98,3 @@
 {{ transform.Remarshal "yaml" $params }}
 </pre>
 {{- /**/ -}}
-
-
-{{- /* 
-    Check the .Destination of the image:  
-    1. Remote (URL)
-    1. Local (page bundle)
-    2. Global (assets)
-    4. Data file with one of the first three options for the path and additional meta-data
-*/ -}}
-
-
-
-{{- /* 
-    Get the image:
-    For the first three options Hugo offers 
-*/ -}}
