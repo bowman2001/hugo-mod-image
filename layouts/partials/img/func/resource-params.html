@@ -1,0 +1,13 @@
+{{ $params := .paramsOld }}
+
+{{ with .resource }}
+    {{ with .RelPermalink }}
+        {{ $params = merge $params (dict (slice "attrs" "src") . ) }}
+    {{ end }}
+    {{- if not (eq .MediaType.SubType "svg") }}
+        {{- $params = merge $params (dict (slice "attrs" "height") (string .Height)) }}
+        {{- $params = merge $params (dict (slice "attrs" "width") (string .Width)) }}
+    {{- end -}}
+{{ end }}
+
+{{ return $params }}

@@ -1,0 +1,12 @@
+{{ $params := .paramsOld }}
+
+{{ with .ctx }}   
+    {{ with .PlainText }}
+        {{ $params = merge $params (dict (slice "attrs" "alt") . ) }}
+    {{ end }}
+    {{ with .Title }}
+        {{ $params = merge $params (dict (slice "attrs" "title") . ) }}
+    {{ end }}
+{{ end }}
+
+{{ return $params }}

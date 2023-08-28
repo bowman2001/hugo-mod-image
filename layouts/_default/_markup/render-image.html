@@ -35,8 +35,7 @@
     {{- end }}
 {{- end }}
 
-{{- if not $r }} 
-    {{- /* Placeholder for missing images */}}
+{{- if not $r }} {{- /* Placeholder for missing images */}}
     {{- with resources.Get site.Data.hugoModImage.missing }}
         {{- $r = . }}
     {{- else }}
@@ -45,18 +44,48 @@
     {{- end }}
 {{- end }}
 
-{{- $attrs := merge .Attributes (dict "alt" .PlainText "title" .Title "src" $r.RelPermalink) }}
-{{- if not (eq $r.MediaType.SubType "svg") }}
-    {{- $attrs = merge $attrs (dict "height" (string $r.Height) "width" (string $r.Width)) }}
-{{- end -}}
+{{- /* Shift zero base to 1 and add default identifier attribute */}}
+{{- $params := (dict (slice "attrs" "id") (printf "img-%d" (add .Ordinal 1))) }}
+{{- if .IsBlock }}
+    {{- $params = merge $params (dict (slice "class" "width") site.Data.hugoModImage.default.blockWidth) }}
+{{- else }}
+    {{- $params = merge $params (dict (slice "class" "width") site.Data.hugoModImage.default.embedWidth) }}
+{{- end }}
+
+{{- $params := dict }}
+{{- with $r.Params }} {{- /* Params in the front-matter resources */}}
+    {{- $params = partial "img/func/params" (dict "paramsNew" . "paramsOld" $params) }}
+{{- end }}
+
+{{- with $data }} {{- /* Additional params in separate data file */}}
+    {{- $params = partial "img/func/params" (dict "paramsNew" . "paramsOld" $params) }}
+{{- end }}
+
+{{- with $r }}
+    {{- $params = partial "img/func/resource-params" (dict "resource" . "paramsOld" $params) }}
+{{- end }}
+
+{{- with . }}
+    {{- $params = partial "img/func/hook-params" (dict "ctx" . "paramsOld" $params )}}
+{{- end }}
+
+{{- $u := urls.Parse .Destination }}
+{{- with and (not $u.IsAbs) $u.Query }}
+    {{- $params = partial "img/func/query-params" (dict "query" . "paramsOld" $params) }}
+{{- end }}
+
 
 <img
-  {{- range $k, $v := $attrs }}
+  {{- range $k, $v := $params.attrs }}
     {{- if or $v (eq $k "alt") }}
       {{- printf " %s=%q" $k $v | safeHTMLAttr }}
     {{- end }}
   {{- end -}}
 >
+
+<pre>
+{{ transform.Remarshal "yaml" $params }}
+</pre>
 {{- /**/ -}}
 
 

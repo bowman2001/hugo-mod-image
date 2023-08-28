@@ -1,2 +1,5 @@
-errorLevel: warning
+default:
+  figureWidth: normal
+  embedWidth: half  
 missing: hugo-mod-image-missing.svg
+errorLevel: warning

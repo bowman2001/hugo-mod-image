@@ -1,26 +1,35 @@
 ---
 title: "Hugo module for retrieving, processing, and placing images"
+resources:
+  - src: mulyadi-JJMoAiVl9jA-unsplash.jpg
+    name: splash
+    title: Splash!
+    params:
+      alt: Splashing drop of water
+      width: full
+      rel: nofollow
+      hint: graphic
 ---
 
 ## Image sources
 
-There are three types of image sources Hugo can retrieve: **Local** images in page bundles, **global** (site-wide) images in the assets folder, and **remote** images via absolute URLs.
+There are three types of places where Hugo can retrieve images from: Images in **page bundles**, **site-wide** images in the assets folder, and **remote** images via absolute URLs.
 
 Because we can only add a very limited amount of information in the Markdown image tag, this module additionally offers to parse **data** files to process layout information and generate a caption.
 
-### Local (page bundle)
+### Page bundles
 
-![Local](mulyadi-JJMoAiVl9jA-unsplash.jpg)
+![](splash)
 
-### Global (asset folder)
+### Site-wide (global asset folder)
 
-![Global](erda-estremera-eMX1aIAp9Nw-unsplash.jpg)
+![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash.jpg)
 
 ### Remote (URL)
 
 Remote images are cached and processed locally.
 
-![Picsum](https://picsum.photos/1200/500)
+![Random image from picsum](https://picsum.photos/1200/500)
 
 ### Data (indirect)
 
@@ -38,4 +47,4 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 To prevent broken image tags the module always provides a placeholder for missing ones:
 
-![missing image](missing.jpg)
+![Missing](missing.jpg)
