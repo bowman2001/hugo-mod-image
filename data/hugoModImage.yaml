@@ -2,7 +2,3 @@ missing: hugo-mod-image-missing.svg
 errorLevel: warning
 unsplash: false
 
-default:
-  figureWidh: normal
-  embedWidth: half  
-

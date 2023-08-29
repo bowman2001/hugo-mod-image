@@ -8,14 +8,15 @@
             {{ $params = merge $params (dict (slice "attrs" "alt") . ) }}
         {{ end }}
     {{ end }}
+    {{ with .class }}{{ $params = merge $params (dict (slice "class" "plain") (. | lower ) ) }}{{ end }}
     {{ with .container }}{{ $params = merge $params (dict "container" (. | lower ) ) }}{{ end }}
     {{ with .hint }}{{ $params = merge $params (dict (slice "process" "hint") (. | lower ) ) }}{{ end }}
     {{ with .id }}{{ $params = merge $params (dict (slice "attrs" "id") (. | lower ) ) }}{{ end }}
-    {{ with .link }}{{ $params = merge $params (dict "link" (. | lower ) ) }}{{ end }}
+    {{ with .link }}{{ $params = merge $params (dict (slice "link" "href") (. | lower ) ) }}{{ end }}
     {{ with or .posh .ph }}{{ $params = merge $params (dict (slice "class" "posh") ( . | lower )) }}{{ end }}
     {{ with or .posv .pv }}{{ $params = merge $params (dict (slice "class" "posv") ( . | lower )) }}{{ end }}
     {{ with .ratio }}{{ $params = merge $params (dict (slice "process" "ratio")  .  ) }}{{ end }}
-    {{ with .rel }}{{ $params = merge $params (dict (slice "attrs" "rel") ( . | lower ) ) }}{{ end }}
+    {{ with .rel }}{{ $params = merge $params (dict (slice "link" "rel") ( . | lower ) ) }}{{ end }}
     {{ with .rotate }}{{ $params = merge $params (dict (slice "process" "rotate")  .  ) }}{{ end }}
     {{ with or .width .w }}
         {{ $params = merge $params (dict (slice "class" "width") ( . | lower )) }}
@@ -27,6 +28,6 @@
             {{ $params = merge $params (dict (slice "process" "svg")  (. | lower) ) }}
         {{ end }}
     {{ end }}
-    {{ with .target }}{{ $params = merge $params (dict (slice "attrs" "target") ( . | lower ) ) }}{{ end }}
+    {{ with .target }}{{ $params = merge $params (dict (slice "link" "target") ( . | lower ) ) }}{{ end }}
 {{ end }}
 {{ return $params }}

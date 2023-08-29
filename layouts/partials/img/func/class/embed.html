@@ -1,0 +1,53 @@
+{{ $name := "hugo-mod-img – img/func/class/embed" }}
+{{- $configName := "data/hugoModImage" }}
+{{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
+{{- $configErrorEnd := printf "See configuration in %s" $configName }}
+
+{{ $params := . }}
+{{ $baseClass := "embed" }}
+{{ $classes := (slice $baseClass) }}
+{{ with site.Data.hugoModImage.embed.class }}
+    {{ $widthOpts := .width }}
+    {{ $poshOpts := .posh }}
+    {{ $posvOpts := .posv }}    
+    
+    {{ with $params.class.width  }}
+        {{ if in $widthOpts .  }}
+            {{ $classes = $classes | append (printf "%s--w-%s" $baseClass . ) }}
+        {{ else }}
+            {{ $msg := printf "Width %q is not in %s. %s" . $widthOpts $configErrorEnd }}
+            {{ partial "error-msg" (dict "caller" $name "errorMsg" $msg "errorLevel" $errorLevel ) }}
+        {{ end }}
+    {{ end }}
+    {{ with $params.class.posh  }}
+        {{ if in $poshOpts . }}
+            {{ $classes = $classes | append (printf "%s--ph-%s" $baseClass . ) }}
+        {{ else }}
+            {{ $msg := printf "Horizontal position %q is not in %s. %s" . $poshOpts $configErrorEnd }}
+            {{ partial "error-msg" (dict "caller" $name "errorMsg" $msg "errorLevel" $errorLevel ) }}
+        {{ end }}
+    {{ end }}
+    {{ with $params.class.posv  }}
+        {{ if in $posvOpts . }}
+            {{ $classes = $classes | append (printf "%s--pv-%s" $baseClass . ) }}
+        {{ else }}
+            {{ $msg := printf "Vertical position %q is not in %s. %s" . $posvOpts $configErrorEnd }}
+            {{ partial "error-msg" (dict "caller" $name "errorMsg" $msg "errorLevel" $errorLevel ) }}
+        {{ end }}
+    {{ end }}
+{{ else }}
+    {{ $msg := print "Can’t find embedded image classes. " $configErrorEnd }}
+    {{ partial "error-msg" (dict "caller" $name "errorMsg" $msg "errorLevel" $errorLevel )}}
+{{ end }}
+
+{{ with $params.class.plain }}
+    {{ $classes = $classes | append (print .) }}
+{{ end }}
+
+{{ with $params.attrs.class }}
+    {{ $classes = $classes | append (print .) }}
+{{ end }}
+
+{{ $params = merge $params (dict (slice "attrs" "class") (delimit $classes " ")) }}
+
+{{ return $params }}

@@ -15,11 +15,13 @@
 
 {{- $r := "" }}
 {{- $data := "" }}
-{{- with (partial "resource/func/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
+{{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
+{{- with (partialCached "resource/func/get" $args $args) }}
     {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
         {{- $data = transform.Unmarshal . }}
-        {{ $url = urls.Parse $data.src }}
-        {{- with (partial "resource/func/get" (dict "url" $url "ctx" $ctx "errorLevel" $errorLevel)) }}
+        {{- $url := urls.Parse $data.src }} 
+        {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
+        {{- with (partialCached "resource/func/get" $args $args) }}
             {{- if (eq .MediaType.MainType "image") }}
                 {{- $r = . }}
             {{- else }}
@@ -47,16 +49,23 @@
 {{- end }}
 
 {{- /* Parameter defaults */}}
-{{- $params := (dict (slice "attrs" "id") (printf "img-%d" (add .Ordinal 1))) }}
+{{- $params := dict }}
+{{- with site.Data.hugoModImage.default.id }}
+    {{- $params = (dict (slice "attrs" "id") (printf . (add $.Ordinal 1))) }}
+{{- else }}
+    {{- $msg := print "Can’t find default id." $configErrorEnd }}
+    {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
+{{- end }}
+
 {{- if .IsBlock }}
-    {{- with site.Data.hugoModImage.default.figureWidth }}
-        {{- $params = merge $params (dict (slice "class" "width") . ) }}
+    {{- with site.Data.hugoModImage.default.figure.class.width }} 
+        {{- $params = merge $params (dict (slice "class" "width") . ) }} {{- /* Replace with range for more params */}}
     {{- else }}
         {{- $msg := print "Can’t find default width for figure." $configErrorEnd }}
         {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
-    {{- with site.Data.hugoModImage.default.embedWidth }}
+    {{- with site.Data.hugoModImage.default.embed.class.width }}
         {{- $params = merge $params (dict (slice "class" "width") . ) }}
     {{- else }}
         {{- $msg := print "Can’t find default width for embedded image." $configErrorEnd }}
@@ -64,13 +73,14 @@
     {{- end }}
 {{- end }}
 
+{{- /* Collect parameters */}}
 {{- with $r.Params }} {{- /* Extra params in the front-matter resources */}}
     {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
     {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with $data }} {{- /* Extra params in separate data file */}}
-    {{- $params = partial "img/func/params/extra.html" (dict "paramsNew" . "paramsOld" $params) }}
+    {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
     {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
@@ -88,13 +98,24 @@
 
 {{ $params = merge $params (dict "attrs" .Attributes) }} {{- /* Params from Markdown attributes */}}
 
-<img
+{{- /* Aggregate classes */}}
+{{- if .IsBlock }}
+    {{- $params = partial "img/func/class/figure" $params }}
+{{- else }}
+    {{- $params = partial "img/func/class/embed" $params }}
+{{- end }}
+
+{{- /* Preprocess */}}
+
+{{- /* Generate HTML */}}
+{{- if and site.IsServer site.Data.hugoModImage.debug }}
+<span>
+    <pre style="font-size: 12px; line-height: 1.2; background-color: #eee">
+    {{- transform.Remarshal "yaml" $params -}}
+    </pre>
+</span>{{- end -}}<img
   {{- range $k, $v := $params.attrs }}
       {{- printf " %s=%q" $k $v | safeHTMLAttr }}
   {{- end -}}
 >
-
-<pre>
-{{ transform.Remarshal "yaml" $params }}
-</pre>
 {{- /**/ -}}
