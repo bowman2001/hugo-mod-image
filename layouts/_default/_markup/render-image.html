@@ -23,7 +23,7 @@
             {{- if (eq .MediaType.MainType "image") }}
                 {{- $r = . }}
             {{- else }}
-                {{- $msg := printf "Can’t resolve resource %q in %q" $data.src $src }}
+                {{- $msg := printf "The resource %q in %q is not an image." $data.src $src }}
                 {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
             {{- end }}
         {{- end }}
@@ -31,7 +31,7 @@
         {{- if (eq .MediaType.MainType "image") }}
             {{- $r = . }}
         {{- else }}
-            {{- $msg := printf "Can’t resolve resource %q" $src }}
+            {{- $msg := printf "The resource %q is not an image." $src }}
             {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
         {{- end }}
     {{- end }}
@@ -42,7 +42,7 @@
         {{- $r = . }}
     {{- else }}
         {{- $msg := print "Can’t resolve file for missing image" $configErrorEnd }}
-        {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
+        {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
 

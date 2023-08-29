@@ -22,7 +22,8 @@
                 {{ range $slice }}
                     {{ $name = $name | append ( . | humanize ) }}
                 {{ end }}
-                {{ $params = merge $params (dict (slice "caption" "attr") (print (trim (delimit $name " ") " ") (htmlUnescape "/&hairsp;Unsplash")))  }}
+                {{ $attr := print (trim (delimit $name " ") " ") (htmlUnescape "/&thinsp;Unsplash") }}
+                {{ $params = merge $params (dict (slice "caption" "attr") $attr)  }}
             {{ end }}
         {{ end }}
     {{ end }}
