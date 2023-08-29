@@ -50,3 +50,4 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 To prevent broken image tags the module always provides a placeholder for missing ones:
 
 ![Missing](missing.jpg)
+{#missing}

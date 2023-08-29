@@ -64,33 +64,33 @@
     {{- end }}
 {{- end }}
 
-{{- with $r.Params }} {{- /* Params in the front-matter resources */}}
+{{- with $r.Params }} {{- /* Extra params in the front-matter resources */}}
     {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
     {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
-{{- with $data }} {{- /* Additional params in separate data file */}}
+{{- with $data }} {{- /* Extra params in separate data file */}}
     {{- $params = partial "img/func/params/extra.html" (dict "paramsNew" . "paramsOld" $params) }}
     {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
 
-{{- with $r }}
+{{- with $r }} {{- /* Params from resource properties or image data */}}
     {{- $params = partial "img/func/params/resource" (dict "resource" . "paramsOld" $params) }}
 {{- end }}
 
-{{- with . }}
+{{- with . }} {{- /* Params from the hook */}}
     {{- $params = partial "img/func/params/hook" (dict "ctx" . "paramsOld" $params )}}
 {{- end }}
 
-{{- with and (not $url.IsAbs) $url.Query }}
+{{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
     {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
 {{- end }}
 
+{{ $params = merge $params (dict "attrs" .Attributes) }} {{- /* Params from Markdown attributes */}}
+
 <img
   {{- range $k, $v := $params.attrs }}
-    {{- if or $v (eq $k "alt") }}
       {{- printf " %s=%q" $k $v | safeHTMLAttr }}
-    {{- end }}
   {{- end -}}
 >
 
