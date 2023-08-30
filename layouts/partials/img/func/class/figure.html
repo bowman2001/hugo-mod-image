@@ -1,7 +1,7 @@
 {{ $name := "hugo-mod-img – img/func/class/figure" }}
-{{- $configName := "data/hugoModImage" }}
-{{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{- $configErrorEnd := printf "See configuration in %s" $configName }}
+{{ $configName := "data/hugoModImage" }}
+{{ $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
+{{ $configErrorEnd := printf "See configuration in %s" $configName }}
 
 {{ $params := . }}
 {{ $baseClass := "fig" }}
