@@ -3,7 +3,7 @@
 {{- $configName := "data/hugoModImage" }}
 {{- $ctx := . }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{- $configErrorEnd := printf " Please check the configuration in %q." $configName }}
+{{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
 
 {{- $src := .Destination }}
 {{- $url := urls.Parse .Destination }}
@@ -13,7 +13,7 @@
     {{- errorf $s $errorLevel }}
 {{- end }}
 
-{{- $r := "" }}
+{{- $img := "" }}
 {{- $data := "" }}
 {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
 {{- with (partialCached "resource/func/get" $args $args) }}
@@ -23,7 +23,7 @@
         {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
         {{- with (partialCached "resource/func/get" $args $args) }}
             {{- if (eq .MediaType.MainType "image") }}
-                {{- $r = . }}
+                {{- $img = . }}
             {{- else }}
                 {{- $msg := printf "The resource %q in %q is not an image." $data.src $src }}
                 {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
@@ -31,7 +31,7 @@
         {{- end }}
     {{- else }}
         {{- if (eq .MediaType.MainType "image") }}
-            {{- $r = . }}
+            {{- $img = . }}
         {{- else }}
             {{- $msg := printf "The resource %q is not an image." $src }}
             {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
@@ -39,9 +39,9 @@
     {{- end }}
 {{- end }}
 
-{{- if not $r }} {{- /* Placeholder for missing images */}}
+{{- if not $img }} {{- /* Placeholder for missing images */}}
     {{- with resources.Get site.Data.hugoModImage.missing }}
-        {{- $r = . }}
+        {{- $img = . }}
     {{- else }}
         {{- $msg := print "Can’t resolve file for missing image" $configErrorEnd }}
         {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
@@ -50,7 +50,7 @@
 
 {{- /* Parameter defaults */}}
 {{- $params := dict }}
-{{- with site.Data.hugoModImage.default.id }}
+{{- with site.Data.hugoModImage.id }}
     {{- $params = (dict (slice "attrs" "id") (printf . (add $.Ordinal 1))) }}
 {{- else }}
     {{- $msg := print "Can’t find default id." $configErrorEnd }}
@@ -74,7 +74,11 @@
 {{- end }}
 
 {{- /* Collect parameters */}}
-{{- with $r.Params }} {{- /* Extra params in the front-matter resources */}}
+{{- with $img }} {{- /* Params from resource properties or image data */}}
+    {{- $params = partial "img/func/params/resource" (dict "resource" . "paramsOld" $params) }}
+{{- end }}
+
+{{- with $img.Params }} {{- /* Extra params in the front-matter resources */}}
     {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
     {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
 {{- end }}
@@ -82,10 +86,6 @@
 {{- with $data }} {{- /* Extra params in separate data file */}}
     {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
     {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
-{{- end }}
-
-{{- with $r }} {{- /* Params from resource properties or image data */}}
-    {{- $params = partial "img/func/params/resource" (dict "resource" . "paramsOld" $params) }}
 {{- end }}
 
 {{- with . }} {{- /* Params from the hook */}}
@@ -105,17 +105,6 @@
     {{- $params = partial "img/func/class/embed" $params }}
 {{- end }}
 
-{{- /* Preprocess */}}
-
-{{- /* Generate HTML */}}
-{{- if and site.IsServer site.Data.hugoModImage.debug }}
-<span>
-    <pre style="font-size: 12px; line-height: 1.2; background-color: #eee">
-    {{- transform.Remarshal "yaml" $params -}}
-    </pre>
-</span>{{- end -}}<img
-  {{- range $k, $v := $params.attrs }}
-      {{- printf " %s=%q" $k $v | safeHTMLAttr }}
-  {{- end -}}
->
+{{- $args := (dict "img" $img "params" $params )}}
+{{- partial "img/img" $args }}
 {{- /**/ -}}

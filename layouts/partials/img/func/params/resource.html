@@ -2,12 +2,18 @@
 
 {{ with .resource }}
     {{ with .RelPermalink }}
-        {{ $params = merge $params (dict (slice "attrs" "src") . ) }}
+        {{ $params = merge $params (dict (slice "imgAttrs" "src") . ) }}
     {{ end }}
-    {{- if not (eq .MediaType.SubType "svg") }}
-        {{- $params = merge $params (dict (slice "attrs" "height") (string .Height)) }}
-        {{- $params = merge $params (dict (slice "attrs" "width") (string .Width)) }}
+
+    {{ $subType := .MediaType.SubType }}
+    {{- if not (eq $subType "svg") }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "height") (string .Height)) }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .Width)) }}
     {{- end -}}
+    {{ with and (not (in (slice "svg" "png") $subType)) (site.Data.hugoModImage.default.container | default "img-container") }}       
+        {{ $params = merge $params (dict (slice "contAttrs" "class") . ) }}
+    {{ end }}
+
     {{ if or site.Data.hugoModImage.unsplash (eq .Params.unsplash "true") }}
         {{ $filename := .RelPermalink | path.Base }}
         {{ $length := len $filename }}

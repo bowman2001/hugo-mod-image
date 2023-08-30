@@ -1,25 +1,30 @@
 unsplash: true
 debug: true
 
-process:
-  ratio: [0.2, 5] # width to height: min, max 
-
 figure:
   class: 
-    width: [full, small]
+    width: [half, full]
   type: featured
 
 embed:
   class:
-    width: [half, quarter]
+    width: [quarter, half]
     posh: [left, right]
     posv: [top, middle]
 
+width:
+  quarter: [135, 135]
+  half: [275,275]
+  full: [570,570]
+
+link: 
+
 default:
-  id: "img-%d"
+  width: [570,570]
   figure:
     class:
       width: full
   embed:
     class:
       width: half  
+  

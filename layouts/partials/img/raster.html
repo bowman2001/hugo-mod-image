@@ -1,0 +1,27 @@
+{{- $img := .img }}
+{{- $params := .params }}
+
+{{- $srcset := partial "img/func/raster/srcset" (dict "img" $img "params" $params) }}
+{{- $lqip := partial "img/func/raster/lqip" $img -}}
+{{- $fallback := partial "img/func/raster/fallback" $img }}
+{{- $aspectratio := print (div $img.Width (float $img.Height)) }}
+
+{{- $params = merge $params (dict (slice "imgAttrs" "class") "lazyload") }} 
+{{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") $srcset) }}
+{{- $params = merge $params (dict (slice "imgAttrs" "data-src") ($fallback.RelPermalink | safeURL) ) }}
+{{- $params = merge $params (dict (slice "imgAttrs" "data-sizes") "auto" ) }}
+{{- $params = merge $params (dict (slice "imgAttrs" "data-parentfit") "cover" ) }}
+{{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
+{{- if .params.index }}
+    {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }} 
+{{- end }}
+{{- $params = merge $params (dict (slice "imgAttrs" "width") $fallback.Width) }} 
+{{- $params = merge $params (dict (slice "imgAttrs" "height") $fallback.Height) -}}  
+
+{{- partial "img/debug" $params }}
+<img
+  {{- range $k, $v := $params.imgAttrs }}
+      {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+  {{- end -}}
+>
+{{- /**/ -}}       

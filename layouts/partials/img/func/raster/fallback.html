@@ -1,0 +1,3 @@
+{{ $width := site.Data.hugoModImage.fallback.width | default 900 -}}
+{{ $quality := site.Data.hugoModImage.fallback.quality | default 60 -}}
+{{ return .Resize (printf "%dx webp q%d" (int $width) (int $quality)) -}}

@@ -3,10 +3,10 @@ title: "Hugo module for retrieving, processing, and placing images"
 resources:
   - src: mulyadi-JJMoAiVl9jA-unsplash.jpg
     name: splash
-    title: Splash!
     params:
       alt: Splashing drop of water
       width: full
+      link: https://unsplash.com/photos/JJMoAiVl9jA
       rel: nofollow
       target: _blank
       hint: graphic
@@ -24,7 +24,7 @@ Because we can’t add much information in the Markdown image tag, this module p
 
 ### Page bundles
 
-![](splash)
+![](splash "What a splash!")
 
 ### Site-wide (global asset folder)
 

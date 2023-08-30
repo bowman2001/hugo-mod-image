@@ -1,4 +1,11 @@
+container: "img-c"
+id: "img-%d"  # %d gets replaced by the number of the image on the page
 missing: hugo-mod-image-missing.svg
 errorLevel: warning
 unsplash: false
+
+process:
+  sizeStep: 50 # In percent 
+  maxDensityFactor: 2
+  ratioBoundaries: [0.2, 5] # width to height: min, max 
 

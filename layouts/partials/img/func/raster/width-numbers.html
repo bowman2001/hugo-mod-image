@@ -1,0 +1,24 @@
+{{/* Calculate the width numbers for the 'srcset' */}}
+{{ $min := .min }}
+{{ $max := .max }}   
+
+{{ $step := site.Data.hugoModImage.process.sizestep | default 50 }}
+{{ if (lt $step 20) }}
+    {{ errorf "Aborting. The file size difference of %d percent for your srcset is too small. The srcset would become too big. At least 25 percent are recommended." $step }}
+{{ else if (lt $step 25) }}
+    {{ warnf "The file size difference of %d percent for the srcset is small. Hugo will take some time for the image processing. 25 percent or more are recommended." $step }}
+{{ end }}
+
+{{ $factor := (math.Sqrt (add 1 (div $step 100.0))) }}
+{{ $ratio := (div $max (float $min)) }}
+{{ $n := (math.Ceil (div (math.Log $ratio) (math.Log $factor))) }}
+{{ $fo := (math.Pow $ratio (div 1.0 $n)) }}
+
+{{ $width := $min }}
+{{ $numbers := (slice (int $min)) }}
+{{ range (seq 1 (int $n)) }}
+    {{ $width = (mul $width $fo) }}
+    {{ $numbers = $numbers | append (int (math.Round $width)) }}
+{{ end }}
+
+{{ return $numbers }}

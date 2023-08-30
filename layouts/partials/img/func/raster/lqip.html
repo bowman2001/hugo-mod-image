@@ -1,0 +1,17 @@
+{{ $width := or site.Data.hugoModImage.process.lqip.width 66 }}
+{{ $pixelate := or site.Data.hugoModImage.process.lqip.pixelate 8 }}
+{{ $blur := or site.Data.hugoModImage.process.lqip.blur 6 }}
+{{ $quality := or site.Data.hugoModImage.process.lqip.quality 20 }}
+
+{{ $filters := slice (images.GaussianBlur $blur) (images.Pixelate $pixelate) -}}
+{{ $src := "" }}
+{{ with (.Filter $filters).Resize (printf "%dx webp q%d" $width $quality) -}}
+    {{- $base64 := base64Encode .Content -}}
+    {{- if lt (len $base64) 2048 -}}
+        {{ $src = printf "data:image/webp;base64,%s" $base64 }}
+    {{- else -}}
+        {{ $src = .RelPermalink }}
+    {{- end -}}
+{{ end -}}
+
+{{ return $src -}}

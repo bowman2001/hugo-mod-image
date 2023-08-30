@@ -1,0 +1,36 @@
+{{ $img := .img }}
+{{ $params := .params }}
+
+{{/* Get width min, max, and density factor */}}
+
+{{ $min := (index site.Data.hugoModImage.default.width 0) | default 400 }} 
+{{ $max := (index site.Data.hugoModImage.default.width 1) | default 800 }}
+{{ $factor := site.Data.hugoModImage.process.maxDensityFactor | default 2 }}
+{{ with index site.Data.hugoModImage.width $params.class.width }}
+    {{ $min = (int (index . 0)) }}
+    {{ $max = (int (index . 1)) }}
+{{ end }}
+
+{{ $maxHd := (int (math.Floor (mul $max $factor))) }}
+
+{{ $srcset := slice }}
+{{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd) }}
+    {{ range $k, $w := . }}
+        {{ $args := slice }}
+        {{ $args = $args | append (printf "%dx" $w) }}
+        {{ if $.params.process.compress }}
+            {{ $args = $args | append "webp" }}
+            {{ with $.params.process.hint }}
+                {{ $args = $args | append . }}
+            {{ end }}
+        {{ end }}
+        {{ if gt $w $max }}
+            {{ $args = $args | append "MitchellNetravali" }}
+        {{ end }}
+        {{/* warnf "string %d: %v" $k $string */}}
+        {{ $rs_img := $img.Resize (print (delimit $args " ")) }}
+        {{ $srcset = $srcset | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
+    {{ end }}
+{{ end }}
+
+{{ return ( delimit $srcset ", " ) }}
