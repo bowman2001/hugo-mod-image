@@ -41,13 +41,13 @@ Remote images are cached and processed locally.
 
 A data file in the format YAML, TOML, or JSON needs to include a source like the previous ones. We can use such a file to add local parameters to site-wide or remote images without resource information.
 
-#### Site-wide source in data file
+#### A site-wide source in a data file
 
-![Global image via data file](global.yaml?w=half)
+![Global image in a data file](global.yaml?w=half)
 
-#### Remote source in data file
+#### Remote source in a data file
 
-![Remote image via data file](remote.json?w=full)
+![Remote image in a data file](remote.json?w=full)
 
 ## Embedded images
 
