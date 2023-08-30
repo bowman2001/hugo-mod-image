@@ -3,14 +3,26 @@ debug: true
 
 figure:
   class: 
-    width: [half, full]
+    width: 
+      name: Width
+      prefix: w-
+      options: [half, full]
   type: featured
 
 embed:
   class:
-    width: [quarter, half]
-    posh: [left, right]
-    posv: [top, middle]
+    width: 
+      name: Width
+      prefix: w-
+      options: [quarter, half]
+    posh: 
+      name: Horizontal position
+      prefix: ph-
+      options: [left, right]
+    posv:
+      name: Vertical position
+      prefix: pv-
+      options: [top, middle]
 
 width:
   quarter: [135, 135]

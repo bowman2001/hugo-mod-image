@@ -35,7 +35,7 @@ Because we can’t add much information in the Markdown image tag, this module p
 Remote images are cached and processed locally.
 
 ![Random image from picsum](https://picsum.photos/1200/500)
-{.fig--w-1}
+{.attr-test}
 
 ### Data (indirect)
 
@@ -43,11 +43,11 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 #### Site-wide source in data file
 
-![Global image via data file](global.yaml?w=small)
+![Global image via data file](global.yaml?w=half)
 
 #### Remote source in data file
 
-![Remote image via data file](remote.json?w=small)
+![Remote image via data file](remote.json?w=full)
 
 ## Embedded images
 

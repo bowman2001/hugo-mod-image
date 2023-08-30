@@ -1,6 +1,6 @@
 {{- if and site.IsServer site.Data.hugoModImage.debug }}
 <span>
-    <pre style="font-size: 12px; line-height: 1.2; background-color: #ddd; overflow-x: auto">
+    <pre style="font-size: 10px; line-height: 1.2; background-color: #ddd; overflow-x: auto">
     {{- print (transform.Remarshal "yaml" .) -}}
     </pre>
 </span>
