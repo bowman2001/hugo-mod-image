@@ -1,4 +1,6 @@
 {
     "src": "https://picsum.photos/1200/300",
-    "caption": "Remote data file caption"
+    "caption": "Remote data file caption",
+    "attr": "Picsum",
+    "attrlink": "https://picsum.photos"
 }

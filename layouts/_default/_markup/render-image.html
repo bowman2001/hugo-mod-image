@@ -89,7 +89,7 @@
 {{- end }}
 
 {{- with . }} {{- /* Params from the hook */}}
-    {{- $params = partial "img/func/params/hook" (dict "ctx" . "paramsOld" $params )}}
+    {{- $params = partial "img/func/params/hook" (dict "ctx" . "paramsOld" $params ) }}
 {{- end }}
 
 {{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
@@ -105,6 +105,11 @@
     {{- $params = partial "img/func/class/embed" $params }}
 {{- end }}
 
+{{- partial "img/debug" $params }}
 {{- $args := (dict "img" $img "params" $params )}}
-{{- partial "img/container/img" $args }}
+{{- if .IsBlock }}
+    {{- partial "img/container/figure" $args }}
+{{- else }}
+    {{- partial "img/container/embed" $args }}
+{{- end }}
 {{- /**/ -}}

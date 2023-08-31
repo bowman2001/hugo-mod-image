@@ -17,8 +17,6 @@
 {{- end }}
 {{- $params = merge $params (dict (slice "imgAttrs" "width") $fallback.Width) }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "height") $fallback.Height) -}}  
-
-{{- partial "img/debug" $params }}
 <img
   {{- range $k, $v := $params.imgAttrs }}
       {{- printf " %s=%q" $k $v | safeHTMLAttr }}

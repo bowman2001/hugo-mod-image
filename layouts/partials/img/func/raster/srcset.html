@@ -24,7 +24,7 @@
                 {{ $args = $args | append . }}
             {{ end }}
         {{ end }}
-        {{ if gt $w $max }}
+        {{ if gt $w $maxHd }}
             {{ $args = $args | append "MitchellNetravali" }}
         {{ end }}
         {{/* warnf "string %d: %v" $k $string */}}

@@ -1,0 +1,17 @@
+{{- $params := . }}
+
+{{- with $params.caption.text }}
+<span class="caption__text">
+    {{ with $params.ordinal }}<span class="caption__nr">{{ . }}.</span> {{ end }}{{ . | site.Home.RenderString -}}
+</span>
+{{- end }}
+{{ with $params.caption.attr -}}
+    {{- $attribution := ( . | site.Home.RenderString ) -}}
+    <span class="caption__attr" data-pagefind-ignore>
+    {{- with $params.caption.attrlink -}}
+        (<a class="link link--text" href="{{ . | safeHTMLAttr }}">{{ $attribution }}</a>)
+    {{- else -}}
+        ({{ $attribution }})
+    {{- end -}}
+    </span>
+{{ end -}}

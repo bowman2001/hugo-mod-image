@@ -2,7 +2,6 @@
 {{- $params := .params }}
 
 {{- if (eq $params.process.svg "inline") }}
-    {{- partial "img/debug" $params }}
     {{- $img.Content | safeHTML }}
     {{- if $params.index -}} {{- /* Hidden img with pagefind attributes */}}
         <img class="hide" 
@@ -14,7 +13,6 @@
     {{- if $params.index }}
         {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[src], image_alt[alt]" ) }}
     {{- end }}
-    {{- partial "img/debug" $params }}
     <img
     {{- range $k, $v := $params.imgAttrs }}
         {{- printf " %s=%q" $k $v | safeHTMLAttr }}
