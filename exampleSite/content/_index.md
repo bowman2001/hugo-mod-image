@@ -29,11 +29,11 @@ The included image render hook can produce figures and embedded images with link
 
 ### Page bundles
 
-![](splash "What a splash!") {{% pangram 10 %}}
+![](splash "What a splash!") {{% pangram 11 %}}
 
 ### Site-wide (global asset folder)
 
-![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash.jpg?posh=right) {{% pangram 10 %}}
+![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash.jpg?posh=right) {{% pangram 11 %}}
 
 ### Remote (URL)
 
@@ -54,9 +54,6 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ![Remote image in a data file](remote.json?w=full)
 
-## Embedded images
-
-![](splash?w=half&posh=left) {{% pangram 10 %}} 
 ## Missing image
 
 To prevent broken image tags the module always provides a placeholder for missing ones:
