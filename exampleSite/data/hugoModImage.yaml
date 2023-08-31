@@ -4,8 +4,17 @@ debug: true
 process:
   maxDensityFactor: 4
 
+container:
+  class:
+    base: "img-c"
+    background:
+      name: "Background"
+      prefix: bg-
+      options: [grey, transparent]      
+
 figure:
-  class: 
+  class:
+    base: "fig"
     width: 
       name: Width
       prefix: w-
@@ -14,6 +23,7 @@ figure:
 
 embed:
   class:
+    base: "emb"
     width: 
       name: Width
       prefix: w-
@@ -35,11 +45,15 @@ width:
 link: 
 
 default:
-  width: [570,570]
+  container:
+    class: 
+      background: transparent
   figure:
     class:
       width: full
   embed:
     class:
-      width: half  
+      width: half
+  width: [570,570]
+  
   

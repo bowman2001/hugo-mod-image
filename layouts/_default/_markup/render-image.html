@@ -57,10 +57,6 @@
     {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
 {{- end }}
 
-{{ with and (not (in (slice "svg" "png") $img.MediaType.SubType )) (site.Data.hugoModImage.container | default "img-c") }}       
-        {{ $params = merge $params (dict (slice "contAttrs" "class") . ) }}
-{{ end }}
-
 {{- if .IsBlock }}
     {{- with site.Data.hugoModImage.default.figure.class.width }} 
         {{- $params = merge $params (dict (slice "class" "width") . ) }} {{- /* Replace with range for more params */}}
@@ -103,10 +99,11 @@
 {{ $params = merge $params (dict "attrs" .Attributes) }} {{- /* Params from Markdown attributes */}}
 
 {{- /* Aggregate classes */}}
+{{- $params = partial "img/func/container" $params }}
 {{- if .IsBlock }}
-    {{- $params = partial "img/func/class/figure" $params }}
+    {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
 {{- else }}
-    {{- $params = partial "img/func/class/embed" $params }}
+    {{- $params = partial "img/func/class" (dict "type" "embed" "params" $params ) }}
 {{- end }}
 
 {{- partial "img/debug" $params }}

@@ -22,6 +22,8 @@ figure {
 }
 
 .img-c {
+    display: block;
+    line-height: unset;
     overflow: hidden;
 }
 
@@ -43,23 +45,23 @@ code {
     font-weight: 300;
 }
 
-.embed--ph-left {
+.emb--ph-left {
     float: left;
     clear: left;
     margin-right: 20px;
 }
 
-.embed--ph-right {
+.emb--ph-right {
     float: right;
     clear: right;
     margin-left: 20px;
 }
 
-.embed--w-quarter {
+.emb--w-quarter {
     width: 135px;
 }
 
-.embed--w-half {
+.emb--w-half {
     width: 275px;
 }
 
@@ -75,5 +77,5 @@ code {
 
 .lazyloaded {
 	filter: blur(0);
-	transition: filter 200ms;
+	transition: filter 200ms ease-in-out;
 }

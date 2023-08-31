@@ -9,7 +9,7 @@
         {{ end }}
     {{ end }}
     {{ with .class }}{{ $params = merge $params (dict (slice "class" "plain") ( . | lower )) }}{{ end }}
-    {{ with .contclass }}{{ $params = merge $params (dict (slice "contClass" "class") ( . | lower )) }}{{ end }}
+    {{ with .background }}{{ $params = merge $params (dict (slice "contClass" "background") ( . | lower )) }}{{ end }}
     {{ with .hint }}{{ $params = merge $params (dict (slice "process" "hint") ( . | lower )) }}{{ end }}
     {{ with .id }}{{ $params = merge $params (dict (slice "attrs" "id") ( . | lower )) }}{{ end }}
     {{ with .link }}{{ $params = merge $params (dict (slice "linkAttrs" "href") . ) }}{{ end }}
