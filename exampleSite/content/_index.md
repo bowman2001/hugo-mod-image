@@ -48,7 +48,7 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 #### A site-wide source in a data file
 
-![Global image in a data file](global.yaml?w=half)
+![Global image in a data file](global.yaml) {{% pangram 11 %}}
 
 #### Remote source in a data file
 

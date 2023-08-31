@@ -22,7 +22,7 @@ figure {
 }
 
 .img-c {
-    display: inline-block;
+    overflow: hidden;
 }
 
 code {
@@ -65,4 +65,15 @@ code {
 
 .blur {
     filter: blur(5px);
+}
+
+
+.lazyload,
+.lazyloading {
+	filter: blur(5px);
+}
+
+.lazyloaded {
+	filter: blur(0);
+	transition: filter 200ms;
 }

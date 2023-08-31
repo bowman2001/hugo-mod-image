@@ -6,6 +6,7 @@
 {{- $fallback := partial "img/func/raster/fallback" $img }}
 {{- $aspectratio := print (div $img.Width (float $img.Height)) }}
 
+{{- $params = merge $params (dict (slice "imgAttrs" "src") $lqip ) }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "class") "lazyload") }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") $srcset) }}
 {{- $params = merge $params (dict (slice "imgAttrs" "data-src") ($fallback.RelPermalink | safeURL) ) }}
@@ -15,8 +16,6 @@
 {{- if .params.index }}
     {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }} 
 {{- end }}
-{{- $params = merge $params (dict (slice "imgAttrs" "width") $fallback.Width) }} 
-{{- $params = merge $params (dict (slice "imgAttrs" "height") $fallback.Height) -}}  
 <img
   {{- range $k, $v := $params.imgAttrs }}
       {{- printf " %s=%q" $k $v | safeHTMLAttr }}

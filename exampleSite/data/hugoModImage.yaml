@@ -1,6 +1,9 @@
 unsplash: true
 debug: true
 
+process:
+  maxDensityFactor: 4
+
 figure:
   class: 
     width: 

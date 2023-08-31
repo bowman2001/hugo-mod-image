@@ -57,6 +57,10 @@
     {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
 {{- end }}
 
+{{ with and (not (in (slice "svg" "png") $img.MediaType.SubType )) (site.Data.hugoModImage.container | default "img-c") }}       
+        {{ $params = merge $params (dict (slice "contAttrs" "class") . ) }}
+{{ end }}
+
 {{- if .IsBlock }}
     {{- with site.Data.hugoModImage.default.figure.class.width }} 
         {{- $params = merge $params (dict (slice "class" "width") . ) }} {{- /* Replace with range for more params */}}

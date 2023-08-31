@@ -6,12 +6,12 @@
     {{- if $params.index -}} {{- /* Hidden img with pagefind attributes */}}
         <img class="hide" 
             data-pagefind-meta="image[data-src], image_alt[alt]" 
-            data-src="{{ $params.imgAttrs.src }}" 
-            {{- with $params.imgAttrs.alt }}alt="{{ . }}"{{ end -}}>
+            data-src="{{ $params.imgAttrs.src | safeHTMLAttr }}" 
+            {{- with $params.imgAttrs.alt }}alt="{{ . | safeHTMLAttr }}"{{ end }}>
     {{- end }}
 {{- else }}
     {{- if $params.index }}
-        {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[src], image_alt[alt]" ) }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }}
     {{- end }}
     <img
     {{- range $k, $v := $params.imgAttrs }}
