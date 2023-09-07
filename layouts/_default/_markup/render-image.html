@@ -1,12 +1,11 @@
 {{- /* Init */}}
 {{- $hookName := "hugo-mod-image – render-image" }}
 {{- $configName := "data/hugoModImage" }}
-{{- $ctx := . }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
 {{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
 
 {{- $src := .Destination }}
-{{- $url := urls.Parse .Destination }}
+{{- $ctx := . }}
 
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
     {{- $s := print "The errorLevel %q is invalid." $configErrorEnd }}
@@ -15,6 +14,7 @@
 
 {{- $img := "" }}
 {{- $data := "" }}
+{{- $url := urls.Parse $src }}
 {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
 {{- with (partialCached "resource/func/get" $args $args) }}
     {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
@@ -40,12 +40,7 @@
 {{- end }}
 
 {{- if not $img }} {{- /* Placeholder for missing images */}}
-    {{- with resources.Get site.Data.hugoModImage.missing }}
-        {{- $img = . }}
-    {{- else }}
-        {{- $msg := print "Can’t resolve file for missing image" $configErrorEnd }}
-        {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
-    {{- end }}
+    {{- $img = partial "img/missing" . }}
 {{- end }}
 
 {{- /* Parameter defaults */}}
@@ -109,8 +104,8 @@
 {{- partial "img/debug" $params }}
 {{- $args := (dict "img" $img "params" $params )}}
 {{- if .IsBlock }}
-    {{- partial "img/container/figure" $args }}
+    {{- partial "img/render/container/figure" $args }}
 {{- else }}
-    {{- partial "img/container/embed" $args }}
+    {{- partial "img/render/container/embed" $args }}
 {{- end }}
 {{- /**/ -}}

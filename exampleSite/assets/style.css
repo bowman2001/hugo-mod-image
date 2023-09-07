@@ -5,11 +5,14 @@ html {
 }
 
 body {
+    background: #fafcfe;
+    color: #333;
+}
+
+.content {
     max-width: 30rem;
     margin: 0 auto;
     padding: 2rem 1rem;
-    background: #fafcfe;
-    color: #333;
 }
 
 img {

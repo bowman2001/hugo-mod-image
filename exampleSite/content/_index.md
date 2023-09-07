@@ -1,6 +1,12 @@
 ---
 title: "Hugo module for retrieving, processing, and placing images"
 resources:
+  - src: 1074-4000x2000.jpg
+    name: featured
+    params:
+      alt: Remote predator
+      attr: "Picsum"
+      attrlink: "https://picsum.photos/id/1074/4000/2000"
   - src: mulyadi-JJMoAiVl9jA-unsplash.jpg
     name: splash
     params:

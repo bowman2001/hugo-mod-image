@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 </head>
 <body>
+<header class="content">
 <h1>{{ .Title | site.Home.RenderString }}</h1>
+</header>
+{{ partial "img/render-featured" . }}
+<div class="content">
 {{ .Content }}
+</div>
 </body>
 </html>

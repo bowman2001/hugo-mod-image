@@ -1,7 +1,7 @@
 {{- $args := (dict "img" .img "params" .params )}}
 {{- if eq .img.MediaType.SubType "svg" -}}
-    {{- partial "img/svg" $args }}
+    {{- partial "img/render/svg" $args }}
 {{- else }}
-    {{- partial "img/raster" $args }}
+    {{- partial "img/render/raster" $args }}
 {{- end -}}
 {{- /**/ -}}

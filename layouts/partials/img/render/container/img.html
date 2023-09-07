@@ -7,13 +7,13 @@
     {{- range $k, $v := $attrs }}
         {{- printf " %s=%q" $k $v | safeHTMLAttr }}
     {{- end }}>
-    {{- partial "img/img.html" (dict "img" $img "params" $params ) }}
+    {{- partial "img/render/img.html" (dict "img" $img "params" $params ) }}
     </a>
 {{- else }}
     <span {{ range $k, $v := .params.contAttrs }}
             {{- printf " %s=%q" $k $v | safeHTMLAttr }}
             {{- end }}>
-        {{- partial "img/img.html" (dict "img" $img "params" $params ) -}}
+        {{- partial "img/render/img.html" (dict "img" $img "params" $params ) -}}
     </span>
 {{- end }}
 

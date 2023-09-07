@@ -2,7 +2,7 @@ unsplash: true
 debug: true
 
 process:
-  maxDensityFactor: 4
+  maxDensityFactor: 3
 
 container:
   class:
@@ -18,7 +18,7 @@ figure:
     width: 
       name: Width
       prefix: w-
-      options: [half, full]
+      options: [half, full, double]
   type: featured
 
 embed:
@@ -41,6 +41,7 @@ width:
   quarter: [135, 135]
   half: [275,275]
   full: [570,570]
+  double: [1140,1140]
 
 link: 
 

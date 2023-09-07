@@ -1,0 +1,6 @@
+{{- with (partial "img/get-img" (dict "src" "featured" "ctx" . )) }}
+    {{- $params := merge .params (dict (slice "class" "width") "double" ) }}
+    {{- $params = partial "img/func/container" $params }}
+    {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
+    {{- partial "img/render/container/figure" (dict "img" .img "params" $params ) }}
+{{- end }}
