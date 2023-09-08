@@ -3,4 +3,5 @@
     {{- $params = partial "img/func/container" $params }}
     {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
     {{- partial "img/render/container/figure" (dict "img" .img "params" $params ) }}
+    {{- partial "img/debug" $params }}
 {{- end }}

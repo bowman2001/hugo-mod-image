@@ -13,32 +13,34 @@
     {{- errorf $s $errorLevel }}
 {{- end }}
 
-{{- $img := "" }}
+{{- $map := "" }}
 {{- $url := urls.Parse $src }}
 {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
 
-{{- with (partialCached "resource/func/get" $args $args) }}
-    {{- if (eq .MediaType.MainType "image") }}
-        {{- $img = . }}
+{{- with (partialCached "resource/func/get-with-params" $args $args) }}
+    {{- if (eq .r.MediaType.MainType "image") }}
+        {{- $map = dict "img" .r "params" .params }}
     {{- else }}
-        {{- $msg := printf "The resource %q is not an image." $src }}
+        {{- $msg := printf "The resource %q is not or does not contain an image source." $src }}
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
 
-{{- if not $img }}
-    {{- $img = partial "img/missing" . }}
+{{- if not $map.img }}
+    {{- $map = dict "img" (partial "img/missing" . ) }}
 {{- end }}
 
 {{- /* Collect parameters */}}
 {{- $params := dict }}
-{{- with $img }} {{- /* Params from resource properties or image data */}}
-    {{- $params = partial "img/func/params/resource" (dict "resource" . "paramsOld" $params) }}
+{{- with $map }} 
+    {{- /* Params from resource properties or image data */}}
+    {{- $params = partial "img/func/params/resource" (dict "img" .img "paramsOld" $params ) }}
+    {{- /* Specific params */}}
+    {{- $params = partial "img/func/params/extra" (dict "paramsNew" .params "paramsOld" $params) }}
+    {{- /* Caption params */}}
+    {{- $params = partial "resource/func/caption" (dict "paramsNew" .params "paramsOld" $params) }}
 {{- end }}
 
-{{- with $img.Params }} {{- /* Extra params in the front-matter resources */}}
-    {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
-    {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
-{{- end }}
+{{ $map = merge $map (dict "params" $params) }}
 
-{{- return (dict "img" $img "params" $params) }}
+{{- return $map }}

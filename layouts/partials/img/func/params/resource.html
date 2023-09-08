@@ -1,6 +1,6 @@
 {{ $params := .paramsOld }}
 
-{{ with .resource }}
+{{ with .img }}
     {{ with .RelPermalink }}
         {{ $params = merge $params (dict (slice "imgAttrs" "src") . ) }}
     {{ end }}
