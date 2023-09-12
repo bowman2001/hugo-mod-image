@@ -1,6 +1,7 @@
-{{- with (partial "img/get-img" (dict "src" "featured" "ctx" . )) }}
-    {{- $params := merge .params (dict (slice "class" "width") "double" ) }}
-    {{- $params = partial "img/func/container" $params }}
+{{- $map := (dict (slice "img" "src") "featured") }}
+{{- $map := (dict (slice "params" "width") "double") }}
+{{- with (partial "img/get-img-in-map" (dict "map" $map "ctx" . )) }}    
+    {{- $params := partial "img/func/container" .params }}
     {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
     {{- partial "img/render/container/figure" (dict "img" .img "params" $params ) }}
     {{- partial "img/debug" $params }}

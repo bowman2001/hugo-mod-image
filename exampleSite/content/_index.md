@@ -1,12 +1,6 @@
 ---
 title: "Hugo module for retrieving, processing, and placing images"
 resources:
-  - src: 1074-4000x2500.jpg
-    name: featured
-    params:
-      alt: Predator
-      attr: "Picsum"
-      attrlink: "https://picsum.photos/id/1074/4000/2500"
   - src: mulyadi-JJMoAiVl9jA-unsplash.jpg
     name: splash
     params:
@@ -39,7 +33,7 @@ The included image render hook can produce figures and embedded images with link
 
 ### Site-wide (global asset folder)
 
-![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash.jpg?posh=right) {{% pangram 11 %}}
+![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash?posh=right) {{% pangram 11 %}}
 
 ### Remote (URL)
 
@@ -54,15 +48,15 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 #### A site-wide source in a data file
 
-![Global image in a data file](global.yaml) {{% pangram 11 %}}
+![Global image in a data file](global) {{% pangram 11 %}}
 
 #### Remote source in a data file
 
-![Remote image in a data file](remote.json?w=full)
+![Remote image in a data file](remote?w=full)
 
 ## Missing image
 
 To prevent broken image tags the module always provides a placeholder for missing ones:
 
-![Missing](missing.jpg)
+![Missing](test-missing)
 {#missing}

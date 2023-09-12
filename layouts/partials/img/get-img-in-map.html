@@ -1,11 +1,11 @@
 {{- /* Constants */}}
-{{- $name := "hugo-mod-image – img/get-img" }}
+{{- $name := "hugo-mod-image – img/get-img-in-map" }}
 {{- $configName := "data/hugoModImage" }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
 {{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
 
 {{- /* Arguments */}}
-{{- $src := .src }}
+{{- $map := .map }}
 {{- $ctx := .ctx }}
 
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
@@ -13,21 +13,20 @@
     {{- errorf $s $errorLevel }}
 {{- end }}
 
-{{- $map := dict }}
-{{- $url := urls.Parse $src }}
+{{- $url := urls.Parse $map.img.src }}
 {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
 
 {{- with (partialCached "resource/func/get-with-params" $args $args) }}
     {{- if (eq .r.MediaType.MainType "image") }}
-        {{- $map = dict "img" .r "params" .params }}
+        {{- $map = merge $map (dict "img" .r "params" .params) }}
     {{- else }}
-        {{- $msg := printf "The resource %q is not or does not contain an image source." $src }}
+        {{- $msg := printf "The resource %q is not or does not contain an image." $map.img.src }}
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
 
 {{- if not $map.img }}
-    {{- $map = dict "img" (partial "img/missing" . ) }}
+    {{- $map = merge $map (dict "img" (partial "img/missing" . )) }}
 {{- end }}
 
 {{- /* Collect parameters */}}
