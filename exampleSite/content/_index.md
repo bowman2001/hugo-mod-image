@@ -33,7 +33,7 @@ The included image render hook can produce figures and embedded images with link
 
 ### Site-wide (global asset folder)
 
-![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash?posh=right) {{% pangram 11 %}}
+![Splash of water](erda-estremera-eMX1aIAp9Nw-unsplash.jpg?posh=right) {{% pangram 11 %}}
 
 ### Remote (URL)
 
