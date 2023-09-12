@@ -18,7 +18,9 @@
 
 {{- with (partialCached "resource/func/get-with-params" $args $args) }}
     {{- if (eq .r.MediaType.MainType "image") }}
+        {{- warnf "Map before: %v" . }}
         {{- $map = merge $map (dict "img" .r "params" .params) }}
+        {{- warnf "Map after: %v" $map }}
     {{- else }}
         {{- $msg := printf "The resource %q is not or does not contain an image." $map.img.src }}
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
@@ -33,7 +35,7 @@
 {{- $params := dict }}
 {{- with $map }} 
     {{- /* Params from resource properties or image data */}}
-    {{- $params = partial "img/func/params/resource" (dict "img" .img "paramsOld" $params ) }}
+    {{- $params = partial "img/func/params/resource" (dict "img" .img "paramsOld" .params ) }}
     {{- /* Specific params */}}
     {{- $params = partial "img/func/params/extra" (dict "paramsNew" .params "paramsOld" $params) }}
     {{- /* Caption params */}}

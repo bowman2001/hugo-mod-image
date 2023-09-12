@@ -2,6 +2,7 @@ unsplash: true
 debug: true
 
 process:
+  sizeStep: 25
   maxDensityFactor: 3
 
 container:

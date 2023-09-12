@@ -28,3 +28,13 @@ github.com/bowman2001/hugo-mod-resource v0.0.0-20230911120504-433b7db02370 h1:ZC
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230911120504-433b7db02370/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230911122908-63220d3b3ace h1:RMwi3gCnwpwfjLBAjt5RAEdPLWEHCr6p2Z3qj7TAGGk=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230911122908-63220d3b3ace/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912205759-0e20e8d6448a h1:01wYglu+IVEmbOzXFyzE9ZU6zBgaWJ5fB7jdVD2FnRg=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912205759-0e20e8d6448a/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912210851-3742b8d903eb h1:If+hRcZWjss57ArApoPN9Pt4c07Z4MJOPImL2zorPQo=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912210851-3742b8d903eb/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912211119-461b3f200323 h1:kHUs4Xfe8ehDctwh9yznNb37EQUGrEQQOehnqj8BoIA=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912211119-461b3f200323/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912211328-9abcf4f2fed6 h1:minupTsX0RF3MlGTle7I5fCjUvo4ShXcM+NK4xelpmI=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912211328-9abcf4f2fed6/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912211512-1f3365292c9f h1:WiFmTja4FD8PDgVe1FP71jKbXCBa8cO8rPZj4aSB74U=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230912211512-1f3365292c9f/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=

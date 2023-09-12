@@ -61,11 +61,19 @@ code {
 }
 
 .emb--w-quarter {
-    width: 135px;
+    width: 7rem;
 }
 
 .emb--w-half {
-    width: 275px;
+    width: 14.5rem;
+}
+
+.fig {
+    margin: 0 auto;
+}
+
+.fig--w-double {
+    width: 60rem;
 }
 
 .blur {
