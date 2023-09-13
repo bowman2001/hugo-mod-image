@@ -1,5 +1,6 @@
-container: "img-c"
+container: img-c
 id: "img-%d"  # %d gets replaced by the number of the image on the page
+svg: inline
 missing: hugo-mod-image/missing.svg
 errorLevel: warning
 unsplash: false
