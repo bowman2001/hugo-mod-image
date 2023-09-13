@@ -3,45 +3,15 @@
 {{- $configName := "data/hugoModImage" }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
 {{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
-
-{{- $src := .Destination }}
-{{- $ctx := . }}
-
 {{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
     {{- $s := print "The errorLevel %q is invalid." $configErrorEnd }}
     {{- errorf $s $errorLevel }}
 {{- end }}
 
-{{- $img := "" }}
-{{- $data := "" }}
-{{- $url := urls.Parse $src }}
-{{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
-{{- with (partialCached "resource/func/get" $args $args) }}
-    {{- if (in (slice "yaml" "toml" "json") .MediaType.SubType ) }}
-        {{- $data = transform.Unmarshal . }}
-        {{- $url := urls.Parse $data.src }} 
-        {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
-        {{- with (partialCached "resource/func/get" $args $args) }}
-            {{- if (eq .MediaType.MainType "image") }}
-                {{- $img = . }}
-            {{- else }}
-                {{- $msg := printf "The resource %q in %q is not an image." $data.src $src }}
-                {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
-            {{- end }}
-        {{- end }}
-    {{- else }}
-        {{- if (eq .MediaType.MainType "image") }}
-            {{- $img = . }}
-        {{- else }}
-            {{- $msg := printf "The resource %q is not an image." $src }}
-            {{- partial "md-error-msg" (dict "caller" $hookName "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
-        {{- end }}
-    {{- end }}
-{{- end }}
-
-{{- if not $img }} {{- /* Placeholder for missing images */}}
-    {{- $img = partial "img/missing" . }}
-{{- end }}
+{{- /* Variable maps */}}
+{{- $ctx := . }}
+{{- $url := urls.Parse .Destination }}
+{{- $map := dict (slice "img" "src") .Destination }}
 
 {{- /* Parameter defaults */}}
 {{- $params := dict }}
@@ -54,58 +24,46 @@
 
 {{- if .IsBlock }}
     {{- with site.Data.hugoModImage.default.figure.class.width }} 
-        {{- $params = merge $params (dict (slice "class" "width") . ) }} {{- /* Replace with range for more params */}}
+        {{- $params = merge $params (dict "width" . ) }} {{- /* Replace with range for more params */}}
     {{- else }}
         {{- $msg := print "Can’t find default width for figure." $configErrorEnd }}
         {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
     {{- with site.Data.hugoModImage.default.embed.class.width }}
-        {{- $params = merge $params (dict (slice "class" "width") . ) }}
+        {{- $params = merge $params (dict "width" . ) }}
     {{- else }}
         {{- $msg := print "Can’t find default width for embedded image." $configErrorEnd }}
         {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
+{{- $map = merge $map (dict "params" $params ) }}
 
-{{- /* Collect parameters */}}
-{{- with $img }} {{- /* Params from resource properties or image data */}}
-    {{- $params = partial "img/func/params/resource" (dict "img" . "paramsOld" $params) }}
-{{- end }}
+{{- /* Get, aggregate, and render */}}
+{{- $args := dict "map" $map "ctx" $ctx }}
+{{- with (partialCached "img/get-img-in-map" $args $args) }}
+    {{- /* Collect hook parameters */}}
+    {{- $params := partial "img/func/params/hook" (dict "ctx" $ctx "paramsOld" .params ) }}
+    {{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
+        {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
+    {{- end }}
+    {{ $params = merge $params (dict "attrs" $ctx.Attributes) }} {{- /* Params from Markdown attributes */}}
 
-{{- with $img.Params }} {{- /* Extra params in the front-matter resources */}}
-    {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
-    {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
-{{- end }}
+    {{- /* Aggregate classes */}}
+    {{- $params = partial "img/func/container" $params }}
+    {{- if $.IsBlock }}
+        {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
+    {{- else }}
+        {{- $params = partial "img/func/class" (dict "type" "embed" "params" $params ) }}
+    {{- end }}
 
-{{- with $data }} {{- /* Extra params in separate data file */}}
-    {{- $params = partial "img/func/params/extra" (dict "paramsNew" . "paramsOld" $params) }}
-    {{- $params = partial "resource/func/caption" (dict "paramsNew" . "paramsOld" $params) }}
-{{- end }}
-
-{{- with . }} {{- /* Params from the hook */}}
-    {{- $params = partial "img/func/params/hook" (dict "ctx" . "paramsOld" $params ) }}
-{{- end }}
-
-{{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
-    {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
-{{- end }}
-
-{{ $params = merge $params (dict "attrs" .Attributes) }} {{- /* Params from Markdown attributes */}}
-
-{{- /* Aggregate classes */}}
-{{- $params = partial "img/func/container" $params }}
-{{- if .IsBlock }}
-    {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
-{{- else }}
-    {{- $params = partial "img/func/class" (dict "type" "embed" "params" $params ) }}
-{{- end }}
-
-{{- partial "img/debug" $params }}
-{{- $args := (dict "img" $img "params" $params )}}
-{{- if .IsBlock }}
-    {{- partial "img/render/container/figure" $args }}
-{{- else }}
-    {{- partial "img/render/container/embed" $args }}
+    {{- /* Render */}}
+    {{- partial "img/debug" $params }}
+    {{- $args := (dict "img" .img "params" $params )}}
+    {{- if $.IsBlock }}
+        {{- partial "img/render/container/figure" $args }}
+    {{- else }}
+        {{- partial "img/render/container/embed" $args }}
+    {{- end }}
 {{- end }}
 {{- /**/ -}}
