@@ -1,0 +1,42 @@
+{{- /* Constants */}}
+{{ $name := "hugo-mod-image – img/get" }}
+{{ $configName := "data/hugoModImage" }}
+{{ $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
+{{ partial "error-level" (dict "caller" $name "level" $errorLevel "config" $configName ) }}
+{{ $configErrorEnd := printf " Please check the configuration in %q" $configName }}
+
+{{/* Arguments */}}
+{{ $src := .src }}
+{{ $ctx := .ctx }}
+
+{{ $imgMap := dict }}
+{{ $url := urls.Parse $src }}
+{{ $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
+
+{{ with (partial "resource/func/get-with-params" $args $args) }}
+    {{ if (eq .resource.MediaType.MainType "image") }}
+        {{ $imgMap = dict "img" .resource "params" .params }}
+    {{ else }}
+        {{ $imgMap = dict "params" .params }}
+        {{ $msg := printf "The resource %q is not or does not contain an image source." $src }}
+        {{ partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
+    {{ end }}
+{{ end }}
+
+{{ if not $imgMap.img }}
+    {{ $imgMap = merge $imgMap (dict "img" (partial "img/helper/missing" $ctx)) }}
+{{ end }}
+
+{{/* Collect and sort parameters */}}
+{{ $imgParams := partial "img/func/params/resource" $imgMap.img }}
+{{ $extraParams := dict }}
+{{ $captionParams := dict }}
+{{ with $imgMap.params }}
+    {{ $extraParams = partial "img/func/params/extra" . }}
+    {{ $captionParams = partial "resource/func/caption" . }}
+{{ end }}
+{{ $sortedParams := merge $imgParams $extraParams $captionParams }}
+{{ $map := dict "img" $imgMap.img "params" $sortedParams }}
+
+{{ return $map }}
+

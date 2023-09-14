@@ -1,7 +1,7 @@
 {{ $width := or site.Data.hugoModImage.process.lqip.width 100 }}
 {{ $pixelate := or site.Data.hugoModImage.process.lqip.pixelate 5 }}
 {{ $blur := or site.Data.hugoModImage.process.lqip.blur 5 }}
-{{ $quality := or site.Data.hugoModImage.process.lqip.quality 25 }}
+{{ $quality := or site.Data.hugoModImage.process.lqip.quality 20 }}
 
 {{ $filters := slice (images.GaussianBlur $blur) (images.Pixelate $pixelate) -}}
 {{ $src := "" }}

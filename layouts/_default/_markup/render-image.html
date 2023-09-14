@@ -1,57 +1,60 @@
 {{- /* Init */}}
-{{- $hookName := "hugo-mod-image – render-image" }}
-{{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{- partial "error-level" (dict "caller" $hookName "errorLevel" $el "config" "data/hugoModImage" ) }}
+{{- $name := "hugo-mod-image – render-image" }}
+{{- $configName := "data/hugoModImage" }}
+{{- $level := site.Data.hugoModImage.errorLevel | default "warning" }}
+{{- $errorLevel := partial "error-level" (dict "caller" $name "level" $level "config" $configName ) }}
+{{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
 
 {{- /* Variable maps */}}
 {{- $ctx := . }}
 {{- $url := urls.Parse .Destination }}
-{{- $map := dict (slice "img" "src") .Destination }}
 
 {{- /* Parameter defaults */}}
-{{- $inputParams := dict }}
-
-
+{{- $defaultParams := dict }}
 {{- if .IsBlock }}
     {{- with site.Data.hugoModImage.default.figure.class.width }} 
-        {{- $params = merge $params (dict "width" . ) }} {{- /* Replace with range for more params */}}
+        {{- $defaultParams = (dict (slice "class" "width") . ) }}
     {{- else }}
         {{- $msg := print "Can’t find default width for figure." $configErrorEnd }}
-        {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
+        {{- partial "error-msg" (dict "caller" $name "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
     {{- with site.Data.hugoModImage.default.embed.class.width }}
-        {{- $params = merge $params (dict "width" . ) }}
+        {{- $defaultParams = (dict (slice "class" "width") . ) }}
     {{- else }}
         {{- $msg := print "Can’t find default width for embedded image." $configErrorEnd }}
-        {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
+        {{- partial "error-msg" (dict "caller" $name "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- end }}
-{{- $map = merge $map (dict "params" $params ) }}
 
-{{- $args := dict "map" $map "ctx" $ctx }}
-{{- with (partialCached "img/get-img-in-map" $args $args) }}
-    {{- $params := partial "img/func/params/hook" $ctx }}
-    {{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
-        {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
-    {{- end }}
-    {{ $params = merge $params (dict "attrs" $ctx.Attributes) }} {{- /* Params from Markdown attributes */}}
+{{- $hookParams := partial "img/func/params/hook" . }}
+{{- $queryParams := dict }}
+{{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
+    {{- $queryParams = (partial "img/func/params/query" .) }}
+{{- end }}
+{{- $mdParams := dict }}
+{{- with .Attributes }}
+    {{- $mdParams = dict "attrs" . }}
+{{- end }}
 
+{{- $args := dict "src" .Destination "ctx" $ctx }}
+{{- with (partial "img/get" $args $args) }}
+    {{- $params := merge $defaultParams .params $hookParams $queryParams $mdParams }}
     {{- /* Aggregate classes */}}
-    {{- $params = partial "img/func/container" $params }}
+    {{- $params = partial "img/func/params/aggregate/container-class" $params }}
     {{- if $.IsBlock }}
-        {{- $params = partial "img/func/class" (dict "type" "figure" "params" $params ) }}
+        {{- $params = partial "img/func/params/aggregate/class" (dict "type" "figure" "params" $params ) }}
     {{- else }}
-        {{- $params = partial "img/func/class" (dict "type" "embed" "params" $params ) }}
+        {{- $params = partial "img/func/params/aggregate/class" (dict "type" "embed" "params" $params ) }}
     {{- end }}
 
     {{- /* Render */}}
-    {{- partial "img/debug" $params }}
+    {{- partial "img/helper/debug" $params }}
     {{- $args := (dict "img" .img "params" $params )}}
     {{- if $.IsBlock }}
-        {{- partial "img/render/container/figure" $args }}
+        {{- partialCached "img/render/container/figure" $args $args }}
     {{- else }}
-        {{- partial "img/render/container/embed" $args }}
+        {{- partialCached "img/render/container/embed" $args $args }}
     {{- end }}
 {{- end }}
 {{- /**/ -}}

@@ -73,20 +73,21 @@ code {
 }
 
 .fig--w-double {
-    width: 60rem;
+    max-width: 60rem;
 }
 
-.blur {
-    filter: blur(5px);
+.opac {
+    filter: sepia(100%);
+    opacity: 0.5;
 }
 
 
 .lazyload,
 .lazyloading {
-	filter: blur(5px);
+	filter: blur(0px);
 }
 
 .lazyloaded {
 	filter: blur(0);
-	transition: filter 200ms ease-in-out;
+	transition: filter 1s 200ms ease-in-out;
 }

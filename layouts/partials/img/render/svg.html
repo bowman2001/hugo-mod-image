@@ -9,7 +9,7 @@
     {{- if .params.index -}} {{- /* Hidden img with pagefind attributes */}}
         <img class="hide" 
             data-pagefind-meta="image[data-src], image_alt[alt]" 
-            data-src="{{ $params.imgAttrs.src | safeHTMLAttr }}" 
+            data-src="{{ $.params.imgAttrs.src | safeHTMLAttr }}" 
             {{- with .params.imgAttrs.alt }}alt="{{ . | safeHTMLAttr }}"{{ end }}>
     {{- end }}
 {{- else }}

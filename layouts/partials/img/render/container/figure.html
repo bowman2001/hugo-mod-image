@@ -3,9 +3,9 @@
 {{- printf " %s=%q" $k $v | safeHTMLAttr }}
 {{- end }}>
     {{- partial "img/render/container/img.html" . }}
-    {{ if .params.caption }}
+    {{ with .params.caption }}
       <figcaption class="caption">
-           {{ partial "img/render/caption" .params }}
+           {{ partial "img/render/caption" . }}
       </figcaption>
     {{ end }}
 </figure>
