@@ -2,7 +2,7 @@
 {{- range $k, $v := .params.attrs }}
 {{- printf " %s=%q" $k $v | safeHTMLAttr }}
 {{- end }}>
-    {{- partial "img/render/container/img.html" (dict "img" .img "params" .params ) }}
+    {{- partial "img/render/container/img.html" . }}
     {{ if .params.caption }}
       <figcaption class="caption">
            {{ partial "img/render/caption" .params }}

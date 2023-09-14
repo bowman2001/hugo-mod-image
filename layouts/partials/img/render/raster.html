@@ -1,12 +1,15 @@
-{{- $img := .img }}
-{{- $params := .params }}
+{{/* 
+  Context:
+    - img
+    - params 
+*/}}
 
-{{- $srcset := partial "img/func/raster/srcset" (dict "img" $img "params" $params) }}
-{{- $lqip := partial "img/func/raster/lqip" $img -}}
-{{- $fallback := partial "img/func/raster/fallback" $img }}
-{{- $aspectratio := print (div $img.Width (float $img.Height)) }}
+{{- $srcset := partial "img/func/raster/srcset" . }}
+{{- $lqip := partial "img/func/raster/lqip" .img -}}
+{{- $fallback := partial "img/func/raster/fallback" .img }}
+{{- $aspectratio := print (div .img.Width (float .img.Height)) }}
 
-{{- $params = merge $params (dict (slice "imgAttrs" "src") $lqip ) }} 
+{{- $params := merge .params (dict (slice "imgAttrs" "src") $lqip) }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "class") "lazyload") }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") $srcset) }}
 {{- $params = merge $params (dict (slice "imgAttrs" "data-src") ($fallback.RelPermalink | safeURL) ) }}

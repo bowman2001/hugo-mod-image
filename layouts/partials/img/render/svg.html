@@ -1,16 +1,20 @@
-{{- $img := .img }}
-{{- $params := .params }}
+{{/* 
+    Context:
+        - img
+        - params
+*/}}
 
-{{- if (eq $params.process.svg "inline") }}
-    {{- $img.Content | safeHTML }}
-    {{- if $params.index -}} {{- /* Hidden img with pagefind attributes */}}
+{{- if (eq .params.process.svg "inline") }}
+    {{- .img.Content | safeHTML }}
+    {{- if .params.index -}} {{- /* Hidden img with pagefind attributes */}}
         <img class="hide" 
             data-pagefind-meta="image[data-src], image_alt[alt]" 
             data-src="{{ $params.imgAttrs.src | safeHTMLAttr }}" 
-            {{- with $params.imgAttrs.alt }}alt="{{ . | safeHTMLAttr }}"{{ end }}>
+            {{- with .params.imgAttrs.alt }}alt="{{ . | safeHTMLAttr }}"{{ end }}>
     {{- end }}
 {{- else }}
-    {{- if $params.index }}
+    {{- $params := .params }}
+    {{- if .params.index }}
         {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }}
     {{- end }}
     <img

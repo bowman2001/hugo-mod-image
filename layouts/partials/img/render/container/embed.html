@@ -2,8 +2,8 @@
 {{- range $k, $v := .params.attrs }}
 {{- printf " %s=%q" $k $v | safeHTMLAttr }}
 {{- end }}>
-    {{- partial "img/render/container/img.html" (dict "img" .img "params" .params ) }}
-    {{ if .params.caption }}
+    {{- partial "img/render/container/img.html" . }}
+    {{ if or .params.caption.text .params.caption.attr }}
       <span class="caption">
            {{ partial "img/render/caption.html" .params }}
       </span>

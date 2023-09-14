@@ -1,14 +1,14 @@
-{{- $params := . }}
+{{/* Context: params.caption */}}
 
-{{- with $params.caption.text }}
+{{- with .text }}
 <span class="caption__text">
-    {{ with $params.ordinal }}<span class="caption__nr">{{ . }}.</span> {{ end }}{{ . | site.Home.RenderString -}}
+    {{ with $params.ordinal }}<span class="caption__id">{{ . }}</span> {{ end }}{{ . | site.Home.RenderString -}}
 </span>
 {{- end }}
-{{ with $params.caption.attr -}}
+{{ with .attr -}}
     {{- $attribution := ( . | site.Home.RenderString ) -}}
     <span class="caption__attr" data-pagefind-ignore>
-    {{- with $params.caption.attrlink -}}
+    {{- with $.attrlink -}}
         (<a class="link link--text" href="{{ . | safeHTMLAttr }}">{{ $attribution }}</a>)
     {{- else -}}
         ({{ $attribution }})

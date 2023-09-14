@@ -1,10 +1,9 @@
 {{ $params := .params }}
 {{ $type := .type }}
 
-{{ $name := "hugo-mod-img – img/func/class" }}
-{{ $configName := "data/hugoModImage" }}
-{{ $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{ $configErrorEnd := printf "See configuration in %s" $configName }}
+{{ $name := "hugo-mod-img – img/func/params/aggregate/class" }}
+{{ $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" }}
+{{ $configErrorEnd := "See configuration in data/hugoModImage." }}
 
 {{ $classes := slice }}
 {{ with index site.Data.hugoModImage $type }}

@@ -1,12 +1,7 @@
 {{- /* Init */}}
 {{- $hookName := "hugo-mod-image – render-image" }}
-{{- $configName := "data/hugoModImage" }}
 {{- $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
-{{- if not (in (slice "ignore" "warning" "error") $errorLevel) }}
-    {{- $s := print "The errorLevel %q is invalid." $configErrorEnd }}
-    {{- errorf $s $errorLevel }}
-{{- end }}
+{{- partial "error-level" (dict "caller" $hookName "errorLevel" $el "config" "data/hugoModImage" ) }}
 
 {{- /* Variable maps */}}
 {{- $ctx := . }}
@@ -14,13 +9,8 @@
 {{- $map := dict (slice "img" "src") .Destination }}
 
 {{- /* Parameter defaults */}}
-{{- $params := dict }}
-{{- with site.Data.hugoModImage.id }}
-    {{- $params = (dict (slice "attrs" "id") (printf . (add $.Ordinal 1))) }}
-{{- else }}
-    {{- $msg := print "Can’t find default id." $configErrorEnd }}
-    {{- partial "error-msg" (dict "caller" $hookName "errorMsg" $msg "errorLevel" $errorLevel) }}
-{{- end }}
+{{- $inputParams := dict }}
+
 
 {{- if .IsBlock }}
     {{- with site.Data.hugoModImage.default.figure.class.width }} 
@@ -39,11 +29,9 @@
 {{- end }}
 {{- $map = merge $map (dict "params" $params ) }}
 
-{{- /* Get, aggregate, and render */}}
 {{- $args := dict "map" $map "ctx" $ctx }}
 {{- with (partialCached "img/get-img-in-map" $args $args) }}
-    {{- /* Collect hook parameters */}}
-    {{- $params := partial "img/func/params/hook" (dict "ctx" $ctx "paramsOld" .params ) }}
+    {{- $params := partial "img/func/params/hook" $ctx }}
     {{- with and (not $url.IsAbs) $url.Query }} {{- /* Params from a query string (only local) */}}
         {{- $params = partial "img/func/params/query" (dict "query" . "paramsOld" $params) }}
     {{- end }}
