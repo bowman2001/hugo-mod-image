@@ -11,8 +11,11 @@
 
 {{ $factor := (math.Sqrt (add 1 (div $step 100.0))) }}
 {{ $ratio := (div $max (float $min)) }}
-{{ $n := (math.Ceil (div (math.Log $ratio) (math.Log $factor))) }}
-{{ $fo := (math.Pow $ratio (div 1.0 $n)) }}
+{{ $n := math.Ceil (div (math.Log $ratio) (math.Log $factor)) }}
+{{ $fo := 1.0 }}
+{{ if gt 0 $n }}
+    {{ $fo := (math.Pow $ratio (div 1.0 $n)) }}
+{{ end }}
 
 {{ $width := $min }}
 {{ $numbers := (slice (int $min)) }}

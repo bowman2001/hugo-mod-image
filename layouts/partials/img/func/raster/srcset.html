@@ -11,7 +11,7 @@
     {{ $max = (int (index . 1)) }}
 {{ end }}
 
-{{ $maxHd := (int (math.Floor (mul $max $factor))) }}
+{{ $maxHd := math.Max $max (math.Min (int (math.Floor (mul $max $factor))) $img.Width) }}
 
 {{ $srcset := slice }}
 {{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd) }}

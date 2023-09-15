@@ -9,6 +9,7 @@
 {{- $fallback := partial "img/func/raster/fallback" .img }}
 {{- $aspectratio := print (div .img.Width (float .img.Height)) }}
 
+{{- $params }}
 {{- $params := merge .params (dict (slice "imgAttrs" "src") $lqip) }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "class") "lazyload") }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") $srcset) }}
