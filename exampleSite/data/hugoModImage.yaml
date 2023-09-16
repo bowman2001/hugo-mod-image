@@ -1,5 +1,4 @@
-unsplash: true
-debug: true
+debug: false
 
 process:
   sizeStep: 25

@@ -1,10 +1,9 @@
 {{/* Constants */}}
-{{ $name := "hugo-mod-image – img/missing" }}
+{{ $name := "hugo-mod-image – img/helper/missing" }}
 {{ $configName := "data/hugoModImage" }}
-{{ $errorLevel := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
-{{ partial "error-level" (dict "caller" $name "level" $errorLevel "config" $configName ) }}
+{{ $level := site.Data.hugoModImage.errorLevel | default "warning" | lower }}
+{{ $errorLevel := partial "error-level" (dict "caller" $name "level" $level "config" $configName ) }}
 {{ $configErrorEnd := printf "See %q." $configName }}
-
 
 {{ $img := "" }}
 {{ with resources.Get site.Data.hugoModImage.missing }}

@@ -17,14 +17,12 @@
     {{ if (eq .resource.MediaType.MainType "image") }}
         {{ $imgMap = dict "img" .resource "params" .params }}
     {{ else }}
-        {{ $imgMap = dict "params" .params }}
+        {{ $imgMap = dict "img" (partial "img/helper/missing" $ctx) "params" .params }}
         {{ $msg := printf "The resource %q is not or does not contain an image source." $src }}
         {{ partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{ end }}
-{{ end }}
-
-{{ if not $imgMap.img }}
-    {{ $imgMap = merge $imgMap (dict "img" (partial "img/helper/missing" $ctx)) }}
+{{ else }}
+    {{ $imgMap = dict "img" (partial "img/helper/missing" $ctx) }}
 {{ end }}
 
 {{/* Collect and sort parameters */}}

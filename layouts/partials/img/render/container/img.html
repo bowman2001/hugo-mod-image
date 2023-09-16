@@ -1,19 +1,19 @@
-{{- $img := .img }}
-{{- $params := .params }}
+{{ $imgMap := . }}
 
-{{- with $params.linkAttrs }}
-    {{- $attrs := merge $params.contAttrs . }}
+{{- with .params.linkAttrs }}
+    {{- $attrs := merge $imgMap.params.contAttrs . }}
     <a 
     {{- range $k, $v := $attrs }}
         {{- printf " %s=%q" $k $v | safeHTMLAttr }}
     {{- end }}>
-    {{- partial "img/render/img.html" (dict "img" $img "params" $params ) }}
+    {{- partial "img/render/img.html" $imgMap }}
     </a>
 {{- else }}
-    <span {{ range $k, $v := .params.contAttrs }}
-            {{- printf " %s=%q" $k $v | safeHTMLAttr }}
-            {{- end }}>
-        {{- partial "img/render/img.html" (dict "img" $img "params" $params ) -}}
+    <span 
+    {{ range $k, $v := .params.contAttrs }}
+        {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+    {{- end }}>
+    {{- partial "img/render/img.html" $imgMap -}}
     </span>
 {{- end }}
 
