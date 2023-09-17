@@ -4,19 +4,24 @@
     - params 
 */}}
 
-{{- $srcset := partial "img/func/raster/srcset" . }}
+{{- /* warnf "sources: %v" $sources */}}
 {{- $lqip := partial "img/func/raster/lqip" .img -}}
-{{- $fallback := partial "img/func/raster/fallback" .img }}
-{{- $aspectratio := print (div .img.Width (float .img.Height)) }}
 
 {{- /* TODO: Get biggest width and height of the srcset and replace imgAttrs */}}
 {{- $params := merge .params (dict (slice "imgAttrs" "src") $lqip) }} 
+{{- with (partial "img/func/raster/srcset" .) }}
+  {{- $params = merge $params (dict (slice "imgAttrs" "data-src") .first.RelPermalink ) }}
+  {{- $params = merge $params (dict (slice "imgAttrs" "width") (print .first.Width)) (dict (slice "imgAttrs" "height") (print .first.Height)) }}
+  {{- $aspectratio := print (div .first.Width (float .first.Height)) }}
+  {{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
+  {{ with .srcset }}
+    {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") . ) }}
+  {{ end }}
+{{- end }}
 {{- $params = merge $params (dict (slice "imgAttrs" "class") "lazyload") }} 
-{{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") $srcset) }}
-{{- $params = merge $params (dict (slice "imgAttrs" "data-src") ($fallback.RelPermalink | safeURL) ) }}
 {{- $params = merge $params (dict (slice "imgAttrs" "data-sizes") "auto" ) }}
 {{- $params = merge $params (dict (slice "imgAttrs" "data-parentfit") "cover" ) }}
-{{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
+
 {{- if .params.index }}
     {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }} 
 {{- end }}

@@ -13,24 +13,31 @@
 
 {{ $maxHd := math.Max $max (math.Min (int (math.Floor (mul $max $factor))) $img.Width) }}
 
-{{ $srcset := slice }}
+{{ $first_img := .img }}
+{{ $srcset := "" }}
 {{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd) }}
-    {{ range $k, $w := . }}
+    {{ $entries := slice }}
+    {{ range $k, $width := . }}
         {{ $args := slice }}
-        {{ $args = $args | append (printf "%dx" $w) }}
+        {{ $args = $args | append (printf "%dx" $width) }}
         {{ if $.params.process.compress }}
             {{ $args = $args | append "webp" }}
             {{ with $.params.process.hint }}
                 {{ $args = $args | append . }}
             {{ end }}
         {{ end }}
-        {{ if gt $w $maxHd }}
+        {{ if gt $width $img.Width }}
             {{ $args = $args | append "MitchellNetravali" }}
         {{ end }}
-        {{/* warnf "string %d: %v" $k $string */}}
         {{ $rs_img := $img.Resize (print (delimit $args " ")) }}
-        {{ $srcset = $srcset | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
+        {{ if eq $k 0 }}
+            {{ $first_img = $rs_img }}
+        {{ end }}
+        {{ $entries = $entries | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
+    {{ end }}
+    {{ if gt (len .) 1 }}
+        {{ $srcset = delimit $entries ", " }}
     {{ end }}
 {{ end }}
 
-{{ return ( delimit $srcset ", " ) }}
+{{ return (dict "first" $first_img "srcset" $srcset) }}

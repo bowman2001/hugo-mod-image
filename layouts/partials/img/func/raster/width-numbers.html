@@ -13,15 +13,17 @@
 {{ $ratio := (div $max (float $min)) }}
 {{ $n := math.Ceil (div (math.Log $ratio) (math.Log $factor)) }}
 {{ $fo := 1.0 }}
-{{ if gt 0 $n }}
-    {{ $fo := (math.Pow $ratio (div 1.0 $n)) }}
+{{ if gt $n 0 }}
+    {{ $fo = (math.Pow $ratio (div 1.0 $n)) }}
 {{ end }}
 
 {{ $width := $min }}
 {{ $numbers := (slice (int $min)) }}
-{{ range (seq 1 (int $n)) }}
-    {{ $width = (mul $width $fo) }}
-    {{ $numbers = $numbers | append (int (math.Round $width)) }}
+{{ if gt $n 0 }}
+    {{ range (seq 1 (int $n)) }}
+        {{ $width = (mul $width $fo) }}
+        {{ $numbers = $numbers | append (int (math.Round $width)) }}
+    {{ end }}
 {{ end }}
 
 {{ return $numbers }}
