@@ -3,6 +3,8 @@ debug: false
 process:
   sizeStep: 25
   maxDensityFactor: 3
+  quality: 80
+  qualityReductionFactor: 15
 
 container:
   class:
@@ -38,10 +40,10 @@ embed:
       options: [top, middle]
 
 width:
-  quarter: [135, 135]
-  half: [275,275]
-  full: [570,570]
-  double: [1140,1140]
+  quarter: [70, 135]
+  half: [140,275]
+  full: [285,570]
+  double: [570,1140]
 
 link: 
 

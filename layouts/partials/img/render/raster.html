@@ -9,8 +9,8 @@
 
 {{- $lqip := partial "img/func/raster/lqip" .img -}}
 {{- with (partial "img/func/raster/srcset" .) }}
-  {{- $params = merge .params (dict (slice "imgAttrs" "src") $lqip ) }} 
-  {{- $params = merge $params (dict (slice "imgAttrs" "data-src") .first.RelPermalink ) }}
+  {{- $params = merge .params (dict (slice "imgAttrs" "src") .first.RelPermalink ) }} 
+  {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqip ) }}
   {{- $params = merge $params (dict (slice "imgAttrs" "width") (print .first.Width) ) (dict (slice "imgAttrs" "height") (print .first.Height)) }}
   {{- $aspectratio := print (div .first.Width (float .first.Height)) }}
   {{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
@@ -24,7 +24,7 @@
 {{- $params = merge $params (dict (slice "imgAttrs" "data-parentfit") "cover" ) }}
 
 {{- if .params.index }}
-    {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }} 
+    {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[src], image_alt[alt]" ) }} 
 {{- end }}
 <img
   {{- range $k, $v := $params.imgAttrs }}

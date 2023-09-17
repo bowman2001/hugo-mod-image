@@ -6,6 +6,7 @@
 {{ $min := (index site.Data.hugoModImage.default.width 0) | default 400 }} 
 {{ $max := (index site.Data.hugoModImage.default.width 1) | default 800 }}
 {{ $factor := site.Data.hugoModImage.process.maxDensityFactor | default 2 }}
+
 {{ with index site.Data.hugoModImage.width $params.class.width }}
     {{ $min = (int (index . 0)) }}
     {{ $max = (int (index . 1)) }}
@@ -15,22 +16,22 @@
 
 {{ $first_img := .img }}
 {{ $srcset := "" }}
-{{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd) }}
+{{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd "fallback" $max ) }}
     {{ $entries := slice }}
     {{ range $k, $width := . }}
         {{ $args := slice }}
         {{ $args = $args | append (printf "%dx" $width) }}
-        {{ if $.params.process.compress }}
-            {{ $args = $args | append "webp" }}
-            {{ with $.params.process.hint }}
-                {{ $args = $args | append . }}
-            {{ end }}
+        {{ $args = $args | append "webp" }}
+        {{ $quality := partial "inline/quality" (dict "width" $width "max" $max) }}
+        {{ $args = $args | append (printf "q%d" $quality) }}
+        {{ with $params.process.hint }}
+            {{ $args = $args | append . }}
         {{ end }}
         {{ if gt $width $img.Width }}
             {{ $args = $args | append "MitchellNetravali" }}
         {{ end }}
         {{ $rs_img := $img.Resize (print (delimit $args " ")) }}
-        {{ if eq $k 0 }}
+        {{ if eq $width $max }}
             {{ $first_img = $rs_img }}
         {{ end }}
         {{ $entries = $entries | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
@@ -41,3 +42,13 @@
 {{ end }}
 
 {{ return (dict "first" $first_img "srcset" $srcset) }}
+
+{{ define "partials/inline/quality" }}
+    {{ $rfac := site.Data.hugoModImage.process.qualityReductionFactor | default 12.5 }}
+    {{ $quality := site.Data.hugoModImage.process.quality | default 80 }}
+    {{ $diff := (div (sub .width .max) (float .max)) }}
+    {{ if gt $diff 0 }}
+        {{ $quality = (int (math.Round (sub $quality (mul $diff $rfac)))) }}
+    {{ end }}
+    {{ return $quality }}
+{{ end }}

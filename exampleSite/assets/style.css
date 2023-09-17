@@ -49,21 +49,23 @@ code {
 .emb--ph-left {
     float: left;
     clear: left;
-    margin-right: 20px;
+    padding-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .emb--ph-right {
     float: right;
     clear: right;
-    margin-left: 20px;
+    padding-left: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 .emb--w-quarter {
-    width: 7rem;
+    max-width: calc( 25% - 0.5rem );
 }
 
 .emb--w-half {
-    width: 14.5rem;
+    max-width: calc( 50% - 0.5rem );
 }
 
 .fig {
@@ -81,10 +83,10 @@ code {
 
 .lazyload,
 .lazyloading {
-	filter: blur(0px);
+	filter: blur(10px);
 }
 
 .lazyloaded {
 	filter: blur(0);
-	transition: filter 200ms ease-in-out;
+	transition: filter 150ms ease-in-out;
 }

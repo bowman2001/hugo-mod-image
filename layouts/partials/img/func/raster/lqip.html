@@ -1,12 +1,11 @@
 {{ $width := or site.Data.hugoModImage.process.lqip.width 100 }}
-{{ $pixelate := or site.Data.hugoModImage.process.lqip.pixelate 5 }}
-{{ $blur := or site.Data.hugoModImage.process.lqip.blur 5 }}
+{{ $pixelate := or site.Data.hugoModImage.process.lqip.pixelate 8 }}
+{{ $blur := or site.Data.hugoModImage.process.lqip.blur 10 }}
 {{ $quality := or site.Data.hugoModImage.process.lqip.quality 20 }}
 
 {{ $filters := slice (images.GaussianBlur $blur) (images.Pixelate $pixelate) -}}
-{{ $src := "" }}
+{{ $lqip := "" }}
 {{ with (.Filter $filters).Resize (printf "%dx webp q%d" $width $quality) -}}
-    {{ $src = printf "data:image/webp;base64,%s" (base64Encode .Content) }}
+    {{ $lqip = printf "data:image/webp;base64,%s" (base64Encode .Content) }}
 {{ end -}}
-
-{{ return $src -}}
+{{ return $lqip -}}

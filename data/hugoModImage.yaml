@@ -7,6 +7,8 @@ unsplash: false
 process:
   sizeStep: 50 # In percent 
   maxDensityFactor: 2
+  quality: 80
+  qualityReductionFactor: 12.5
 
 preprocess:  
   anchors: [ Smart, TopLeft, Top, TopRight, Left, Center, Right, BottomLeft, Bottom, BottomRight ]

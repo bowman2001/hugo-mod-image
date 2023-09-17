@@ -1,6 +1,7 @@
 {{/* Calculate the width numbers for the 'srcset' */}}
 {{ $min := .min }}
-{{ $max := .max }}   
+{{ $max := .max }} 
+{{ $fallback := .fallback }}  
 
 {{ $step := site.Data.hugoModImage.process.sizestep | default 50 }}
 {{ if (lt $step 20) }}
@@ -18,12 +19,23 @@
 {{ end }}
 
 {{ $width := $min }}
-{{ $numbers := (slice (int $min)) }}
+{{ $numbers := (slice $min) }}
+{{ $inserted := false }}
+{{ if eq $fallback $min }}
+    {{ $inserted = true }}
+{{ end }}
 {{ if gt $n 0 }}
     {{ range (seq 1 (int $n)) }}
         {{ $width = (mul $width $fo) }}
-        {{ $numbers = $numbers | append (int (math.Round $width)) }}
+        {{ $new := (int (math.Round $width)) }}        
+        {{ if eq $fallback $new }}
+            {{ $inserted = true }}
+        {{ end }}
+        {{ if and (not $inserted) (lt $fallback $new ) }}
+            {{ $numbers = $numbers | append $fallback }}
+            {{ $inserted = true }}
+        {{ end }}
+        {{ $numbers = $numbers | append $new }}
     {{ end }}
 {{ end }}
-
 {{ return $numbers }}
