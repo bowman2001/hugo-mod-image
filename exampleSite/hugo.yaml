@@ -20,6 +20,10 @@ markup:
       hardWraps: true
   highlight:
     style: monokailight
+  tableOfContents:
+    endLevel: 3
+    ordered: false
+    startLevel: 2
 
 caches:
   assets:

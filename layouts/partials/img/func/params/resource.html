@@ -7,8 +7,8 @@
 {{ end }}
 
 {{- if not (eq .MediaType.SubType "svg") }}
-    {{- $params = merge $params (dict (slice "imgAttrs" "height") (string .Height)) }}
-    {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .Width)) }}
+    {{- $params = merge $params (dict (slice "imgAttrs" "height") .Height ) }}
+    {{- $params = merge $params (dict (slice "imgAttrs" "width") .Width ) }}
 {{- end -}}
 
 {{ if or site.Data.hugoModImage.unsplash (eq .Params.unsplash "true") }}

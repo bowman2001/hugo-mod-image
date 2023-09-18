@@ -1,7 +1,8 @@
-debug: false
+debug: true
+unsplash: true
 
-process:
-  sizeStep: 25
+srcset:
+  sizeStep: 50
   maxDensityFactor: 3
   quality: 80
   qualityReductionFactor: 15
@@ -57,6 +58,6 @@ default:
   embed:
     class:
       width: half
-  width: [570,570]
+  width: [285,570]
   
   

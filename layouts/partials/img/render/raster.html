@@ -4,15 +4,16 @@
     - params 
 */ -}}
 
+{{- $img := partial "img/func/raster/preprocess" . }}
 
-{{- $params := merge .params (dict (slice "imgAttrs" "src") .img.RelPermalink ) }} 
+{{- $params := merge .params (dict (slice "imgAttrs" "src") $img.RelPermalink ) }} 
 
-{{- $lqip := partial "img/func/raster/lqip" .img -}}
-{{- with (partial "img/func/raster/srcset" .) }}
-  {{- $params = merge .params (dict (slice "imgAttrs" "src") .first.RelPermalink ) }} 
+{{- $lqip := partial "img/func/raster/lqip" $img -}}
+{{- with (partial "img/func/raster/srcset" (dict "img" $img "params" $params) ) }}
+  {{- $params = merge .params (dict (slice "imgAttrs" "src") .fallback.RelPermalink ) }} 
   {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqip ) }}
-  {{- $params = merge $params (dict (slice "imgAttrs" "width") (print .first.Width) ) (dict (slice "imgAttrs" "height") (print .first.Height)) }}
-  {{- $aspectratio := print (div .first.Width (float .first.Height)) }}
+  {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .fallback.Width)) (dict (slice "imgAttrs" "height") (string .fallback.Height)) }}
+  {{- $aspectratio := (string (div .fallback.Width (float .fallback.Height))) }}
   {{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
   {{- with .srcset }}
     {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") . ) }}

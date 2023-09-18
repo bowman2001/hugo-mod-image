@@ -41,6 +41,7 @@
 {{- with (partial "img/get" $args $args) }}
     {{- $params := merge $defaultParams .params $hookParams $queryParams $mdParams }}
     {{- /* Aggregate classes */}}
+    {{- $params = partial "img/func/params/aggregate/preprocess" (dict "img" .img "params" $params )}}
     {{- $params = partial "img/func/params/aggregate/container-class" $params }}
     {{- if $.IsBlock }}
         {{- $params = partial "img/func/params/aggregate/class" (dict "type" "figure" "params" $params ) }}

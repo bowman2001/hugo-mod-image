@@ -5,7 +5,7 @@
 
 {{ $min := (index site.Data.hugoModImage.default.width 0) | default 400 }} 
 {{ $max := (index site.Data.hugoModImage.default.width 1) | default 800 }}
-{{ $factor := site.Data.hugoModImage.process.maxDensityFactor | default 2 }}
+{{ $factor := site.Data.hugoModImage.srcset.maxDensityFactor | default 2 }}
 
 {{ with index site.Data.hugoModImage.width $params.class.width }}
     {{ $min = (int (index . 0)) }}
@@ -14,14 +14,13 @@
 
 {{ $maxHd := math.Max $max (math.Min (int (math.Floor (mul $max $factor))) $img.Width) }}
 
-{{ $first_img := .img }}
+{{ $fallback := .img }}
 {{ $srcset := "" }}
 {{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd "fallback" $max ) }}
     {{ $entries := slice }}
     {{ range $k, $width := . }}
         {{ $args := slice }}
-        {{ $args = $args | append (printf "%dx" $width) }}
-        {{ $args = $args | append "webp" }}
+        {{ $args = $args | append (printf "%dx webp" $width) }}
         {{ $quality := partial "inline/quality" (dict "width" $width "max" $max) }}
         {{ $args = $args | append (printf "q%d" $quality) }}
         {{ with $params.process.hint }}
@@ -32,7 +31,7 @@
         {{ end }}
         {{ $rs_img := $img.Resize (print (delimit $args " ")) }}
         {{ if eq $width $max }}
-            {{ $first_img = $rs_img }}
+            {{ $fallback = $rs_img }}
         {{ end }}
         {{ $entries = $entries | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
     {{ end }}
@@ -41,11 +40,12 @@
     {{ end }}
 {{ end }}
 
-{{ return (dict "first" $first_img "srcset" $srcset) }}
+{{ return (dict "fallback" $fallback "srcset" $srcset) }}
+
 
 {{ define "partials/inline/quality" }}
-    {{ $rfac := site.Data.hugoModImage.process.qualityReductionFactor | default 12.5 }}
-    {{ $quality := site.Data.hugoModImage.process.quality | default 80 }}
+    {{ $rfac := site.Data.hugoModImage.srcset.qualityReductionFactor | default 12.5 }}
+    {{ $quality := site.Data.hugoModImage.srcset.quality | default 80 }}
     {{ $diff := (div (sub .width .max) (float .max)) }}
     {{ if gt $diff 0 }}
         {{ $quality = (int (math.Round (sub $quality (mul $diff $rfac)))) }}

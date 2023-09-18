@@ -1,0 +1,60 @@
+{{ $params := .params }}
+{{ $width := (float .img.Width) }}
+{{ $height := (float .img.Height) }}
+{{ $ratio := div $width $height }}
+{{ $preprocess := false }}
+{{ $rotate := false }}
+{{ $fill := false }}
+{{ $crop := false }}
+
+{{/* with .params.preprocess.rotate }}
+    {{ if $params.preprocess.flipsides }}
+        {{ $tmp := $width }}
+        {{ $width = $height }}
+        {{ $height = $tmp }}
+    {{ end }}
+{{ end */}}
+
+{{ with .params.preprocess.ratio }}
+    {{ if (ge . $ratio) }}
+        {{ $height = div $width . }}
+    {{ else }}
+        {{ $width = mul . $height }}
+    {{ end }}
+    {{ $preprocess = true }}
+    {{ $fill = true }}
+{{ end }}
+
+{{ with .params.preprocess.zoom }}
+    {{ $zoom := (float .) }}
+    {{ $height = div $height $zoom }}
+    {{ $width = div $width $zoom }}
+    {{ $crop = true }}
+    {{ $preprocess = true }}
+{{ end }}
+
+{{ $size := printf "%dx%d" (int (math.Round $width)) (int (math.Round $height)) }}
+{{ $args := (slice $size) }}
+{{ if .params.process.compress }}
+    {{ $args = $args | append "webp" }}
+    {{ $args = $args | append (printf "q%d" site.Data.hugoModImage.srcset.quality) }}
+{{ end }}
+{{ with .params.preprocess.anchor }}
+    {{ $args = $args | append . }}
+{{ end }}
+
+{{ $img := "" }}
+{{ if $preprocess }}
+    {{ $ppImg := "" }}
+    {{ if $crop }}
+        {{ $ppImg = .img.Crop (print (delimit $args " ")) }}
+    {{ else if $fill }}
+        {{ $ppImg = .img.Fill (print (delimit $args " ")) }}
+    {{ end }}
+    {{ $path := path.Split (urls.Parse .img.RelPermalink).Path }}
+    {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" $size (path.Ext $ppImg.RelPermalink)) }}    
+    {{ $img = $ppImg | resources.Copy (print $newpath) }}
+{{ else }}
+    {{ $img = .img }}
+{{ end }} 
+{{ return $img }}

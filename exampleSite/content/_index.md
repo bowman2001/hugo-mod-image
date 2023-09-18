@@ -9,7 +9,7 @@ resources:
       link: https://unsplash.com
       rel: nofollow
       target: _blank
-      hint: graphic
+      hint: photo
       caption: Embedded with link
 ---
 
@@ -53,6 +53,20 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 #### Remote source in a data file
 
 ![Remote image in a data file](remote?w=full)
+
+## Preprocessing
+
+### Change ratio
+
+![Splash](ratio)
+
+### Zoom
+
+![Splash](zoom.yaml)
+
+### Zoom and change ratio
+
+![Splash](zoom-and-ratio)
 
 ## Missing image
 

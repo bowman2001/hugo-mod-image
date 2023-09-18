@@ -3,7 +3,7 @@
 {{ $max := .max }} 
 {{ $fallback := .fallback }}  
 
-{{ $step := site.Data.hugoModImage.process.sizestep | default 50 }}
+{{ $step := site.Data.hugoModImage.srcset.sizestep | default 50 }}
 {{ if (lt $step 20) }}
     {{ errorf "Aborting. The file size difference of %d percent for your srcset is too small. The srcset would become too big. At least 25 percent are recommended." $step }}
 {{ else if (lt $step 25) }}
