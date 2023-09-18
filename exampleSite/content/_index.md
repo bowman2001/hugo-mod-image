@@ -9,7 +9,6 @@ resources:
       link: https://unsplash.com
       rel: nofollow
       target: _blank
-      hint: photo
       caption: Embedded with link
 ---
 
