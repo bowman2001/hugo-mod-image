@@ -2,7 +2,7 @@ debug: true
 unsplash: true
 
 srcset:
-  sizeStep: 50
+  sizeStep: 25
   maxDensityFactor: 3
   quality: 80
   qualityReductionFactor: 15
@@ -21,7 +21,7 @@ figure:
     width: 
       name: Width
       prefix: w-
-      options: [half, full, double]
+      options: [half, full, double, triple]
   type: featured
 
 embed:
@@ -45,6 +45,7 @@ width:
   half: [140,275]
   full: [285,570]
   double: [570,1140]
+  triple: [570,1710]
 
 link: 
 

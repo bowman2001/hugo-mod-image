@@ -42,7 +42,7 @@
 
 {{ $newWidth := int (math.Round $width) }}
 {{ $newHeight := int (math.Round $height) }}
-{{ $params = merge $params  (dict (slice "imgAttrs" "width") $newWidth) (dict (slice "imgAttrs" "height") $newHeight) }}
+{{ $params = merge $params  (dict (slice "imgAttrs" "width") (string $newWidth)) (dict (slice "imgAttrs" "height") (string $newHeight)) }}
 {{ $size := printf "%dx%d" $newWidth $newHeight }}
 {{ $args := (slice $size) }}
 {{ if .params.process.compress }}

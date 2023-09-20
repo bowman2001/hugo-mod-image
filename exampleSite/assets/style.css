@@ -29,9 +29,36 @@ figure {
     overflow: hidden;
 }
 
+
+.ls-blur-up-img,
 .img--ls {
+    position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+
 	/* only if you want to change the blur-up option from always to auto or want to use blur up effect without a lowsrc image. */
-	font-family: "blur-up: auto", "object-fit: cover";
+	font-family: "blur-up: always", "object-fit: cover";
+
+    object-fit: cover;
+}
+
+.img--ls.ls-blur-up-is-loading,
+.img--ls.lazyload:not([src]) {
+	visibility: hidden;
+}
+
+.ls-blur-up-img {
+    filter: blur(10px);
+    opacity: 1;
+    transition: opacity 1000ms, filter 1500ms;
+}
+
+.ls-blur-up-img.ls-inview.ls-original-loaded {
+    opacity: 0;
+    filter: blur(5px);
 }
 
 code {
@@ -72,11 +99,11 @@ code {
 }
 
 .emb--w-quarter {
-    max-width: calc( 25% - 0.5rem );
+    width: calc( 25% - 0.5rem );
 }
 
 .emb--w-half {
-    max-width: calc( 50% - 0.5rem );
+    width: calc( 50% - 0.5rem );
 }
 
 .fig {
@@ -87,17 +114,22 @@ code {
     max-width: 60rem;
 }
 
+.fig--w-triple {
+    max-width: 90rem;
+}
+
 .opac {
     opacity: 0.5;
 }
 
-
+/*
 .lazyload,
 .lazyloading {
-	filter: blur(10px);
+	filter: blur(5px);
 }
 
 .lazyloaded {
 	filter: blur(0);
 	transition: filter 150ms ease-in-out;
 }
+*/
