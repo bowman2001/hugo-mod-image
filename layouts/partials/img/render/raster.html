@@ -14,7 +14,7 @@
         {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .fallback.Width)) (dict (slice "imgAttrs" "height") (string .fallback.Height)) }}
         {{- $lqip := partial "img/func/raster/lqip" .fallback -}}
         {{- $lqipBase64 := printf "data:image/webp;base64,%s" (base64Encode $lqip.Content) }}
-        {{- if lt (len $lqipBase64) 8192 }}
+        {{- if lt (len $lqipBase64) 4096 }}
             {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqipBase64 ) }}
         {{ else }}
             {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $placeholder ) }}
