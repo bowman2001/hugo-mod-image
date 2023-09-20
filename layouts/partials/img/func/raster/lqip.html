@@ -1,9 +1,10 @@
-{{ $width := int (math.Round (div .Width (float 2))) }}
+{{ $width := int (math.Round (div .Width (float 4))) }}
 {{ $blur := or site.Data.hugoModImage.process.lqip.blur 5 }}
-{{ $quality := or site.Data.hugoModImage.process.lqip.quality 60 }}
+{{ $quality := or site.Data.hugoModImage.process.lqip.quality 80 }}
 
 {{ $lqip := (.Filter (images.GaussianBlur $blur)).Resize (printf "%dx webp q%d" $width $quality) }}
-{{ $path := path.Split .RelPermalink }}
-{{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-lqip" (path.Ext $lqip.RelPermalink )) }}    
+{{ $path := path.Split .Key }}
+{{ $id := printf "-%dx-q%d-lqip" $width $quality }}
+{{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) $id (path.Ext $lqip.Key )) }}    
 {{ $lqip = $lqip | resources.Copy (print $newpath) }}
 {{ return $lqip -}}

@@ -10,11 +10,17 @@
 
 {{- if $params.process.compress }}
     {{- with (partial "img/func/raster/srcset" (dict "img" $img "params" $params) ) }}
-        {{- $params = merge .params (dict (slice "imgAttrs" "src") .fallback.RelPermalink ) }} 
-        {{- $lqip := partial "img/func/raster/lqip" .fallback -}}
-        {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $placeholder ) }}
-        {{- $params = merge $params (dict (slice "imgAttrs" "data-lowsrc") $lqip.RelPermalink ) }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "src") .fallback.RelPermalink ) }} 
         {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .fallback.Width)) (dict (slice "imgAttrs" "height") (string .fallback.Height)) }}
+        {{- $lqip := partial "img/func/raster/lqip" .fallback -}}
+        {{- $lqipBase64 := printf "data:image/webp;base64,%s" (base64Encode $lqip.Content) }}
+        {{- if lt (len $lqipBase64) 8192 }}
+            {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqipBase64 ) }}
+        {{ else }}
+            {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $placeholder ) }}
+            {{- $params = merge $params (dict (slice "imgAttrs" "data-lowsrc") $lqip.RelPermalink ) }}
+        {{- end }}
+        
         {{- with .srcset }}
             {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") . ) }}
         {{- end }}
