@@ -1,7 +1,9 @@
 {
-    "src": "https://picsum.photos/id/1074/4000/2500",
-    "link": "https://picsum.photos/id/1074/4000/2500",
+    "src": "https://picsum.photos/id/1074/3000/3000",
+    "link": "https://picsum.photos/id/1074/3000/3000",
     "caption": "Remote image in data file",
     "attr": "Picsum",
-    "attrlink": "https://picsum.photos"
+    "attrlink": "https://picsum.photos",
+    "ratio": 1.1,
+    "anchor": "Bottom"
 }

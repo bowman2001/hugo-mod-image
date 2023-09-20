@@ -60,7 +60,7 @@
     {{ else if $fill }}
         {{ $img = $img.Fill (print (delimit $args " ")) }}
     {{ end }}   
-    {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" $size (path.Ext $img.RelPermalink )) }}    
+    {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" (delimit $args "-") (path.Ext $img.RelPermalink )) }}    
     {{ $img = $img | resources.Copy (print $newpath) }}
 {{ end }} 
 
