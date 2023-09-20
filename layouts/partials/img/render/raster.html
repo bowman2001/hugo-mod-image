@@ -19,8 +19,8 @@
     {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") . ) }}
   {{- end }}
 {{- end }}
-
-{{- $params = merge $params (dict (slice "imgAttrs" "class") "lazyload") }} 
+{{ $imgClass := site.Data.hugoModImage.lsImgClass | default "img--ls" }}
+{{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s lazyload" $imgClass)) }} 
 {{- $params = merge $params (dict (slice "imgAttrs" "data-sizes") "auto" ) }}
 {{- $params = merge $params (dict (slice "imgAttrs" "data-parentfit") "cover" ) }}
 

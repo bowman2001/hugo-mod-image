@@ -9,6 +9,7 @@ resources:
       link: https://unsplash.com
       rel: nofollow
       target: _blank
+      zoom: 1.3
       caption: Embedded with link
 ---
 
@@ -55,6 +56,10 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ## Preprocessing
 
+### Rotate
+
+![Splash](rotate.yaml)
+
 ### Change ratio
 
 ![Splash](ratio)
@@ -63,9 +68,9 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ![Splash](zoom.yaml)
 
-### Zoom and change ratio
+### Rotate, zoom and change ratio
 
-![Splash](zoom-and-ratio)
+![Splash](rotate-zoom-ratio)
 
 ## Missing image
 

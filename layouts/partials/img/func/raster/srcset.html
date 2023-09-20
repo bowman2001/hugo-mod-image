@@ -19,8 +19,9 @@
 {{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd "fallback" $max ) }}
     {{ $entries := slice }}
     {{ range $k, $width := . }}
-        {{ $args := slice }}
-        {{ $args = $args | append (printf "%dx webp" $width) }}
+        {{ $size := printf "%dx" $width }}
+        {{ $args := (slice $size) }}
+        {{ $args = $args | append "webp" }}
         {{ $quality := partial "inline/quality" (dict "width" $width "max" $max) }}
         {{ $args = $args | append (printf "q%d" $quality) }}
         {{ with $params.process.hint }}
@@ -33,6 +34,9 @@
         {{ if eq $width $max }}
             {{ $fallback = $rs_img }}
         {{ end }}
+        {{ $path := path.Split $img.RelPermalink }}
+        {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" $size ".webp" ) }} 
+        {{ $rs_img = $rs_img | resources.Copy (print $newpath) }}
         {{ $entries = $entries | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
     {{ end }}
     {{ if gt (len .) 1 }}

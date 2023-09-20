@@ -29,6 +29,11 @@ figure {
     overflow: hidden;
 }
 
+.img--ls {
+	/* only if you want to change the blur-up option from always to auto or want to use blur up effect without a lowsrc image. */
+	font-family: "blur-up: auto", "object-fit: cover";
+}
+
 code {
     font-size: 80%;
     font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;

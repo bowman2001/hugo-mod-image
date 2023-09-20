@@ -8,4 +8,4 @@
 {{ with (.Filter $filters).Resize (printf "%dx webp q%d" $width $quality) -}}
     {{ $lqip = printf "data:image/webp;base64,%s" (base64Encode .Content) }}
 {{ end -}}
-{{ return $lqip -}}
+{{ return "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" -}}
