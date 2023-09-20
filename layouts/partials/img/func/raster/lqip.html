@@ -1,10 +1,9 @@
-{{ $pixelate := or site.Data.hugoModImage.process.lqip.pixelate 5 }}
-{{ $blur := or site.Data.hugoModImage.process.lqip.blur 10 }}
-{{ $quality := or site.Data.hugoModImage.process.lqip.quality 10 }}
+{{ $width := int (math.Round (div .Width (float 2))) }}
+{{ $blur := or site.Data.hugoModImage.process.lqip.blur 5 }}
+{{ $quality := or site.Data.hugoModImage.process.lqip.quality 60 }}
 
-{{ $filters := slice (images.GaussianBlur $blur) (images.Pixelate $pixelate) -}}
-{{ $lqip := (.Filter $filters).Resize (printf "%dx%d webp q%d" .Width .Height $quality) }}
-{{ $path := path.Split $lqip.RelPermalink }}
+{{ $lqip := (.Filter (images.GaussianBlur $blur)).Resize (printf "%dx webp q%d" $width $quality) }}
+{{ $path := path.Split .RelPermalink }}
 {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-lqip" (path.Ext $lqip.RelPermalink )) }}    
 {{ $lqip = $lqip | resources.Copy (print $newpath) }}
 {{ return $lqip -}}

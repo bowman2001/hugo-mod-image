@@ -5,7 +5,9 @@
     <title>{{ site.Title }}</title>
     {{ partial "head/js/lazysizes" . }}
     {{- $css := resources.Get "style.css" | minify | fingerprint -}}
+    {{- $lscss := resources.Get "hugo-mod-image/lazysizes.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+    <link rel="stylesheet" href="{{ $lscss.RelPermalink }}" integrity="{{ $lscss.Data.Integrity }}">
 </head>
 <body>
 <header class="content">
