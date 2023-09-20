@@ -49,13 +49,18 @@
         {{- $params = partial "img/func/params/aggregate/class" (dict "type" "embed" "params" $params ) }}
     {{- end }}
 
+    {{- $imgMap := (dict "img" .img "params" $params) }}
+    {{- /* Preprocess */}}
+    {{- if $params.process.run }}
+        {{- $imgMap = partial "img/func/raster/preprocess" $imgMap }}
+    {{- end }}
+
     {{- /* Render */}}
-    {{- partial "img/helper/debug" $params }}
-    {{- $args := (dict "img" .img "params" $params )}}
+    {{- partial "img/helper/debug" $imgMap.params }}
     {{- if $.IsBlock }}
-        {{- partialCached "img/render/container/figure" $args $args }}
+        {{- partialCached "img/render/container/figure" $imgMap $imgMap }}
     {{- else }}
-        {{- partialCached "img/render/container/embed" $args $args }}
+        {{- partialCached "img/render/container/embed" $imgMap $imgMap }}
     {{- end }}
 {{- end }}
 {{- /**/ -}}

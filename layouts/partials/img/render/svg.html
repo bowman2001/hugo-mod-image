@@ -17,9 +17,7 @@
     {{- if .params.index }}
         {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[data-src], image_alt[alt]" ) }}
     {{- end }}
-    <img
-    {{- range $k, $v := $params.imgAttrs }}
-        {{- printf " %s=%q" $k $v | safeHTMLAttr }}
-    {{- end -}}
-    >
+    <img {{- range $k, $v := $params.imgAttrs }}
+            {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+        {{- end }}>
 {{ end }}

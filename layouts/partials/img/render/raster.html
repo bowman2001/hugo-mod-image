@@ -4,25 +4,27 @@
     - params 
 */ -}}
 
-{{- $img := partial "img/func/raster/preprocess" . }}
-
+{{- $img := .img }}
 {{- $params := merge .params (dict (slice "imgAttrs" "src") $img.RelPermalink ) }} 
 
-{{- $lqip := partial "img/func/raster/lqip" $img -}}
-{{- with (partial "img/func/raster/srcset" (dict "img" $img "params" $params) ) }}
-  {{- $params = merge .params (dict (slice "imgAttrs" "src") .fallback.RelPermalink ) }} 
-  {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqip ) }}
-  {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .fallback.Width)) (dict (slice "imgAttrs" "height") (string .fallback.Height)) }}
-  {{- $aspectratio := (string (div .fallback.Width (float .fallback.Height))) }}
-  {{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
-  {{- with .srcset }}
-    {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") . ) }}
-  {{- end }}
+{{- if $params.process.compress }}
+    {{- $lqip := partial "img/func/raster/lqip" $img -}}
+    {{- with (partial "img/func/raster/srcset" (dict "img" $img "params" $params) ) }}
+        {{- $params = merge .params (dict (slice "imgAttrs" "src") .fallback.RelPermalink ) }} 
+        {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqip ) }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "width") (string .fallback.Width)) (dict (slice "imgAttrs" "height") (string .fallback.Height)) }}
+        {{- $aspectratio := (string (div .fallback.Width (float .fallback.Height))) }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "data-aspectratio") $aspectratio) }}
+        {{- with .srcset }}
+            {{- $params = merge $params (dict (slice "imgAttrs" "data-srcset") . ) }}
+        {{- end }}
+    {{- end }}
+
+    {{- $imgClass := site.Data.hugoModImage.lsImgClass | default "img--ls" }}
+    {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s lazyload" $imgClass)) }} 
+    {{- $params = merge $params (dict (slice "imgAttrs" "data-sizes") "auto" ) }}
+    {{- $params = merge $params (dict (slice "imgAttrs" "data-parentfit") "cover" ) }}
 {{- end }}
-{{ $imgClass := site.Data.hugoModImage.lsImgClass | default "img--ls" }}
-{{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s lazyload" $imgClass)) }} 
-{{- $params = merge $params (dict (slice "imgAttrs" "data-sizes") "auto" ) }}
-{{- $params = merge $params (dict (slice "imgAttrs" "data-parentfit") "cover" ) }}
 
 {{- if .params.index }}
     {{- $params = merge $params (dict (slice "imgAttrs" "data-pagefind-meta") "image[src], image_alt[alt]" ) }} 

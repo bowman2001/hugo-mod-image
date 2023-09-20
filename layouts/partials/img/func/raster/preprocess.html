@@ -3,7 +3,7 @@
 {{ $width := (float .img.Width) }}
 {{ $height := (float .img.Height) }}
 {{ $ratio := div $width $height }}
-{{ $origPath := path.Split .img.RelPermalink }}
+{{ $path := path.Split .img.RelPermalink }}
 {{ $resize := false }}
 {{ $fill := false }}
 {{ $crop := false }}
@@ -17,9 +17,9 @@
     {{ end }}
     {{ $args := printf "%dx%d %s" (int (math.Round $width)) (int (math.Round $height)) . }}
     {{ $img = $img.Resize $args }}
-    {{ $newpath := path.Join $origPath.Dir (print (path.BaseName $origPath.File) "-" . (path.Ext $img.RelPermalink)) }}    
+    {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" . (path.Ext $img.RelPermalink)) }}    
     {{ $img = $img | resources.Copy (print $newpath) }}
-    {{ $origPath = path.Split $img.RelPermalink }}
+    {{ $path = path.Split $img.RelPermalink }}
 {{ end }}
 
 {{ with .params.preprocess.ratio }}
@@ -40,12 +40,16 @@
     {{ $resize = true }}
 {{ end }}
 
-{{ $size := printf "%dx%d" (int (math.Round $width)) (int (math.Round $height)) }}
+{{ $newWidth := int (math.Round $width) }}
+{{ $newHeight := int (math.Round $height) }}
+{{ $params = merge $params  (dict (slice "imgAttrs" "width") $newWidth) (dict (slice "imgAttrs" "height") $newHeight) }}
+{{ $size := printf "%dx%d" $newWidth $newHeight }}
 {{ $args := (slice $size) }}
 {{ if .params.process.compress }}
     {{ $args = $args | append "webp" }}
     {{ $args = $args | append (printf "q%d" site.Data.hugoModImage.srcset.quality) }}
 {{ end }}
+
 {{ with .params.preprocess.anchor }}
     {{ $args = $args | append . }}
 {{ end }}
@@ -56,8 +60,8 @@
     {{ else if $fill }}
         {{ $img = $img.Fill (print (delimit $args " ")) }}
     {{ end }}   
-    {{ $newpath := path.Join $origPath.Dir (print (path.BaseName $origPath.File) "-" $size (path.Ext $img.RelPermalink )) }}    
+    {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" $size (path.Ext $img.RelPermalink )) }}    
     {{ $img = $img | resources.Copy (print $newpath) }}
 {{ end }} 
 
-{{ return $img }}
+{{ return (dict "img" $img "params" $params) }}

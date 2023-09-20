@@ -5,12 +5,12 @@
 
 {{ $min := (index site.Data.hugoModImage.default.width 0) | default 400 }} 
 {{ $max := (index site.Data.hugoModImage.default.width 1) | default 800 }}
-{{ $factor := site.Data.hugoModImage.srcset.maxDensityFactor | default 2 }}
-
 {{ with index site.Data.hugoModImage.width $params.class.width }}
     {{ $min = (int (index . 0)) }}
     {{ $max = (int (index . 1)) }}
 {{ end }}
+
+{{ $factor := site.Data.hugoModImage.srcset.maxDensityFactor | default 2 }}
 
 {{ $maxHd := math.Max $max (math.Min (int (math.Floor (mul $max $factor))) $img.Width) }}
 
