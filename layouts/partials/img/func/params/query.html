@@ -11,5 +11,17 @@
 {{ with or (.Get "width") (.Get "w") }}
     {{ $params = merge $params (dict (slice "class" "width") . ) }}
 {{ end }}
+{{ with (.Get "ratio") }}
+    {{ $params = merge $params (dict (slice "preprocess" "ratio") . ) }}
+{{ end }}
+{{ with (.Get "zoom") }}
+    {{ $params = merge $params (dict (slice "preprocess" "zoom") . ) }}
+{{ end }}
+{{ with (.Get "anchor") }}
+    {{ $params = merge $params (dict (slice "preprocess" "anchor") . ) }}
+{{ end }}
+{{ with (.Get "rotate") }}
+    {{ $params = merge $params (dict (slice "preprocess" "rotate") . ) }}
+{{ end }}
 
 {{ return $params }}

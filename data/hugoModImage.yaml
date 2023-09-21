@@ -20,6 +20,6 @@ preprocess:
   ratio: 
     min: 0.2
     max: 5    
-  rotate: [ 90right, 90left, "180", flip ]
+  rotate: [ 90right, 90left, "180" ]
   rsFilter: [ bartlett, blackman, box, bspline, catmullrom, cosine, gaussian, hamming, hann, hermite, lanczos, linear, mitchellnetravali, nearestneighbor, welch ]
   webpHint: [ drawing, icon, photo, picture, text ]

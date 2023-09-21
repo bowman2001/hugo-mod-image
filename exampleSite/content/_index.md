@@ -5,11 +5,9 @@ resources:
     name: splash
     params:
       alt: Splashing drop of water
-      posh: left
       link: https://unsplash.com
       rel: nofollow
       target: _blank
-      zoom: 1.3
       caption: Embedded with link
 ---
 
@@ -29,7 +27,7 @@ The included image render hook can produce figures and embedded images with link
 
 ### Page bundles
 
-![](splash "What a splash!") {{% pangram 11 %}}
+![](splash?posh=left&zoom=1.3 "What a splash!") {{% pangram 11 %}}
 
 ### Site-wide (global asset folder)
 
