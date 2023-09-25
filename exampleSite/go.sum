@@ -54,3 +54,5 @@ github.com/bowman2001/hugo-mod-resource v0.0.0-20230914210227-378518409564 h1:Gh
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230914210227-378518409564/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230915102315-3b914d0429ce h1:3n8IJb+1NqS1xJf6Lzc2YfZF5rFvmaQC5IslGuTXD3w=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230915102315-3b914d0429ce/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230925100400-ff39aded4edf h1:aTjlWeWVT4jrpGM7NeItB3+TNP/UX9qE4BXiGj9LxmY=
+github.com/bowman2001/hugo-mod-resource v0.0.0-20230925100400-ff39aded4edf/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
