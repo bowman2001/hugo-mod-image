@@ -4,5 +4,5 @@ go 1.21
 
 require (
 	github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914193737-c927540eeed6 // indirect
-	github.com/bowman2001/hugo-mod-resource v0.0.0-20230925101149-ee0a46cb7fa0 // indirect
+	github.com/bowman2001/hugo-mod-resource v0.0.0-20230925102821-1d86cfb766aa // indirect
 )
