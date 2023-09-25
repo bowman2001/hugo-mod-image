@@ -1,7 +1,6 @@
 
 .img-c {
     display: block;
-    overflow: hidden;
 }
 
 .ls-blur-up-img,
@@ -26,7 +25,7 @@
 
 .ls-blur-up-img {
     opacity: 1;
-	filter: blur(0);
+	filter: blur(5px);
     transition: opacity 500ms ease-in-out, filter 1s ease-in-out;
 }
 
@@ -37,12 +36,10 @@
 
 img.lazyload,
 img.lazyloading {
-	opacity: 0.5;
 	filter: blur(5px);
 }
 
 img.lazyloaded {
 	filter: blur(0);
-	opacity: 1;
-	transition: filter 250ms ease-in-out, opacity 500ms ease-in-out;
+	transition: filter 250ms ease-in-out;
 }

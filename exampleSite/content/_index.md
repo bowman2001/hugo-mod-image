@@ -38,7 +38,6 @@ The included image render hook can produce figures and embedded images with link
 Remote images are cached and processed locally. The only way to add attributes here are Markdown attributes. And they are only available for stand-alone images (figure).
 
 ![Random image from picsum](https://picsum.photos/1200/500)
-{.opac}
 
 ### Data (indirect)
 

@@ -2,7 +2,7 @@ debug: true
 unsplash: true
 
 srcset:
-  sizeStep: 100
+  sizeStep: 25
   maxDensityFactor: 3
   quality: 90
   qualityReductionFactor: 15
