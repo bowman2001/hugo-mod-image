@@ -18,21 +18,24 @@
 {{ $srcset := "" }}
 {{ with partial "img/func/raster/width-numbers" (dict "min" $min "max" $maxHd "fallback" $max ) }}
     {{ $entries := slice }}
+    
     {{ range $k, $width := . }}
         {{ $size := printf "%dx" $width }}
         {{ $args := (slice $size) }}
-        {{ $args = $args | append "webp" }}
-        {{ $quality := partial "inline/quality" (dict "width" $width "max" $max) }}
-        {{ $args = $args | append (printf "q%d" $quality) }}
-        {{ with $params.process.hint }}
-            {{ $args = $args | append . }}
+        {{ if $params.process.compress }}
+            {{ $args = $args | append "webp" }}
+            {{ $quality := partial "inline/quality" (dict "width" $width "max" $max) }}
+            {{ $args = $args | append (printf "q%d" $quality) }}
+            {{ with $params.process.hint }}
+                {{ $args = $args | append . }}
+            {{ end }}
         {{ end }}
         {{ if gt $width $img.Width }}
             {{ $args = $args | append "MitchellNetravali" }}
         {{ end }}
         {{ $rs_img := $img.Resize (print (delimit $args " ")) }}
-        {{ $path := path.Split $img.RelPermalink }}
-        {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" $size ".webp" ) }} 
+        {{ $path := path.Split $img.Key }}
+        {{ $newpath := path.Join $path.Dir (print (path.BaseName $path.File) "-" $size (path.Ext $rs_img.Key) ) }} 
         {{ $rs_img = $rs_img | resources.Copy (print $newpath) }}
         {{ $entries = $entries | append (print ($rs_img.RelPermalink | safeURL) " " $rs_img.Width "w") }}
         {{ if eq $width $max }}

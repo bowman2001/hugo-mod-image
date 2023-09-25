@@ -4,7 +4,7 @@ unsplash: true
 srcset:
   sizeStep: 25
   maxDensityFactor: 3
-  quality: 80
+  quality: 90
   qualityReductionFactor: 15
 
 container:

@@ -26,7 +26,7 @@ code {
 }
 
 #TableOfContents {
-    padding: 0.5rem 0;
+    padding: 10px 0;
     background-color: #eee;
     box-shadow: 0 0 0 1px #ccc;
 }
@@ -45,23 +45,23 @@ code {
 .emb--ph-left {
     float: left;
     clear: left;
-    padding-right: 0.5rem;
-    margin-right: 0.5rem;
+    padding-right: 10px;
+    margin-right: 10px;
 }
 
 .emb--ph-right {
     float: right;
     clear: right;
-    padding-left: 0.5rem;
-    margin-left: 0.5rem;
+    padding-left: 10px;
+    margin-left: 10px;
 }
 
 .emb--w-quarter {
-    width: calc( 25% - 0.5rem );
+    width: calc( 25% - 10px );
 }
 
 .emb--w-half {
-    width: calc( 50% - 0.5rem );
+    width: calc( 50% - 10px );
 }
 
 .fig {
