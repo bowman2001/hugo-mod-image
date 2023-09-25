@@ -5,7 +5,7 @@
     <title>{{ site.Title }}</title>
     {{ partial "head/js/lazysizes" . }}
     {{- $css := resources.Get "style.css" | minify | fingerprint -}}
-    {{- $lscss := resources.Get "hugo-mod-image/lazysizes.css" | minify | fingerprint }}
+    {{- $lscss := resources.Get "mod-img/lazysizes.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
     <link rel="stylesheet" href="{{ $lscss.RelPermalink }}" integrity="{{ $lscss.Data.Integrity }}">
 </head>
@@ -13,7 +13,7 @@
 <header class="content">
 <h1>{{ .Title | site.Home.RenderString }}</h1>
 </header>
-{{ partial "img/render-featured" . }}
+{{ partial "mod-img/render-featured" . }}
 <div class="content">
 {{ .TableOfContents }}
 {{ .Content }}

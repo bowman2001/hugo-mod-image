@@ -1,4 +1,0 @@
-{{ $width := site.Data.hugoModImage.fallback.width | default 900 -}}
-{{ $quality := site.Data.hugoModImage.fallback.quality | default 60 -}}
-{{/* TODO: check width of original and change resampling filter if it is too small */}}
-{{ return .Resize (printf "%dx webp q%d" (int $width) (int $quality)) -}}

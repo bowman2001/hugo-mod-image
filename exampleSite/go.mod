@@ -1,4 +1,4 @@
-module github.com/bowman2001/hugo-mod-image/exampleSite
+module github.com/bowman2001/mod-img/exampleSite
 
 go 1.21
 
