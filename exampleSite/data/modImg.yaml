@@ -63,6 +63,7 @@ default:
     class:
       width: half
       posh: left
+  width: [285, 570]
   
   
   
