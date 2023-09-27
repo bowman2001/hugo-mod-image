@@ -21,7 +21,8 @@ figure:
     width: 
       name: Width
       prefix: w-
-      options: [half, full, double, triple]
+      options: [half, full, double]
+      intOpts: [triple]
     posh: 
       name: Horizontal position
       prefix: ph-
