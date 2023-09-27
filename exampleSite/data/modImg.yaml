@@ -58,7 +58,6 @@ default:
       background: transparent
   figure:
     class:
-      posh: left
       width: full
   embed:
     class:
