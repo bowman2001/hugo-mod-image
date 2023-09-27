@@ -75,3 +75,7 @@ To prevent broken image tags the module always provides a placeholder for missin
 
 ![Missing](test-missing)
 {#missing}
+
+## Lossless
+
+![PNG](Png-logo.png)
