@@ -2,10 +2,10 @@
 {{ $params := .params }}
 
 {{ with and $params.process.run $params.preprocess }}
-    {{ $width := (float .img.Width) }}
-    {{ $height := (float .img.Height) }}
+    {{ $width := (float $img.Width) }}
+    {{ $height := (float $img.Height) }}
     {{ $ratio := div $width $height }}
-    {{ $path := path.Split .img.Key }}
+    {{ $path := path.Split $img.Key }}
     {{ $resize := false }}
     {{ $fill := false }}
     {{ $crop := false }}
