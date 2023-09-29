@@ -1,14 +1,15 @@
 {{ $img := .img }}
 {{ $params := .params }}
-{{ $width := (float .img.Width) }}
-{{ $height := (float .img.Height) }}
-{{ $ratio := div $width $height }}
-{{ $path := path.Split .img.Key }}
-{{ $resize := false }}
-{{ $fill := false }}
-{{ $crop := false }}
 
-{{ with $params.preprocess }}
+{{ with and $params.process.run $params.preprocess }}
+    {{ $width := (float .img.Width) }}
+    {{ $height := (float .img.Height) }}
+    {{ $ratio := div $width $height }}
+    {{ $path := path.Split .img.Key }}
+    {{ $resize := false }}
+    {{ $fill := false }}
+    {{ $crop := false }}
+    
     {{ with .rotate }}
         {{ if $params.preprocess.flipsides }}
             {{ $tmp := $width }}
