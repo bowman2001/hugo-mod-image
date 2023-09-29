@@ -8,7 +8,7 @@ replace github.com/bowman2001/hugo-mod-image => ../
 
 require (
 	github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914193737-c927540eeed6 // indirect
-	github.com/bowman2001/hugo-mod-image v0.0.0-20230920124247-3bdf3b888fd9 // indirect
+	github.com/bowman2001/hugo-mod-image v0.0.0-20230929125935-985e35e2767c // indirect
 	github.com/bowman2001/hugo-mod-pangram v0.0.0-20230803153646-6851d0e94236 // indirect
-	github.com/bowman2001/hugo-mod-resource v0.0.0-20230927144514-ae9cce3bdbb0 // indirect
+	github.com/bowman2001/hugo-mod-resource v0.0.0-20230929131237-6b40a97b4ef3 // indirect
 )
