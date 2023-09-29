@@ -1,10 +1,10 @@
 {{- $defaultParams := dict (slice "class" "width") "triple" (slice "imgAttrs" "alt") "Featured image" }}
 {{- with (partial "mod-img/get" (dict "src" "featured" "ctx" . )) }}
     {{- $params := merge $defaultParams .params }}
-    {{- $params = partial "mod-img/func/params/aggregate/preprocess" (dict "img" .img "params" $params) }}
+    {{/*- $params = partial "mod-img/func/params/aggregate/preprocess" (dict "img" .img "params" $params) }}
     {{- $params = partial "mod-img/func/params/aggregate/container-class" $params }}
-    {{- $params = partial "mod-img/func/params/aggregate/class" (dict "type" "figure" "params" $params) }}       
-    {{- $imgMap := (dict "img" .img "params" $params )}}
+    {{- $params = partial "mod-img/func/params/aggregate/class" (dict "type" "figure" "params" $params) */}}       
+    {{- $imgMap := partial "mod-img/func/params/aggregate/all/figure" (dict "img" .img "params" $params) }}
     {{- if $params.process.run }}
         {{- $imgMap = partial "mod-img/func/raster/preprocess" $imgMap }}
     {{- end }}
