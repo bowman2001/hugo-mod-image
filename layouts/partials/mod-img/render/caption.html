@@ -2,10 +2,11 @@
 
 {{- with .text }}
 <span class="caption__text">
-    {{ with $.id }}<span class="caption__id">{{ . }}</span> {{ end }}{{ . | site.Home.RenderString -}}
+    {{- with $.id }}<span class="caption__id">{{ . }}</span> {{ end }}{{ . | site.Home.RenderString -}}
 </span>
 {{- end }}
-{{ with .attr -}}
+
+{{- with .attr -}}
     {{- $attribution := ( . | site.Home.RenderString ) -}}
     <span class="caption__attr" data-pagefind-ignore>
     {{- with $.attrlink -}}
@@ -14,4 +15,4 @@
         ({{ $attribution }})
     {{- end -}}
     </span>
-{{ end -}}
+{{- end -}}

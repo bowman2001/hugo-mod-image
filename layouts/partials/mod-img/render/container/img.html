@@ -9,6 +9,9 @@
 
 {{- with .params.linkAttrs }}
     {{- $attrs := merge $imgMap.params.contAttrs . }}
+    {{- with $.params.imgAttrs.alt }}
+        {{- $attrs = merge $attrs (dict "aria-label" . ) }}
+    {{- end }}
     <a 
     {{- range $k, $v := $attrs }}
         {{- printf " %s=%q" $k $v | safeHTMLAttr }}
