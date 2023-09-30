@@ -2,11 +2,11 @@
 
 {{- $ratio := "" }}
 
-{{- if .params.process.run }}
-    {{- $ratio = div (float .img.Width) .img.Height }}
-{{- else }} 
-    {{- with $imgMap.params.preprocess.ratio }}
-        {{- $ratio = . }}
+{{- with $imgMap.params.preprocess.ratio }}
+    {{- $ratio = . }}
+{{- else }}
+    {{- if .params.process.run }}
+        {{- $ratio = div (float .img.Width) .img.Height }}
     {{- end }}
 {{- end }}
 
