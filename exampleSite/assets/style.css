@@ -76,18 +76,10 @@ code {
     max-width: 90rem;
 }
 
-.opac {
-    opacity: 0.5;
+.img-c--bg-grey {
+    background-color: #eee;
 }
 
-/*
-.lazyload,
-.lazyloading {
-	filter: blur(5px);
+.img-c--box-shadow {
+    box-shadow: 0 0 0 1px #aaa;
 }
-
-.lazyloaded {
-	filter: blur(0);
-	transition: filter 150ms ease-in-out;
-}
-*/

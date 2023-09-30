@@ -9,6 +9,12 @@ resources:
       rel: nofollow
       target: _blank
       caption: Embedded with link
+  - src: Png-logo.png
+    name: png
+    params:
+      caption: Unofficial PNG logo
+      background: trans
+      box: none
 ---
 
 The example site demonstrates the functionality of the module with simple layout examples. The full power of the module unfolds when we use it in a project to offer users a variety of formatting and styling options with HTML attributes.
@@ -78,4 +84,4 @@ To prevent broken image tags the module always provides a placeholder for missin
 
 ## Lossless
 
-![PNG](Png-logo.png)
+![PNG](png)
