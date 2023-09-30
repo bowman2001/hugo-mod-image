@@ -9,7 +9,7 @@
 {{ $src := .src }}
 {{ $ctx := .ctx }}
 
-{{ $imgMap := dict }}
+{{ $imgMap := (dict "img" "" "params" "") }}
 {{ $url := urls.Parse $src }}
 {{ $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
 
