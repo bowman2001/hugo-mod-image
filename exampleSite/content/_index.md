@@ -13,8 +13,17 @@ resources:
     name: png
     params:
       caption: Unofficial PNG logo
-      background: trans
       box: none
+  - src: Perplex.svg
+    name: perplex
+    params:
+      alt: Perplex logo
+      attr: Perplex theme
+      attrLink: https://perplex.desider.at
+      target: _blank
+      caption: Perplex logo
+      padding: one
+      background: light
 ---
 
 The example site demonstrates the functionality of the module with simple layout examples. The full power of the module unfolds when we use it in a project to offer users a variety of formatting and styling options with HTML attributes.
@@ -43,7 +52,7 @@ The included image render hook can produce figures and embedded images with link
 
 Remote images are cached and processed locally. The only way to add attributes here are Markdown attributes. And they are only available for stand-alone images (figure).
 
-![Random image from picsum](https://picsum.photos/1200/500)
+![Random image from picsum](https://picsum.photos/id/599/1200/500)
 
 ### Data (indirect)
 
@@ -75,6 +84,15 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ![Splash](rotate-zoom-ratio)
 
+## Lossless
+
+### PNG
+
+![PNG](png)
+
+### SVG
+
+![](perplex)
 ## Missing image
 
 To prevent broken image tags the module always provides a placeholder for missing ones:
@@ -82,6 +100,3 @@ To prevent broken image tags the module always provides a placeholder for missin
 ![Missing](test-missing)
 {#missing}
 
-## Lossless
-
-![PNG](png)

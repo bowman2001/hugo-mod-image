@@ -1,8 +1,8 @@
-debug: true
+debug: false
 unsplash: true
 
 srcset:
-  sizeStep: 25
+  sizeStep: 100
   maxDensityFactor: 3
   quality: 90
   qualityReductionFactor: 15
@@ -13,13 +13,15 @@ container:
     background:
       name: Background
       prefix: bg-
-      options: [grey, trans]
-      default: trans
+      options: [light, dark]
     box:
       name: Box
       prefix: box-
       options: [shadow, none]
-      default: shadow
+    padding:
+      name: padding
+      prefix: pad-
+      options: [half, one, two]
 
 figure:
   class:
@@ -29,7 +31,6 @@ figure:
       prefix: w-
       options: [half, full, double]
       intOpts: [triple]
-      default: full
     posh: 
       name: Horizontal position
       prefix: ph-
@@ -43,7 +44,6 @@ embed:
       name: Width
       prefix: w-
       options: [quarter, half]
-      default: half
     posh: 
       name: Horizontal position
       prefix: ph-
@@ -60,12 +60,10 @@ width:
   full: [285, 570]
   double: [570, 1140]
   triple: [570, 1710]
-  default: [285, 570]
 
 default:
   container:
     class: 
-      background: trans
       box: shadow
   figure:
     class:

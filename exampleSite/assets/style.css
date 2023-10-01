@@ -15,6 +15,10 @@ body {
     padding: 2rem 1rem;
 }
 
+img {
+    display: block;
+}
+
 figure {
     margin: 0;
 }
@@ -33,6 +37,7 @@ code {
 
 .caption {
     display: block;
+    padding: 5px 0;
     font-size: 12px;
     line-height: 1.3;
 }
@@ -76,10 +81,18 @@ code {
     max-width: 90rem;
 }
 
-.img-c--bg-grey {
+.img-c svg {
+    display: block;
+}
+
+.img-c--bg-light {
     background-color: #eee;
 }
 
 .img-c--box-shadow {
     box-shadow: 0 0 0 1px #aaa;
+}
+
+.img-c--pad-one img, .img-c--pad-one svg {
+    padding: 1rem;
 }
