@@ -65,7 +65,7 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ### Change ratio
 
-![Splash](ratio?ratio=0.75)
+![Splash](ratio)
 
 ### Zoom
 
