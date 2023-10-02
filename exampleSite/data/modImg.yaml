@@ -1,4 +1,4 @@
-debug: false
+debug: true
 unsplash: true
 
 srcset:
@@ -6,6 +6,14 @@ srcset:
   maxDensityFactor: 3
   quality: 90
   qualityReductionFactor: 15
+
+image:
+  class:
+    base: img  
+    type:
+      name: Type
+      prefix: t-
+      options: [logo]
 
 container:
   class:

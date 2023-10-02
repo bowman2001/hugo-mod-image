@@ -14,6 +14,7 @@ resources:
     params:
       caption: Unofficial PNG logo
       box: none
+      type: logo
   - src: Perplex.svg
     name: perplex
     params:
