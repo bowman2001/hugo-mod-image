@@ -3,6 +3,9 @@
 {{ $img := .img }}
 {{ $params := .params }}
 
+{{/* Preprocess ? */}}
+{{ $params = merge (dict (slice "preprocess" "run") true ) .params }}
+
 {{/* Process and compress? */}}
 {{ with $img.MediaType.SubType }}
     {{ if eq "svg" .  }}
