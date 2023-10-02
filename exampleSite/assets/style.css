@@ -15,7 +15,7 @@ body {
     padding: 2rem 1rem;
 }
 
-img {
+.img {
     display: block;
 }
 
@@ -81,18 +81,27 @@ code {
     max-width: 90rem;
 }
 
-.img-c svg {
+.img__c svg {
     display: block;
 }
 
-.img-c--bg-light {
+.img__c--bg-light {
     background-color: #eee;
 }
 
-.img-c--box-shadow {
+.img__c--box-shadow {
     box-shadow: 0 0 0 1px #aaa;
 }
 
-.img-c--pad-one img, .img-c--pad-one svg {
+.img--t-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.img--pad-one {
     padding: 1rem;
 }

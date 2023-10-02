@@ -25,6 +25,8 @@ resources:
       caption: Perplex logo
       padding: one
       background: light
+      ratio: 1.5
+      type: logo
 ---
 
 The example site demonstrates the functionality of the module with simple layout examples. The full power of the module unfolds when we use it in a project to offer users a variety of formatting and styling options with HTML attributes.

@@ -14,10 +14,14 @@ image:
       name: Type
       prefix: t-
       options: [logo]
+    padding:
+      name: padding
+      prefix: pad-
+      options: [half, one, two]
 
 container:
   class:
-    base: img-c
+    base: img__c
     background:
       name: Background
       prefix: bg-
@@ -26,10 +30,6 @@ container:
       name: Box
       prefix: box-
       options: [shadow, none]
-    padding:
-      name: padding
-      prefix: pad-
-      options: [half, one, two]
 
 figure:
   class:
