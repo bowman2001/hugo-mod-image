@@ -25,7 +25,6 @@ resources:
       caption: Perplex logo
       padding: one
       background: light
-      ratio: 1.5
       type: logo
 ---
 
