@@ -7,9 +7,9 @@ srcset:
   quality: 90
   qualityReductionFactor: 15
 
-container:
+frame:
   class:
-    base: img__c
+    base: img__frame
     background:
       name: Background
       prefix: bg-
@@ -18,14 +18,18 @@ container:
       name: Box
       prefix: box-
       options: [shadow, none]
-    type:
-      name: Type
-      prefix: t-
-      options: [logo]
     padding:
       name: padding
       prefix: pad-
       options: [half, one, two]
+
+container:
+  class:
+    base: img__c
+    type:
+      name: Type
+      prefix: t-
+      options: [contain]
 
 figure:
   class:
@@ -66,7 +70,7 @@ width:
   triple: [570, 1710]
 
 default:
-  container:
+  frame:
     class: 
       box: shadow
   figure:

@@ -15,7 +15,7 @@
     {{- $imgMap = merge $imgMap (dict (slice "params" "contAttrs" "style") $style ) }}
 {{- end }}
 
-{{- with .params.linkAttrs }}
+{{- with and (not .params.frameAttrs) .params.linkAttrs }}
     {{- $attrs := merge $imgMap.params.contAttrs . }}
     {{- with $.params.imgAttrs.alt }}
         {{- $attrs = merge $attrs (dict "aria-label" . ) }}

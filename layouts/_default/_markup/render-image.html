@@ -16,8 +16,9 @@
 {{- else }}
     {{- $classParams = partial "mod-img/func/params/default-class" (dict "type" "embed" "className" "class") }} 
 {{- end }}
+{{- $frameParams := partial "mod-img/func/params/default-class" (dict "type" "frame" "className" "frameClass") }}
 {{- $contParams := partial "mod-img/func/params/default-class" (dict "type" "container" "className" "contClass") }}
-{{- $defaultParams := merge $classParams $contParams }}
+{{- $defaultParams := merge $classParams $frameParams $contParams }}
 
 {{- /* Collect parameters */}}
 {{- $hookParams := partial "mod-img/func/params/hook" . }}
@@ -38,6 +39,7 @@
     {{- else }}
         {{- $params = partial "mod-img/func/params/aggregate/class" (dict "type" "embed" "params" $params ) }}
     {{- end }}
+    {{- $params = partial "mod-img/func/params/aggregate/frame-class" $params }}
     {{- $params = partial "mod-img/func/params/aggregate/container-class" $params }}
 
     {{- $imgMap := (dict "img" .img "params" $params) }}

@@ -13,8 +13,10 @@ resources:
     name: png
     params:
       caption: Unofficial PNG logo
-      box: none
-      type: logo
+      padding: one
+      background: light
+      box: shadow
+      type: contain
   - src: Perplex.svg
     name: perplex
     params:
@@ -25,7 +27,8 @@ resources:
       caption: Perplex logo
       padding: one
       background: light
-      type: logo
+      box: shadow
+      type: contain
 ---
 
 The example site demonstrates the functionality of the module with simple layout examples. The full power of the module unfolds when we use it in a project to offer users a variety of formatting and styling options with HTML attributes.
