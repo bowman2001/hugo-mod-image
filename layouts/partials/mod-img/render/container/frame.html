@@ -1,5 +1,10 @@
 {{- $imgMap := . }}
 
+{{- if .params.process.run }}
+    {{- $style := "display: flex; justify-content: center; align-items: center" }}
+    {{- $imgMap = merge $imgMap (dict (slice "params" "frameAttrs" "style") $style ) }}
+{{- end }}
+
 {{- with .params.frameAttrs }}
     {{- with $imgMap.params.linkAttrs }}
         {{- $attrs := merge $imgMap.params.frameAttrs . }}
