@@ -1,13 +1,7 @@
 {{ $name := "mod-img/params/aggregate/preprocess" }}
 
 {{ $img := .img }}
-{{ $params := .params }}
-
-{{/* Preprocess ? */}}
-{{ $params = merge (dict (slice "preprocess" "run") true ) .params }}
-{{ if (eq $params.imgClass.type "logo") }}
-    {{ $params = merge $params (dict (slice "preprocess" "run") false ) }}
-{{ end }}
+{{ $params := merge (dict (slice "preprocess" "run") true ) .params }}
 
 {{ if $params.preprocess.run }}
     {{/* Check and modify preprocessing parameters */}}
