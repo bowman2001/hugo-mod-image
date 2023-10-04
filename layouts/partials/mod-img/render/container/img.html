@@ -1,14 +1,6 @@
 {{- $imgMap := . }}
 
-{{- $ratio := "" }}
-{{- with .params.preprocess.ratio }}
-    {{- $ratio = . }}
-{{- end }}
-{{- if .params.process.run }}
-    {{- $ratio = div (float .img.Width) (float .img.Height) }}
-{{- end }}
-
-{{- with and .params.process.run $ratio }}
+{{- with and .params.process.run (div (float .img.Width) (float .img.Height)) }}
     {{- $style := print "position: relative; " "width: 100%; " "height: 0; " "padding-bottom: " (printf "%.4f%%" (div (float 100) . )) ";" }}
     {{- $imgMap = merge $imgMap (dict (slice "params" "contAttrs" "style") $style ) }}
 {{- end }}
