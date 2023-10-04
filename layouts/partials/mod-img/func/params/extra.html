@@ -20,6 +20,8 @@
     {{ $params = merge $params (dict (slice "imgAttrs" "alt") . ) }}    
 {{ end }}
 
+{{ $params := partial "mod-img/func/params/theme" $params }}
+
 {{ with .preprocess }}{{ $params = merge $params (dict (slice "preprocess" "run") false ) }}{{ end }}
 {{ with .ratio }}{{ $params = merge $params (dict (slice "preprocess" "ratio") . ) }}{{ end }}
 {{ with .zoom }}{{ $params = merge $params (dict (slice "preprocess" "zoom") . ) }}{{ end }}
@@ -31,3 +33,5 @@
 {{ end }}
 
 {{ return $params }}
+
+{{ define "partials/mod-img/func/params/theme" }}{{ return . }}{{ end }}
