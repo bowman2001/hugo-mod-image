@@ -1,4 +1,5 @@
-{{ $width := int (math.Round (div .img.Width (float .divider))) }}
+{{ $divider :=  site.Data.modImg.srcset.lqipDivider | default 2 }}
+{{ $width := int (math.Round (div .img.Width (float $divider))) }}
 {{ $blur := or site.Data.modImg.process.lqip.blur 6 }}
 {{ $quality := or site.Data.modImg.process.lqip.quality 30 }}
 

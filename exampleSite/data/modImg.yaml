@@ -6,6 +6,8 @@ srcset:
   maxDensityFactor: 3
   quality: 90
   qualityReductionFactor: 15
+  lqipDivider: 2
+  maxLqip: 4096
 
 frame:
   class:
