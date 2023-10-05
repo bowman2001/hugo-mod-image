@@ -5,7 +5,7 @@
 */ -}}
 
 {{- $img := .img }}
-{{- $maxLqip := site.Data.modImg.srcset.maxLqip | default 2048 }}
+{{- $maxLqip := site.Data.modImg.srcset.lqip.max | default 2048 }}
 
 {{- $params := merge .params (dict (slice "imgAttrs" "src") $img.RelPermalink ) }} 
 {{- $placeholder := "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" }}
