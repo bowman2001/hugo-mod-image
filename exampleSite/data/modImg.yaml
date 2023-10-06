@@ -2,15 +2,15 @@ debug: true
 unsplash: true
 
 srcset:
-  sizeStep: 100
-  maxDensityFactor: 3
-  quality: 90
-  qualityReductionFactor: 15
+  sizeStep: 50
+  maxDensityFactor: 2
+  quality: 85
+  qualityReductionFactor: 20
   lqip:
     divider: 2
     blur: 5
     quality: 20
-    max: 4096
+    max: 2048
 
 frame:
   class:
