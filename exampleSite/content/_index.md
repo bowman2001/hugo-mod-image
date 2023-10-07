@@ -17,6 +17,7 @@ resources:
       background: light
       box: shadow
       type: contain
+      hint: icon
   - src: Perplex.svg
     name: perplex
     params:
