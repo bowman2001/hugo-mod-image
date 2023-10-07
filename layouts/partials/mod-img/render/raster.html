@@ -12,6 +12,7 @@
 {{- $placeholder := "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" }}
 
 {{- if $params.process.run }}
+    {{- $imgClass := site.Data.modImg.lsImgClass | default "img--ls" }}
     {{- if $params.process.base64 }}
         {{- $base64 := partial "mod-img/func/raster/base64" (dict "img" $img "params" $params) }}
         {{- $params = merge $params (dict (slice "imgAttrs" "src") $base64 ) }}
@@ -32,24 +33,24 @@
             {{- end }}
             {{- if $params.lqip.run | default true }}      
                 {{- $lqip := partial "mod-img/func/raster/lqip" (dict "img" .fallback "params" $params) -}}
-                {{- $lqipBase64 := printf "data:image/webp;base64,%s" (base64Encode $lqip.Content) }}
-                {{- $lsClass := "" }}
+                {{- $lqipBase64 := printf "data:image/webp;base64,%s" (base64Encode $lqip.Content) }}                
                 {{- if lt (len $lqipBase64) $maxLqip }}
                     {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $lqipBase64 ) }}
-                    {{- $lsClass = printf "%s %s" (site.Data.modImg.lsImgClass | default "img--ls") "img--lqip" }}
+                    {{- $imgClass = printf "%s %s lazyload" $imgClass "img--lqip" }}
                 {{- else }}
                     {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $placeholder) }}
-                    {{- $params = merge $params (dict (slice "imgAttrs" "data-lowsrc") $lqip.RelPermalink ) }}
-                    {{- $lsClass = site.Data.modImg.lsImgClass | default "img--ls" }}                
-                {{- end }}
-                {{ with $params.imgAttrs.class }}
-                    {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s lazyload %s" . $lsClass)) }}
-                {{- else }}
-                    {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "lazyload %s" $lsClass)) }}
+                    {{- $params = merge $params (dict (slice "imgAttrs" "data-lowsrc") $lqip.RelPermalink ) }}   
+                    {{- $imgClass = printf "%s lazyload" $imgClass }}           
                 {{- end }}
             {{- else }}
                 {{- $params = merge $params (dict (slice "imgAttrs" "srcset") $placeholder) }}
+                {{- $imgClass = printf "%s %s lazyload" $imgClass "img--ph" }}
             {{- end }}
+        {{- end }}
+        {{ with $params.imgAttrs.class }}
+            {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s %s" . $imgClass)) }}
+        {{- else }}
+            {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s" $imgClass)) }}
         {{- end }}
     {{- end }}    
     
