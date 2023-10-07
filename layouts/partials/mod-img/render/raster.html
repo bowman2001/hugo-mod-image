@@ -47,13 +47,12 @@
                 {{- $imgClass = printf "%s %s lazyload" $imgClass "img--ph" }}
             {{- end }}
         {{- end }}
-        {{ with $params.imgAttrs.class }}
-            {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s %s" . $imgClass)) }}
-        {{- else }}
-            {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s" $imgClass)) }}
-        {{- end }}
     {{- end }}    
-    
+    {{ with $params.imgAttrs.class }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s %s" . $imgClass)) }}
+    {{- else }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "class") (printf "%s" $imgClass)) }}
+    {{- end }}    
 {{- else }}
     {{- $params := merge $params (dict (slice "imgAttrs" "src") $img.RelPermalink ) }} 
     {{- $params = merge $params (dict (slice "imgAttrs" "loading") "lazy" ) }}
