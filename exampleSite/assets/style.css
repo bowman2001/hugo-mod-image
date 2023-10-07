@@ -17,6 +17,8 @@ body {
 
 img {
     display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 figure {
@@ -71,6 +73,15 @@ code {
 
 .fig {
     margin: 0 auto;
+}
+
+.fig--portrait {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.fig--w-tiny {
+    width: 45px;
 }
 
 .fig--w-double {

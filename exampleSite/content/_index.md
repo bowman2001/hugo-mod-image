@@ -29,6 +29,10 @@ resources:
       background: light
       box: shadow
       type: contain
+  - src: small_portrait.jpg
+    name: portrait
+    params:
+      alt: Georg Makowski
 ---
 
 The example site demonstrates the functionality of the module with simple layout examples. The full power of the module unfolds when we use it in a project to offer users a variety of formatting and styling options with HTML attributes.

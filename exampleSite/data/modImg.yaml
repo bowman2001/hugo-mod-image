@@ -1,4 +1,4 @@
-debug: true
+debug: false
 unsplash: true
 
 srcset:
@@ -11,6 +11,10 @@ srcset:
     blur: 5
     quality: 20
     max: 2048
+
+base64:
+  densityFactor: 1.5
+  quality: 60
 
 frame:
   class:
@@ -42,7 +46,7 @@ figure:
     width: 
       name: Width
       prefix: w-
-      options: [half, full, double]
+      options: [tiny, half, full, double]
       intOpts: [triple]
     posh: 
       name: Horizontal position
@@ -68,6 +72,7 @@ embed:
       options: [top, middle]
 
 width:
+  tiny: [45, 45]
   quarter: [70, 135]
   half: [140, 275]
   full: [285, 570]

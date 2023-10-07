@@ -1,0 +1,12 @@
+{{- $defaultParams := dict 
+    (slice "class" "plain") "fig--portrait"
+    (slice "class" "width") "tiny" 
+    (slice "imgAttrs" "alt") "Portrait" 
+    (slice "process" "base64") true
+}}
+{{- with (partial "mod-img/get" (dict "src" "portrait" "ctx" . )) }}
+    {{- $params := merge $defaultParams .params }}    
+    {{- $imgMap := partial "mod-img/func/params/aggregate/all/figure" (dict "img" .img "params" $params) }}
+    {{- partial "mod-img/render/container/figure" $imgMap }}
+    {{- partial "mod-img/helper/debug" $imgMap.params }}
+{{- end }}
