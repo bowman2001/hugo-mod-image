@@ -6,7 +6,7 @@
 
 {{ $arg :=  printf "resize %dx" $width }}
 {{ if .params.process.compress }}
-    {{ $arg = printf "resize %dx jpeg q%d" $width $quality }}
+    {{ $arg = printf "resize %dx webp q%d" $width $quality }}
 {{ end }}
 {{ $lqip := .img.Filter (images.GaussianBlur $blur) (images.Process $arg) }}
 {{ $path := path.Split .img.Key }}
