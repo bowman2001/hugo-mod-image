@@ -8,7 +8,7 @@ srcset:
   qualityReductionFactor: 20
   lqip:
     divider: 2
-    blur: 5
+    blur: 3
     quality: 20
     max: 2048
 
