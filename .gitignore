@@ -4,6 +4,7 @@ node_modules
 .idea
 .vscode
 .hugo*
+yarn.lock
 
 # Go workspace file
 go.work
