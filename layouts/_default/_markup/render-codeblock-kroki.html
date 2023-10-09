@@ -1,0 +1,18 @@
+{{- $name := "mod-img/render-codeblock-kroki" }}
+{{- $configName := "data/mod-img" }}
+{{- $level := site.Data.modImg.errorLevel | default "warning" }}
+{{- $errorLevel := partial "error-level" (dict "caller" $name "level" $level "config" $configName ) }}
+{{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
+
+{{- $inner := trim .Inner "\n\r" }}
+{{- $attrs := .Attributes }}
+{{- $type := $attrs.type | lower }}
+
+{{- $server := site.Data.modImg.kroki.server }}
+{{- $supported := site.Data.modImg.kroki.types }}
+
+{{- if not (in $supported $type) }}
+    {{- errorf "%s: The diagram type %q is not supported." }}
+{{- end }}
+
+

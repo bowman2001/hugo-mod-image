@@ -8,10 +8,10 @@ srcset:
   sizeStep: 50 # In percent 
   maxDensityFactor: 2
   quality: 85
-  qualityReductionFactor: 20
+  qualityReductionFactor: 30
   lqip: 
-    divider: 2
-    
+    divider: 3
+    blur: 4
     max: 2048
 
 process:
@@ -27,3 +27,32 @@ preprocess:
   rotate: [ 90right, 90left, "180" ]
   rsFilter: [ bartlett, blackman, box, bspline, catmullrom, cosine, gaussian, hamming, hann, hermite, lanczos, linear, mitchellnetravali, nearestneighbor, welch ]
   webpHint: [ drawing, icon, photo, picture, text ]
+
+kroki:
+  server: "https://kroki.io/"
+  types: 
+    - "actdiag" 
+    - "blockdiag" 
+    - "bpmn" 
+    - "bytefield" 
+    - "d2" 
+    - "dbml" 
+    - "ditaa" 
+    - "erd" 
+    - "excalidraw" 
+    - "graphviz" 
+    - "mermaid" 
+    - "nomnoml" 
+    - "nwdiag" 
+    - "packetdiag" 
+    - "pikchr" 
+    - "plantuml" 
+    - "rackdiag" 
+    - "seqdiag" 
+    - "structurizr" 
+    - "svgbob" 
+    - "umlet" 
+    - "vega" 
+    - "vegalite" 
+    - "wavedrom" 
+    - "wireviz"
