@@ -56,3 +56,19 @@ kroki:
     - "vegalite" 
     - "wavedrom" 
     - "wireviz"
+  attrs:
+    - id
+    - width
+    - w
+    - posh
+    - ph
+    - posv
+    - pv
+    - class
+    - link
+    - rel
+    - target
+    - background
+    - box
+    - padding
+    - type

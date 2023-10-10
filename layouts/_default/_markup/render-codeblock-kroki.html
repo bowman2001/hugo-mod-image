@@ -4,15 +4,47 @@
 {{- $errorLevel := partial "error-level" (dict "caller" $name "level" $level "config" $configName ) }}
 {{- $configErrorEnd := printf " Please check the configuration in %q" $configName }}
 
+{{ $path := "" }}
+{{ with .Page.File }}
+    {{- $path = .Path -}}
+{{ else }}
+    {{- $path = .Page.Path }}
+{{ end }}
+
 {{- $inner := trim .Inner "\n\r" }}
-{{- $attrs := .Attributes }}
-{{- $type := $attrs.type | lower }}
+{{- $supported := site.Data.modImg.kroki.types }}
+{{- $type := "" }}
+{{ with .Attributes.type }}
+    {{- $type := . | lower }}
+{{ else }}
+    {{- errorf "Missing mandatory 'type' attribute for Kroki diagram." }}
+{{ end }}
+{{- if not (in $supported $type) }}
+    {{- errorf "%s: The diagram type %q is not supported." }}{{/* TODO: Better error message. */}}
+{{- end }}
+
+{{ $attrs := dict }}
+{{ range $k, $v := .Attributes }}
+    {{ if not (in site.Data.modImg.kroki.attrs $k) }}
+        {{ $attrs = merge $attrs dict $k (string $v) }}
+    {{ end }}
+{{ end }}
 
 {{- $server := site.Data.modImg.kroki.server }}
-{{- $supported := site.Data.modImg.kroki.types }}
 
-{{- if not (in $supported $type) }}
-    {{- errorf "%s: The diagram type %q is not supported." }}
+{{- $jsonBody := dict "diagram_source" $inner "diagram_type" $type "output_format" "SVG" | jsonify }}
+{{- $args := dict "method" "post" "body" $jsonBody }}
+{{- with resources.GetRemote $server $args }}
+    {{- with .Err }}
+        {{- warnf "$s: Unable to get the remote diagram in %q. %s" $name $path . }}
+    {{- else }}
+        {{- $imgMap := (dict "img" . "params" $params) }}
+        {{- partial "mod-img/render/container/figure" $imgMap }}
+    {{- end }}
+{{- else }}
+    {{- warnf "The %q code block render hook was unable to get the remote diagram in %q. See %s" $renderHookName $path $position }}
 {{- end }}
+
+
 
 

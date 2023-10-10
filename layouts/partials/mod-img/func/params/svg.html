@@ -1,0 +1,7 @@
+{{ $params := dict }}
+
+{{ with or .svg site.Data.modImg.svg }}
+    {{ $params = merge $params (dict (slice "process" "svg") ( . | lower )) }}
+{{ end }}
+
+{{ return $params }}
