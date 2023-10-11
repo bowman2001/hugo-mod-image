@@ -18,6 +18,7 @@ resources:
       box: shadow
       type: contain
       hint: icon
+      lqip: run
   - src: Perplex.svg
     name: perplex
     params:
