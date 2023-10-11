@@ -6,10 +6,10 @@
 
 {{ $svg := "" }}
 {{ with .img }}
-    {{ $svg := .Content }}
+    {{ $svg = .Content }}
 {{ end }}
 {{ with .params.svgstr }}
-    {{ $svg := . }}
+    {{ $svg = . }}
 {{ end }}
 
 {{- if (lt (len $svg) site.Data.modImg.svg.inlineMax) }}
