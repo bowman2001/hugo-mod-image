@@ -5,5 +5,6 @@
     "attr": "Picsum",
     "attrlink": "https://picsum.photos",
     "ratio": 1.1,
-    "anchor": "Bottom"
+    "anchor": "Bottom",
+    "lqip": "yes"
 }
