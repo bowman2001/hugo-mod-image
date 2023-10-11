@@ -2,8 +2,7 @@
 
 {{ $attrs := partial "mod-img/func/params/attributes" . }}
 {{ $raster := partial "mod-img/func/params/raster" . }}
-{{ $svg := partial "mod-img/func/params/svg" . }}
-{{ $params := merge $attrs $raster $svg }}
+{{ $params := merge $attrs $raster }}
 
 {{ $params = partial "mod-img/func/params/theme" $params }}
 

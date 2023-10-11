@@ -23,10 +23,10 @@
     {{- errorf "%s: The diagram type %q is not supported." }}{{/* TODO: Better error message. */}}
 {{- end }}
 
-{{ $attrs := dict }}
+{{ $params := dict }}
 {{ range $k, $v := .Attributes }}
     {{ if not (in site.Data.modImg.kroki.attrs $k) }}
-        {{ $attrs = merge $attrs dict $k (string $v) }}
+        {{ $params = merge $params dict $k (string $v) }}
     {{ end }}
 {{ end }}
 
@@ -42,7 +42,7 @@
         {{- partial "mod-img/render/container/figure" $imgMap }}
     {{- end }}
 {{- else }}
-    {{- warnf "The %q code block render hook was unable to get the remote diagram in %q. See %s" $renderHookName $path $position }}
+    {{- warnf "The %q code block render hook was unable to get the remote diagram in %q." $name $path }}
 {{- end }}
 
 

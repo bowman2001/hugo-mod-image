@@ -1,8 +1,9 @@
 container: img-c
-svg: inline
 missing: mod-img/missing.svg
 errorLevel: warning
 unsplash: false
+svg: 
+  maxInline: 8192
 
 srcset:
   sizeStep: 50 # In percent 
@@ -18,6 +19,7 @@ process:
   none: [ gif ]
   compress: [ bmp, jpeg, webp, png ]
   lossless: [ tiff ]
+    
 
 preprocess:  
   anchor: [ Smart, TopLeft, Top, TopRight, Left, Center, Right, BottomLeft, Bottom, BottomRight ] # See https://gohugo.io/content-management/image-processing/#anchor
