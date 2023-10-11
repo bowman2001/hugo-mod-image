@@ -2,4 +2,6 @@
 
 Hugo module for retrieving, preprocessing, and rendering all kinds of images: raster (transparent) or vectorized. 
 
-You can see it in full action at https://perplex.desider.at. The example site demonstrates a fundamental setup and a few examples.
+Includes [Lazysizes](https://github.com/aFarkas/lazysizes/issues) for near-optimal, bandwidth-conservative, and smooth rendering.
+
+You can see it in full action at https://perplex.desider.at. The included example site demonstrates a fundamental setup and a few examples.
