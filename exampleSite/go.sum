@@ -6,6 +6,10 @@ github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914090821-234a6e8aca40 
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914090821-234a6e8aca40/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914193737-c927540eeed6 h1:YQsjESxD13lKWJzPdDHob6yvg2sZfhqcItiSuwPQVI0=
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914193737-c927540eeed6/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20231017200927-fb4ca93354cd h1:TM1fE12YOLDxxxz/Zh6IkxJjd/D+VWQf1q9fGrro5JA=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20231017200927-fb4ca93354cd/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
+github.com/bowman2001/hugo-mod-error-message v0.1.0 h1:YE39+3IzZPA2+55cnULJfEfJmxQTEL9dCwGdFAFoyWo=
+github.com/bowman2001/hugo-mod-error-message v0.1.0/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824130622-a8b58edb8e0a h1:ZaBVVoibmACKmHa/DjAf6idxh1/UOrYvaaqslMSaLTo=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824130622-a8b58edb8e0a/go.mod h1:S6nfOoTUyVKnDj92lm+SMjUH3WWbzc++FVmflwGyRck=
 github.com/bowman2001/hugo-mod-image v0.0.0-20230824132640-c1aec8739c5b h1:2elhYb14MO4PmCgE/1xd0EnsgjXT6DVJz4T6GDAExQg=

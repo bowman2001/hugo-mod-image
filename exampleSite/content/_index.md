@@ -114,7 +114,7 @@ To prevent broken image tags the module always provides a placeholder for missin
 
 ## Kroki diagrams
 
-```kroki {diagram=BlockDiag width=half posh=left background=light}
+```kroki {diagram=BlockDiag background=light caption="Block diagram" attr="Kroki.io" attrlink="https://kroki.io"}
 blockdiag {
   Kroki -> generates -> "Block diagrams";
   Kroki -> is -> "very easy!";
@@ -123,4 +123,7 @@ blockdiag {
   "Block diagrams" [color = "pink"];
   "very easy!" [color = "orange"];
 }
+```
+
+```kroki {diagram=BlockDiag background=light caption="Missing diagram" attr="Kroki.io" attrlink="https://kroki.io"}
 ```

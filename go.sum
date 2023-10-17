@@ -6,6 +6,12 @@ github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914090821-234a6e8aca40 
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914090821-234a6e8aca40/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914193737-c927540eeed6 h1:YQsjESxD13lKWJzPdDHob6yvg2sZfhqcItiSuwPQVI0=
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230914193737-c927540eeed6/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20231017200927-fb4ca93354cd h1:TM1fE12YOLDxxxz/Zh6IkxJjd/D+VWQf1q9fGrro5JA=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20231017200927-fb4ca93354cd/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20231017204645-2438f8bd30bd h1:nJOsly2hubo3Y/kVAMDpehQdXJEnoATNC56ECpEtYtw=
+github.com/bowman2001/hugo-mod-error-message v0.0.0-20231017204645-2438f8bd30bd/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
+github.com/bowman2001/hugo-mod-error-message v0.1.0 h1:YE39+3IzZPA2+55cnULJfEfJmxQTEL9dCwGdFAFoyWo=
+github.com/bowman2001/hugo-mod-error-message v0.1.0/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230827183443-a64d78766181 h1:ptAigNqbktBI2kiNxxlmk5qmPKzrgDCfxD20jh+p0aA=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230827183443-a64d78766181/go.mod h1:ogxoWgrfHZ1zwnU02JMH0Ep43QIr19T5Ld9pLDnBwVs=
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230828081742-ba67f8a96c7e h1:X+uekrNFDBM6uD5BeGBwgu0wBdUu09I+PwwLyE2QGfs=
@@ -70,3 +76,5 @@ github.com/bowman2001/hugo-mod-resource v0.0.0-20230930135357-1a5b8e9e7893 h1:dm
 github.com/bowman2001/hugo-mod-resource v0.0.0-20230930135357-1a5b8e9e7893/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
 github.com/bowman2001/hugo-mod-resource v0.1.0 h1:x/dQKplZ3JO8vhdn22BMPNmAhNw+brx2rh0WSTh6evY=
 github.com/bowman2001/hugo-mod-resource v0.1.0/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
+github.com/bowman2001/hugo-mod-resource v0.1.2 h1:+6thJesmW8Q6FQgCawW39JqJB7Kg35oaxsdzyQgmkiA=
+github.com/bowman2001/hugo-mod-resource v0.1.2/go.mod h1:XaqBpwviNkKXnCArAwk2jQAysLJxWbJxRbtniDIJwd0=
