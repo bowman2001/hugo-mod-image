@@ -13,14 +13,14 @@
 
 {{- $inner := trim .Inner "\n\r" }}
 {{- $supported := site.Data.modImg.kroki.types }}
-{{- $type := "" }}
-{{ with .Attributes.type }}
-    {{- $type = (string .) | lower }}
+{{- $diagram := "" }}
+{{ with .Attributes.diagram }}
+    {{- $diagram = (string .) | lower }}
 {{ else }}
-    {{- errorf "Missing mandatory 'type' attribute for Kroki diagram. See %s" $path }}
+    {{- errorf "Missing mandatory 'diagram' attribute for Kroki. See %s" $path }}
 {{ end }}
-{{- if not (in $supported $type) }}
-    {{- errorf "%s: The diagram type %q is not supported. See %s" $name $type $path }}{{/* TODO: Better error message. */}}
+{{- if not (in $supported $diagram) }}
+    {{- errorf "%s: The diagram type %q is not supported. See %s" $name $diagram $path }}{{/* TODO: Better error message. */}}
 {{- end }}
 
 
@@ -55,11 +55,11 @@
 
 {{- $server := site.Data.modImg.kroki.server }}
 
-{{- $jsonBody := dict "diagram_source" $inner "diagram_type" $type "output_format" "SVG" | jsonify }}
+{{- $jsonBody := dict "diagram_source" $inner "diagram_type" $diagram "output_format" "SVG" | jsonify }}
 {{- $args := dict "method" "post" "body" $jsonBody }}
 {{- with resources.GetRemote $server $args }}
     {{- with .Err }}
-        {{- warnf "$s: Unable to get the remote diagram in %q. %s" $name $path . }}
+        {{- warnf "%s: Unable to get the remote diagram in %q. %s" $name $path . }}
     {{- else }}
         {{ with .RelPermalink }}
             {{ $params = merge $params (dict (slice "imgAttrs" "src") . ) }}
