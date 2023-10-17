@@ -50,7 +50,9 @@
 {{- $imgMap := dict }}
 {{- with resources.GetRemote $server $args }}
     {{- with .Err }}
-        {{- $imgMap = dict "img" (partial "mod-img/helper/missing" $ctx) "params" $params }}
+        {{- $img := partial "mod-img/helper/missing" site }}
+        {{- $params = merge $params (dict (slice "imgAttrs" "src") $img.RelPermalink ) }}
+        {{- $imgMap = dict "img" $img "params" $params }}
         {{- $msg := printf "Unable to get remote diagram — %s." . }}
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel) }}
     {{- else }}
