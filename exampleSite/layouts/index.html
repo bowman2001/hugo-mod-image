@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ site.Title }}</title>
-    {{ partial "head/js/lazysizes" . }}
+    {{ partial "mod-img/head/js/lazysizes" . }}
     {{- $css := resources.Get "style.css" | minify | fingerprint -}}
     {{- $lscss := resources.Get "mod-img/lazysizes.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

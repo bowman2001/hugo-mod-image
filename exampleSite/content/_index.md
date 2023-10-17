@@ -103,7 +103,8 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ### SVG
 
-![](perplex)
+![Perplex logo](perplex)
+
 ## Missing image
 
 To prevent broken image tags the module always provides a placeholder for missing ones:
@@ -111,3 +112,15 @@ To prevent broken image tags the module always provides a placeholder for missin
 ![Missing](test-missing)
 {#missing}
 
+## Kroki diagrams
+
+```kroki {type=BlockDiag width=half posh=left background=light}
+blockdiag {
+  Kroki -> generates -> "Block diagrams";
+  Kroki -> is -> "very easy!";
+
+  Kroki [color = "greenyellow"];
+  "Block diagrams" [color = "pink"];
+  "very easy!" [color = "orange"];
+}
+```

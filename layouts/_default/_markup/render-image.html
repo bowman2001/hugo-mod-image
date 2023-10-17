@@ -20,7 +20,7 @@
 {{- $contParams := partial "mod-img/func/params/default-class" (dict "type" "container" "className" "contClass") }}
 {{- $defaultParams := merge $classParams $frameParams $contParams }}
 
-{{- /* Collect parameters */}}
+{{- /* Collect and sort parameters */}}
 {{- $hookParams := partial "mod-img/func/params/hook" . }}
 
 {{- $queryParams := dict }}
