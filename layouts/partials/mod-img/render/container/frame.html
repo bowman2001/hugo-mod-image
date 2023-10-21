@@ -10,12 +10,10 @@
             {{- $colors := $srcset.smallest.Colors }}
             {{- $color1 := index $colors 0 }}
             {{- $color2 := index $colors 1 }}
-            {{ with and $color1 $color2 }}
+            {{ if (and $color1 $color2) }}
                 {{ $style = printf "%s; background-image: linear-gradient(to right, %s, %s)" $style $color1 $color2 }}
-            {{ else }}
-                {{ with $color1 }}
-                    {{ $style = printf "%s; background-color: %s" $style $color1 }}
-                {{ end }}
+            {{ else if $color1 }}
+                {{ $style = printf "%s; background-color: %s" $style $color1 }}
             {{ end }}
         {{ end }}    
     {{ end }}
