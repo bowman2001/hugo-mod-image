@@ -1,6 +1,7 @@
 {{- $defaultParams := dict 
     (slice "class" "width") "triple" 
     (slice "imgAttrs" "alt") "Featured image" 
+    (slice "lqip" "run") true
 }}
 {{- with (partial "mod-img/get" (dict "src" "featured" "ctx" . )) }}
     {{- $params := merge $defaultParams .params }}
