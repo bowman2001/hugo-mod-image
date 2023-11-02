@@ -1,0 +1,14 @@
+{{- $name := "shortcodes/mod-img/value" }}
+
+{{- $param := "" -}}
+{{- with (.Get 0) -}}{{- $param = . -}}{{ else -}}
+    {{- errorf "%s: Missing shortcode argument: One parameter name is needed." $name -}}
+{{- end }}
+
+{{- with site.Data.modImg $param -}}
+    {{- if reflect.IsSlice . -}}
+        {{- print "[" (delimit . ", ") "]" -}}
+    {{- else -}}
+        {{- print . -}}
+    {{- end -}}
+{{- end -}}

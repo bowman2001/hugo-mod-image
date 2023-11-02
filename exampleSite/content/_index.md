@@ -127,3 +127,15 @@ blockdiag {
 
 ```kroki {diagram=BlockDiag background=light caption="Missing diagram" attr="Kroki.io" attrlink="https://kroki.io"}
 ```
+
+## Included shortcodes
+
+### Print the recommended size for images
+
+When we have configured the width of our image classes, we want to inform users about them.
+
+| Class | Min. width            | Max. width                  |
+|:-- | :-------------------- | :-------------------------- |
+| Tiny |{{% mod-img/width "tiny" 1 %}} | {{% mod-img/width "tiny" %}} |
+| Small |{{% mod-img/width "full" 1 %}} | {{% mod-img/width "full" %}} |
+| Double |{{% mod-img/width "double" 1 %}} | {{% mod-img/width "double" %}} |

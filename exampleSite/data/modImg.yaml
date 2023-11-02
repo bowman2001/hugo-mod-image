@@ -17,59 +17,54 @@ base64:
   quality: 60
 
 frame:
-  class:
-    base: img__frame
-    background:
-      name: Background
-      prefix: bg-
-      options: [light, dark]
-    box:
-      name: Box
-      prefix: box-
-      options: [shadow, none]
-    padding:
-      name: padding
-      prefix: pad-
-      options: [half, one, two]
+  base: img__frame
+  background:
+    name: Background
+    prefix: bg-
+    options: [light, dark]
+  box:
+    name: Box
+    prefix: box-
+    options: [shadow, none]
+  padding:
+    name: padding
+    prefix: pad-
+    options: [half, one, two]
 
 container:
-  class:
-    base: img__c
-    type:
-      name: Type
-      prefix: t-
-      options: [contain]
+  base: img__c
+  type:
+    name: Type
+    prefix: t-
+    options: [contain]
 
 figure:
-  class:
-    base: "fig"
-    width: 
-      name: Width
-      prefix: w-
-      options: [tiny, half, full, double]
-      intOpts: [triple]
-    posh: 
-      name: Horizontal position
-      prefix: ph-
-      options: [left, right]
-  type: featured
+  base: "fig"
+  width: 
+    name: Width
+    prefix: w-
+    options: [tiny, half, full, double]
+    intOpts: [triple]
+  posh: 
+    name: Horizontal position
+    prefix: ph-
+    options: [left, right]
 
 embed:
-  class:
-    base: "emb"
-    width: 
-      name: Width
-      prefix: w-
-      options: [quarter, half]
-    posh: 
-      name: Horizontal position
-      prefix: ph-
-      options: [left, right]
-      posh: left
-    posv:
-      name: Vertical position
-      prefix: pv-
-      options: [top, middle]
+  base: "emb"
+  width: 
+    name: Width
+    prefix: w-
+    options: [quarter, half]
+  posh: 
+    name: Horizontal position
+    prefix: ph-
+    options: [left, right]
+    posh: left
+  posv:
+    name: Vertical position
+    prefix: pv-
+    options: [top, middle]
 
 width:
   tiny: [45, 45]
@@ -80,16 +75,13 @@ width:
   triple: [570, 1710]
 
 default:
-  frame:
-    class: 
-      box: shadow
+  frame: 
+    box: shadow
   figure:
-    class:
-      width: full
+    width: full
   embed:
-    class:
-      width: half
-      posh: left
+    width: half
+    posh: left
   width: [285, 570]
   
   
