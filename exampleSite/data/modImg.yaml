@@ -5,11 +5,11 @@ srcset:
   sizeStep: 50
   maxDensityFactor: 2
   quality: 85
-  qualityReductionFactor: 20
+  qualityReductionFactor: 40
   lqip:
-    divider: 2
+    divider: 3
     blur: 3
-    quality: 20
+    quality: 25
     max: 2048
 
 base64:

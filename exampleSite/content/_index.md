@@ -9,6 +9,7 @@ resources:
       rel: nofollow
       target: _blank
       caption: Embedded with link
+      lqip: run
   - src: Png-logo.png
     name: png
     params:

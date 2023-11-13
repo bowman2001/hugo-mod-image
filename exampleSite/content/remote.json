@@ -2,5 +2,6 @@
     "src": "https://picsum.photos/id/1074/1200/800",
     "caption": "Remote image in data file",
     "attr": "Picsum",
-    "attrlink": "https://picsum.photos"
+    "attrlink": "https://picsum.photos",
+    "lqip": "run"
 }
