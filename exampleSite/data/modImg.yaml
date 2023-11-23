@@ -2,10 +2,10 @@ debug: true
 unsplash: true
 
 srcset:
-  sizeStep: 50
-  maxDensityFactor: 2
+  sizeStep: 25
+  maxDensityFactor: 2.6
   quality: 85
-  qualityReductionFactor: 40
+  qualityReductionFactor: 25
   lqip:
     divider: 3
     blur: 3
@@ -14,7 +14,7 @@ srcset:
 
 base64:
   densityFactor: 1.5
-  quality: 60
+  quality: 65
 
 frame:
   base: img__frame
