@@ -1,4 +1,4 @@
-{{- if eq .img.MediaType.SubType "svg" -}}
+{{- if or (eq .img.MediaType.SubType "svg") .params.svgstr -}}
     {{- partial "mod-img/render/svg" . }}
 {{- else }}
     {{- partial "mod-img/render/raster" . }}
