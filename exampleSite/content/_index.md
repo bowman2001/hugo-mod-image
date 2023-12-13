@@ -20,6 +20,7 @@ resources:
       type: contain
       hint: icon
       lqip: run
+      id: png
   - src: Perplex.svg
     name: perplex
     params:
