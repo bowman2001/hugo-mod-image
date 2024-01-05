@@ -32,7 +32,6 @@ resources:
       padding: one
       background: light
       box: shadow
-      type: contain
   - src: small_portrait.jpg
     name: portrait
     params:
@@ -97,13 +96,11 @@ A data file in the format YAML, TOML, or JSON needs to include a source like the
 
 ![Splash](rotate-zoom-ratio)
 
-## Lossless
-
-### PNG
+## Transparent image
 
 ![PNG](png)
 
-### SVG
+## Vector image (SVG)
 
 ![Perplex logo](perplex)
 
