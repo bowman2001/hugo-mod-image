@@ -2,7 +2,7 @@
 
 {{ $imgMap := . }}
 
-{{ with .img }}
+{{ with $imgMap.img }}
     {{ $imgParams := partial "mod-img/func/params/collect/resource" . }}
     {{ $extraParams := partial "mod-img/func/params/collect/extra" $imgMap }}
     {{ $captionParams := dict }}

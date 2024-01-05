@@ -6,7 +6,7 @@
 {{ $src := .src }}
 {{ $ctx := .ctx }}
 
-{{ $imgMap := "" }}
+{{ $imgMap := dict }}
 {{ $url := urls.Parse $src }}
 
 {{/* No error message for now */}}
@@ -21,7 +21,9 @@
     {{ end }}
 {{ end }}
 
-{{ $imgMap = partial "mod-img/func/params/collect-and-sort" $imgMap }}
+{{ with $imgMap }}
+    {{ $imgMap = partial "mod-img/func/params/collect-and-sort" $imgMap }}
+{{ end }}
 
 {{ return $imgMap }}
 
