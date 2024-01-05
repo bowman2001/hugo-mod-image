@@ -10,7 +10,8 @@ id:
 missing: mod-img/missing.svg
 errorLevel: warning
 unsplash: false
-svg: 
+svg:
+  defaultType: contain
   maxInline: 8192
 
 srcset:
