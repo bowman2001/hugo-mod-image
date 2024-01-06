@@ -40,7 +40,7 @@
     {{ end }}
 {{ end }}
 
-{{ if eq $params.type "symbol" }}
+{{ if eq $params.contClass.type "symbol" }}
         {{ $params = merge $params (dict (slice "preprocess" "run") false ) }}
 {{ end }}
 
