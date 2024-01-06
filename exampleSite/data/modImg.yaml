@@ -36,7 +36,7 @@ container:
   type:
     name: Type
     prefix: t-
-    options: [contain]
+    options: [symbol, none]
 
 figure:
   base: "fig"

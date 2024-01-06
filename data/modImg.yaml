@@ -11,12 +11,12 @@ missing: mod-img/missing.svg
 errorLevel: warning
 unsplash: false
 svg:
-  defaultType: contain
+  defaultType: symbol
   maxInline: 8192
 
 srcset:
   sizeStep: 30 # In percent 
-  maxDensityFactor: 2.61
+  maxDensityFactor: 2.6
   quality: 85
   qualityReductionFactor: 25
   lqip: 

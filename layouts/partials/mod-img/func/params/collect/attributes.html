@@ -1,11 +1,11 @@
-{{/* Context: parameter map */}}
+{{ $imgMap := . }}
 
 {{ $params := dict }}
 
 {{ $svgDefaultType := site.Data.modImg.svg.defaultType | default "symbol" }}
 
 {{ with .params }}
-    {{ if (or .svgstr (eq $.img.MediaType.SubType "svg")) -}}
+    {{ if (or .svgstr (eq $imgMap.img.MediaType.SubType "svg")) -}}
         {{ $params = merge $params (dict (slice "contClass" "type") $svgDefaultType ) }}
     {{ end }}
 
