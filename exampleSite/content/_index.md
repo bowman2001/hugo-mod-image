@@ -32,6 +32,7 @@ resources:
       padding: one
       background: light
       box: shadow
+      ratio: 1
   - src: small_portrait.jpg
     name: portrait
     params:

@@ -2,7 +2,7 @@
 
 {{ $params := dict }}
 
-{{ $svgDefaultType := site.Data.modImg.svg.defaultType | default "contain" }}
+{{ $svgDefaultType := site.Data.modImg.svg.defaultType | default "symbol" }}
 
 {{ with .params }}
     {{ if (or .svgstr (eq $.img.MediaType.SubType "svg")) -}}
