@@ -1,8 +1,6 @@
 module github.com/bowman2001/mod-img/exampleSite
 
-go 1.21.0
-
-toolchain go1.21.1
+go 1.21.6
 
 replace github.com/bowman2001/hugo-mod-image => ../
 
