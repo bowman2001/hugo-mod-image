@@ -17,7 +17,7 @@ resources:
       padding: one
       background: light
       box: shadow
-      type: contain
+      type: symbol
       hint: icon
       lqip: run
       id: png
