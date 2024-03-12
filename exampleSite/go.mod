@@ -1,6 +1,6 @@
 module github.com/bowman2001/mod-img/exampleSite
 
-go 1.21.6
+go 1.22.1
 
 replace github.com/bowman2001/hugo-mod-image => ../
 
